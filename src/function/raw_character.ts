@@ -1,4 +1,4 @@
-// TODO: 重新设计这里的接口, set 部分直接访问后端
+// TODO: Redesign the interface here, the set part should access the backend directly
 import { characters, getPastCharacterChats, getRequestHeaders, getThumbnailUrl, this_chid } from '@sillytavern/script';
 import { v1CharData } from '@sillytavern/scripts/char-data';
 import { LiteralUnion } from 'type-fest';
@@ -33,7 +33,7 @@ export class RawCharacter {
 
     const matching_characters = characters.filter(char => char.name === name || (allow_avatar && char.avatar === name));
     if (matching_characters.length > 1) {
-      console.warn(`找到多个符合条件的角色, 返回导入时间最早的角色: ${name}`);
+      console.warn(`Found multiple matching characters, returning the one with the earliest import time: ${name}`);
     }
 
     return matching_characters[0] || null;
@@ -69,10 +69,10 @@ export class RawCharacter {
       .reverse();
 
     const chat_promise = chat_list.map(async ({ file_name }) => {
-      // 从文件名中提取角色名称（破折号前的部分）
+      // Extract character name from file name (the part before the dash)
       const ch_name = isGroupChat ? '' : file_name.split(' - ')[0];
 
-      // 使用Character.find方法查找角色，获取头像
+      // Use Character.find method to find the character and get the avatar
       let characterData = null;
       let avatar_url = '';
 
@@ -178,7 +178,7 @@ export function getCharData(name: LiteralUnion<'current', string>, allowAvatar: 
     return character.getCardData();
   } catch (err) {
     const error = err as Error;
-    throw Error(`获取${name ? ` '${name}' ` : '未知'}角色卡数据失败: ${error.message}`);
+    throw Error(`Failed to get ${name ? ` '${name}' ` : 'unknown'} character card data: ${error.message}`);
   }
 }
 
@@ -194,7 +194,7 @@ export function getCharAvatarPath(name: LiteralUnion<'current', string>, allowAv
   const character = new RawCharacter(characterData);
   const avatarId = character.getAvatarId();
 
-  // 使用 getThumbnailUrl 获取缩略图URL，然后提取实际文件名
+  // Use getThumbnailUrl to get the thumbnail URL, then extract the actual filename
   const thumbnailPath = getThumbnailUrl('avatar', avatarId);
   const targetAvatarImg = thumbnailPath.substring(thumbnailPath.lastIndexOf('=') + 1);
 

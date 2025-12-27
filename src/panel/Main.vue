@@ -2,24 +2,24 @@
   <Item type="plain">
     <template #title>
       <div class="flex items-center gap-0.5">
-        <span>{{ t`版本更新` }}</span>
+        <span>{{ t`Version Update` }}</span>
         <div
           v-if="has_update"
           class="rounded-full bg-(--SmartThemeQuoteColor) px-0.5 th-text-xs font-medium"
           :style="{ color: getSmartThemeQuoteTextColor() }"
         >
-          {{ t`最新：Ver ${latest_version}` }}
+          {{ t`Latest ：Ver ${latest_version}` }}
         </div>
       </div>
     </template>
-    <template #description>{{ t`当前版本: ${current_version}` }}</template>
+    <template #description>{{ t`Current Version : ${current_version}` }}</template>
     <template #content>
-      <Button @click="openUpdateModal">{{ t`更新` }}</Button>
+      <Button @click="openUpdateModal">{{ t`Update` }}</Button>
     </template>
   </Item>
   <Divider type="major">
     <i class="fa-solid fa-tools mr-0.5" />
-    <div style="word-spacing: 1.5">{{ t`开发工具` }}</div>
+    <div style="word-spacing: 1.5">{{ t`Developer Tools` }}</div>
   </Divider>
   <div class="flex flex-col gap-0.75">
     <Listener />
@@ -28,7 +28,7 @@
   </div>
   <Divider type="major">
     <i class="fa-solid fa-shapes mr-0.5" />
-    <div style="word-spacing: 1.5">{{ t`扩展信息` }}</div>
+    <div style="word-spacing: 1.5">{{ t`Extension Info` }}</div>
   </Divider>
   <Info />
 </template>

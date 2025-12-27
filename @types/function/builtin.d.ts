@@ -1,15 +1,15 @@
 declare const builtin: {
   /**
-   * 向网页添加一条楼层渲染
+   * Adds a message rendering to the webpage
    *
-   * @param mes 要渲染的楼层数据
-   * @param options 可选选项
-   * - `type`: 楼层类型; 默认为 `'normal'`
-   * - `insertAfter`: 插入到指定楼层后; 默认为 `null`
-   * - `scroll`: 是否滚动到新楼层; 默认为 `true`
-   * - `insertBefore`: 插入到指定楼层前; 默认为 `null`
-   * - `forceId`: 强制使用指定楼层号; 默认为 `null`
-   * - `showSwipes`: 是否显示滑动按钮; 默认为 `true`
+   * @param mes Message data to be rendered
+   * @param options Optional options
+   * - `type`: Message type; defaults to `'normal'`
+   * - `insertAfter`: Insert after the specified message; defaults to `null`
+   * - `scroll`: Whether to scroll to the new message; defaults to `true`
+   * - `insertBefore`: Insert before the specified message; defaults to `null`
+   * - `forceId`: Force use of the specified message ID; defaults to `null`
+   * - `showSwipes`: Whether to show swipe buttons; defaults to `true`
    */
   addOneMessage: (
     mes: Record<string, any>,
@@ -60,19 +60,19 @@ declare const builtin: {
     };
     [key: string]: any;
   };
-  /** 刷新当前聊天并触发 CHARACTER_MESSAGE_RENDERED 和 USER_MESSAGE_RENDERED 事件从而重新渲染 */
+  /** Refresh current chat and trigger CHARACTER_MESSAGE_RENDERED and USER_MESSAGE_RENDERED events for re-rendering */
   reloadAndRenderChatWithoutEvents: () => Promise<void>;
-  /** 刷新当前聊天但不触发任何事件 */
+  /** Refresh current chat without triggering any events */
   reloadChatWithoutEvents: () => Promise<void>;
-  /** 刷新世界书编辑器的显示 */
+  /** Refresh the Lorebook editor display */
   reloadEditor: (file: string, load_if_not_selected?: boolean) => void;
-  /** 刷新世界书编辑器的显示 (防抖) */
+  /** Refresh the Lorebook editor display (debounced) */
   reloadEditorDebounced: (file: string, load_if_not_selected?: boolean) => void;
-  /** 将 markdown 渲染成 html */
+  /** Render markdown into html */
   renderMarkdown: (string: string) => string;
-  /** 刷新预设提示词列表 */
+  /** Refresh the prompt manager list */
   renderPromptManager: (after_try_generate?: boolean) => void;
-  /** 刷新预设提示词列表 (防抖) */
+  /** Refresh the prompt manager list (debounced) */
   renderPromptManagerDebounced: (after_try_generate?: boolean) => void;
   saveSettings: () => Promise<void>;
   uuidv4: () => string;

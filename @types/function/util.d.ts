@@ -1,30 +1,30 @@
 /**
- * 替换字符串中的酒馆宏
+ * Substitute macros in the string
  *
- * @param text 要替换的字符串
- * @returns 替换结果
+ * @param text The string to be substituted
+ * @returns The substitution result
  *
  * @example
  * const text = substitudeMacros("{{char}} speaks in {{lastMessageId}}");
- * text == "少女歌剧 speaks in 5";
+ * text == "Starlight Revue speaks in 5";
  */
 declare function substitudeMacros(text: string): string;
 
 /**
- * 获取最新楼层 id
+ * Get the latest message ID
  *
- * @returns 最新楼层id
+ * @returns The latest message ID
  */
 declare function getLastMessageId(): number;
 
 /**
- * 包装任意函数，返回一个会将报错消息通过酒馆通知显示出来的同功能函数
+ * Wraps any function and returns a function with the same functionality that displays error messages through Tavern notifications
  *
- * @param fn 要包装的函数
- * @returns 包装后的函数
+ * @param fn The function to be wrapped
+ * @returns The wrapped function
  *
  * @example
- * // 包装 `test` 函数从而在酒馆通知中显示 'test' 文本
+ * // Wrap the `test` function to display the 'test' text in the Tavern notification
  * function test() {
  *   throw Error(`test`);
  * }
@@ -33,11 +33,11 @@ declare function getLastMessageId(): number;
 declare function errorCatched<T extends any[], U>(fn: (...args: T) => U): (...args: T) => U;
 
 /**
- * 从前端界面的 iframe 标识名称 `iframe_name` 获取它所在楼层的楼层号, **只能对前端界面 iframe 标识名称使用**
+ * Get the message ID from the frontend iframe identifier name `iframe_name`. **Can only be used for frontend interface iframe identifier names**
  *
- * @param iframe_name 前端界面的 iframe 标识名称
- * @returns 楼层号
+ * @param iframe_name The iframe identifier name of the frontend interface
+ * @returns The message ID
  *
- * @throws 如果提供的 `iframe_name` 不是前端界面 iframe 标识名称, 将会抛出错误
+ * @throws Throws an error if the provided `iframe_name` is not a frontend interface iframe identifier name
  */
 declare function getMessageId(iframe_name: string): number;

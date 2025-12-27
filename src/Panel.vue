@@ -1,7 +1,7 @@
 <template>
   <div class="inline-drawer">
     <div class="inline-drawer-toggle inline-drawer-header">
-      <b>{{ t`酒馆助手` }} <span v-if="has_update" class="th-text-xs font-bold text-red-500">New!</span></b>
+      <b>{{ t`TavernHelper` }} <span v-if="has_update" class="th-text-xs font-bold text-red-500">New!</span></b>
       <div class="inline-drawer-icon fa-solid fa-circle-chevron-down"></div>
     </div>
     <div class="inline-drawer-content TH-custom-tailwind">
@@ -49,14 +49,14 @@ import Toolbox from '@/panel/Toolbox.vue';
 import { ModalsContainer } from 'vue-final-modal';
 import { getSmartThemeQuoteTextColor } from './util/color';
 
-// 暴露 Vue 从而让 vue devtool 能正确识别
+// Expose Vue so vue devtool can correctly identify it
 useScriptTag('https://testingcf.jsdelivr.net/npm/vue/dist/vue.runtime.global.prod.min.js');
 
 const tabs = [
-  { name: t`主设置`, icon: 'fa-solid fa-gear', component: Main },
-  { name: t`渲染器`, icon: 'fa-solid fa-magic-wand-sparkles', component: Render },
-  { name: t`脚本库`, icon: 'fa-solid fa-dice-d6', component: Script },
-  { name: t`工具箱`, icon: 'fa-solid fa-toolbox', component: Toolbox },
+  { name: t`Main Settings`, icon: 'fa-solid fa-gear', component: Main },
+  { name: t`Renderer`, icon: 'fa-solid fa-magic-wand-sparkles', component: Render },
+  { name: t`Script Library`, icon: 'fa-solid fa-dice-d6', component: Script },
+  { name: t`Toolbox`, icon: 'fa-solid fa-toolbox', component: Toolbox },
 ] as const;
 const active_tab = useLocalStorage<number>('TH-Panel:active_tab', 0);
 

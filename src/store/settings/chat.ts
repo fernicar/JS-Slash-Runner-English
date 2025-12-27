@@ -6,7 +6,7 @@ function getSettings(): ChatSettings {
   const settings = _.get(chat_metadata, setting_field, {});
   const parsed = ChatSettings.safeParse(settings);
   if (!parsed.success) {
-    toastr.warning(parsed.error.message, t`[酒馆助手]读取聊天数据失败, 将使用空数据`);
+    toastr.warning(parsed.error.message, t`[TavernHelper] Failed to read chat data, will use empty data`);
     return ChatSettings.parse({});
   }
   return ChatSettings.parse(parsed.data);
@@ -14,7 +14,7 @@ function getSettings(): ChatSettings {
 
 export const useChatSettingsStore = defineStore('chat_settings', () => {
   const id = ref<string | undefined>(getCurrentChatId());
-  // 切换聊天时刷新 id 和 settings
+  // Refresh id and ... when switching chat settings
   eventSource.makeFirst(event_types.CHAT_CHANGED, (new_chat_id: string | undefined) => {
     if (id.value !== new_chat_id) {
       id.value = new_chat_id;
@@ -23,14 +23,14 @@ export const useChatSettingsStore = defineStore('chat_settings', () => {
 
   const settings = ref<ChatSettings>(getSettings());
 
-  // 切换聊天时刷新 settings, 但不触发 settings 保存
+  // Refresh settings when switching chat, but do not trigger settings save
   watch(id, () => {
     ignoreUpdates(() => {
       settings.value = getSettings();
     });
   });
 
-  // 在某聊天内修改 settings 时保存
+  // Save when modifying settings within a chat
   const { ignoreUpdates } = watchIgnorable(
     settings,
     new_settings => {

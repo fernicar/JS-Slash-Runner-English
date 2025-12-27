@@ -21,11 +21,11 @@ result = result.merge(
 );
 result.value();
 
-// 其实应该用 waitGlobalInitialized 来等待 Mvu 初始化完毕, 这里设置 window.Mvu 只是为了兼容性
+// Actually, waitGlobalInitialized should be used to wait for Mvu to finish initializing; window.Mvu is set here only for compatibility.
 if (_.has(window.parent, 'Mvu')) {
   Object.defineProperty(window, 'Mvu', {
     get: () => _.get(window.parent, 'Mvu'),
-    // Mvu 脚本自己还会 `_.set()` 自己的变量, 所以这里设置一个空 set
+    // The Mvu script itself will also call `_.set()` on its own variables, so an empty setter is defined here.
     set: () => {},
     configurable: true,
   });

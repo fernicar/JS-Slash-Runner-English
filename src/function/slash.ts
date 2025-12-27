@@ -3,7 +3,7 @@ import { executeSlashCommandsWithOptions } from '@sillytavern/scripts/slash-comm
 export async function triggerSlash(command: string): Promise<string> {
   const result = await executeSlashCommandsWithOptions(command);
   if (result.isError) {
-    throw Error(`运行 Slash 命令 '${command}' 时出错: ${result.errorMessage}`);
+    throw Error(`Error running Slash command '${command}': ${result.errorMessage}`);
   }
   return result.pipe;
 }

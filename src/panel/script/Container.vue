@@ -40,7 +40,7 @@
         />
         <FolderItem v-else v-model="script_trees[index]" :target="target" @delete="handleDelete" @move="handleMove" />
       </div>
-      <div v-if="script_trees.length === 0" class="text-center opacity-50">{{ t`暂无脚本` }}</div>
+      <div v-if="script_trees.length === 0" class="text-center opacity-50">{{ t`No scripts` }}</div>
     </VueDraggable>
   </div>
 </template>

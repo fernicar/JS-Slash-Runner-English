@@ -35,7 +35,7 @@
           <span v-if="index !== breadcrumbSegments.length - 1" class="th-text-xs text-(--SmartThemeBodyColor)"> > </span>
         </template>
       </template>
-      <span v-else class="text-(--SmartThemeBodyColor)/70">单击任意键名以查看路径</span>
+      <span v-else class="text-(--SmartThemeBodyColor)/70">Click any key name to view path</span>
     </div>
     <div class="inline-flex items-center gap-0.25">
       <div
@@ -46,7 +46,7 @@
         "
         type="button"
         :disabled="!canCopySelectedPath"
-        title="复制路径"
+        title="Copy Path"
         @click="copySelectedPath"
       >
         <i class="fa-solid fa-copy"></i>
@@ -120,7 +120,7 @@
           @dblclick.stop.prevent="startValueEditing"
           @touchend="handleValueTouchEnd"
         >
-          <!-- 搜索时为字符串值高亮匹配片段，否则沿用原展示 -->
+          <!-- Highlight matching fragments for string values during search, otherwise use original display -->
           <template v-if="isSearching && isStringValue">
             <Highlighter :query="props.searchInput">
               {{ stringValueWithQuotes }}
@@ -155,31 +155,31 @@
         <ActionButton
           v-if="!isPrimitive"
           icon="fa-solid fa-plus"
-          title="新增变量"
+          title="Add Variable"
           color-class="text-(--SmartThemeQuoteColor)"
           :on-click="openAddChild"
         />
         <ActionButton
           v-if="nodeKey !== null && parentType !== null"
           icon="fa-solid fa-trash"
-          :title="isArray ? '删除变量' : '删除键'"
+          :title="isArray ? 'Delete variable' : 'Delete key'"
           color-class="text-(--warning)"
           :on-click="confirmAndDeleteSelf"
         />
       </span>
-      <!-- 顶层常驻：新增 与 清空 -->
+      <!-- Top-level resident: Add and Clear -->
       <div v-if="!isSelected" class="ml-auto inline-flex items-center gap-0.25">
         <ActionButton
           v-if="isRoot && !isPrimitive"
           icon="fa-solid fa-plus"
-          title="新增变量"
+          title="Add Variable"
           color-class="text-(--SmartThemeQuoteColor)"
           :on-click="openAddChild"
         />
         <ActionButton
           v-if="isRoot"
           icon="fa-solid fa-trash"
-          title="删除变量"
+          title="Delete Variable"
           color-class="text-(--warning)"
           :on-click="clearRoot"
         />
@@ -250,7 +250,7 @@ const keyInputRef = ref<HTMLInputElement | null>(null);
 const valueDisplayRef = ref<HTMLElement | null>(null);
 const valueInputRef = ref<HTMLTextAreaElement | null>(null);
 
-// 可复用的操作按钮（添加/删除等）
+// Reusable operation buttons (Add/Delete etc.）
 const [DefineActionButton, ActionButton] = createReusableTemplate<{
   icon: string;
   title: string;
@@ -374,23 +374,23 @@ const copySelectedPath = async () => {
     } else {
       copyUsingFallback(text);
     }
-    toastr.success(t`路径已复制`);
+    toastr.success(t`Path copied`);
   } catch {
     try {
       copyUsingFallback(text);
-      toastr.success(t`路径已复制`);
+      toastr.success(t`Path copied`);
     } catch {
-      toastr.error(t`无法复制路径，请手动复制`);
+      toastr.error(t`Cannot copy path, please copy manually`);
     }
   }
 };
 
 /**
- * 确保内联尺寸对象的完整性
- * @param {Object|null} size - 尺寸对象，包含宽度和高度
- * @param {string} size.width - 宽度值
- * @param {string} size.height - 高度值
- * @returns {Object} 包含宽度和高度的样式对象
+ * Ensure integrity of inline size object
+ * @param {Object|null} size - Size object, containing width and height
+ * @param {string} size.width - Width value
+ * @param {string} size.height - Height value
+ * @returns {Object} Style object containing width and height
  */
 const ensureInlineSize = (size: { width: string; height: string } | null) => {
   if (!size) return {};
@@ -423,11 +423,11 @@ const MIN_INPUT_WIDTH = 40;
 const MIN_INPUT_HEIGHT = 24;
 
 /**
- * 计算输入框的尺寸
- * @param {HTMLElement|null} el - 要计算尺寸的HTML元素
- * @returns {Object|null} 包含宽度和高度的尺寸对象，如果元素不存在则返回null
- * @returns {string} returns.width - 宽度值（像素单位）
- * @returns {string} returns.height - 高度值（像素单位）
+ * Calculate input box size
+ * @param {HTMLElement|null} el - HTML element to calculate size
+ * @returns {Object|null} Size object containing width and height, return if element does not exist null
+ * @returns {string} returns.width - Width value (pixels ）
+ * @returns {string} returns.height - Height value (pixels ）
  */
 const computeInputSize = (el: HTMLElement | null) => {
   if (!el) return null;
@@ -477,13 +477,13 @@ const valueType = computed(() => {
   return typeof props.data;
 });
 
-// 搜索、高亮与自动展开相关逻辑
+// Search, highlight and auto-expand logic
 const isSearching = computed(() => props.searchInput !== null);
 const isStringValue = computed(() => valueType.value === 'string');
 const stringValueWithQuotes = computed(() => (typeof props.data === 'string' ? `"${props.data}"` : ''));
 
 /**
- * 判断文本是否命中查询条件（字符串大小写不敏感，或正则）
+ * Judge if text hits query condition (case-insensitive string, or regex ）
  */
 const testQuery = (text: string): boolean => {
   const q = props.searchInput as string | RegExp | undefined;
@@ -498,7 +498,7 @@ const testQuery = (text: string): boolean => {
 };
 
 /**
- * 递归检查当前节点（及子孙）是否存在命中的字符串字段
+ * Recursively check if current node (and descendants) has matching string fields
  */
 const hasSearchHit = (value: unknown, visited: WeakSet<object> = new WeakSet<object>()): boolean => {
   if (typeof value === 'string') return testQuery(value);
@@ -514,7 +514,7 @@ const hasSearchHit = (value: unknown, visited: WeakSet<object> = new WeakSet<obj
 
 const hasMatchInSubtree = computed(() => (isSearching.value ? hasSearchHit(props.data) : false));
 
-// 搜索时，命中则自动展开（不强制回收折叠状态，只做展开）
+// When searching, auto-expand if hit (do not force reclaim collapse state, only expand ）
 watch(
   () => hasMatchInSubtree.value,
   val => {
@@ -526,9 +526,9 @@ watch(
 );
 
 /**
- * 将原始值格式化为编辑时显示的字符串
- * @param {Primitive} value - 要格式化的原始值
- * @returns {string} 格式化后的字符串表示
+ * Format raw value to string displayed during editing
+ * @param {Primitive} value - Raw value to format
+ * @returns {string} Formatted string representation
  */
 const formatValueForEdit = (value: Primitive): string => {
   if (value === null) return 'null';
@@ -537,9 +537,9 @@ const formatValueForEdit = (value: Primitive): string => {
 };
 
 /**
- * 松散地解析字符串值为对应的JavaScript值
- * @param {string} raw - 要解析的原始字符串
- * @returns {unknown} 解析后的值，支持null、undefined、boolean、number、JSON对象/数组或原始字符串
+ * Loosely parse string value to corresponding JavaScript value
+ * @param {string} raw - Raw string to parse
+ * @returns {unknown} Parsed value, supports null, undefined, boolean, number, JSON object/array or raw string
  */
 const parseLooseValue = (raw: string): unknown => {
   const trimmed = raw.trim();
@@ -561,11 +561,11 @@ const parseLooseValue = (raw: string): unknown => {
 };
 
 /**
- * 根据当前值的类型强制转换输入的字符串值
- * @param {string} raw - 要转换的原始字符串
- * @returns {Object} 转换结果对象
- * @returns {unknown} returns.value - 转换后的值
- * @returns {boolean} returns.success - 是否转换成功
+ * Force convert input string value based on current value type
+ * @param {string} raw - Raw string to convert
+ * @returns {Object} Conversion result object
+ * @returns {unknown} returns.value - Converted value
+ * @returns {boolean} returns.success - Whether conversion successful
  */
 const coerceValue = (raw: string): { value: unknown; success: boolean } => {
   const currentType = valueType.value;
@@ -600,7 +600,7 @@ const coerceValue = (raw: string): { value: unknown; success: boolean } => {
 };
 
 /**
- * 完成键编辑状态，清理相关资源
+ * Finish key edit state, clean up related resources
  */
 const finishKeyEditing = () => {
   isEditingKey.value = false;
@@ -609,11 +609,11 @@ const finishKeyEditing = () => {
     stopKeyOutside = null;
   }
   keyInputSize.value = null;
-  toastr.success(t`成功编辑键名`);
+  toastr.success(t`Successfully edited key name`);
 };
 
 /**
- * 开始编辑键名，初始化编辑状态和事件监听
+ * Start editing key name, initialize edit state and event listeners
  */
 const startKeyEditing = () => {
   if (!canEditKey.value || props.nodeKey === null) return;
@@ -635,7 +635,7 @@ const startKeyEditing = () => {
 };
 
 /**
- * 保存键编辑结果，如果键名有变化则触发重命名事件
+ * Save key edit result, trigger rename event if key name changed
  */
 const saveKeyEditing = () => {
   if (!isEditingKey.value) return;
@@ -648,7 +648,7 @@ const saveKeyEditing = () => {
 };
 
 /**
- * 取消键编辑，恢复原始键名
+ * Cancel key edit, restore raw key name
  */
 const cancelKeyEditing = () => {
   if (!isEditingKey.value) return;
@@ -657,8 +657,8 @@ const cancelKeyEditing = () => {
 };
 
 /**
- * 处理键输入框的键盘事件
- * @param {KeyboardEvent} event - 键盘事件对象
+ * Handle keyboard events in key input box
+ * @param {KeyboardEvent} event - Keyboard event object
  */
 const handleKeyInputKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Enter') {
@@ -671,8 +671,8 @@ const handleKeyInputKeydown = (event: KeyboardEvent) => {
 };
 
 /**
- * 处理键区域的点击事件，通过延迟判断区分单击和双击
- * @param {MouseEvent} event - 鼠标事件对象
+ * Handle click event in key area, distinguish single and double click via delay
+ * @param {MouseEvent} event - Mouse event object
  */
 const handleKeyAreaClick = (event: MouseEvent) => {
   if (isEditingKey.value) return;
@@ -690,7 +690,7 @@ const handleKeyAreaClick = (event: MouseEvent) => {
 };
 
 /**
- * 处理键区域的双击事件，触发编辑
+ * Handle double click in key area, trigger edit
  */
 const handleKeyAreaDoubleActivate = () => {
   clearKeyClickTimer();
@@ -703,7 +703,7 @@ const handleKeyAreaDoubleActivate = () => {
 };
 
 /**
- * 完成值编辑状态，清理相关资源
+ * Finish value edit state, clean up related resources
  */
 const finishValueEditing = () => {
   isEditingValue.value = false;
@@ -712,11 +712,11 @@ const finishValueEditing = () => {
     stopValueOutside = null;
   }
   valueInputSize.value = null;
-  toastr.success(t`成功编辑值`);
+  toastr.success(t`Successfully edited value`);
 };
 
 /**
- * 开始编辑值，初始化编辑状态和事件监听
+ * Start editing value, initialize edit state and event listeners
  */
 const startValueEditing = () => {
   if (!isPrimitive.value || isEditingValue.value) return;
@@ -738,7 +738,7 @@ const startValueEditing = () => {
 };
 
 /**
- * 保存值编辑结果，如果值有变化则触发更新事件
+ * Save value edit result, trigger update event if value changed
  */
 const saveValueEditing = () => {
   if (!isEditingValue.value) return;
@@ -755,7 +755,7 @@ const saveValueEditing = () => {
 };
 
 /**
- * 取消值编辑，恢复原始值
+ * Cancel value edit, restore raw value
  */
 const cancelValueEditing = () => {
   if (!isEditingValue.value) return;
@@ -764,8 +764,8 @@ const cancelValueEditing = () => {
 };
 
 /**
- * 处理值输入框的键盘事件
- * @param {KeyboardEvent} event - 键盘事件对象
+ * Handle keyboard events in value input box
+ * @param {KeyboardEvent} event - Keyboard event object
  */
 const handleValueInputKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Enter' && !event.shiftKey) {
@@ -778,9 +778,9 @@ const handleValueInputKeydown = (event: KeyboardEvent) => {
 };
 
 /**
- * 更新子节点的值
- * @param {string|number} childKey - 子节点的键名或索引
- * @param {unknown} newValue - 新的值
+ * Update child node value
+ * @param {string|number} childKey - Key name or index of child node
+ * @param {unknown} newValue - New value
  */
 const updateChildValue = (childKey: string | number, newValue: unknown) => {
   if (isObject.value) {
@@ -811,8 +811,8 @@ const updateChildValue = (childKey: string | number, newValue: unknown) => {
 };
 
 /**
- * 删除子节点（对象键或数组元素）
- * @param {string|number} childKey - 子节点的键名或索引
+ * Delete child node (object key or array element ）
+ * @param {string|number} childKey - Key name or index of child node
  */
 const deleteChild = (childKey: string | number) => {
   if (isObject.value) {
@@ -821,7 +821,7 @@ const deleteChild = (childKey: string | number) => {
     if (!Object.prototype.hasOwnProperty.call(source, targetKey)) return;
     const entries = Object.entries(source).filter(([key]) => key !== targetKey);
     emit('update:data', Object.fromEntries(entries) as Record<string, unknown>);
-    toastr.success(t`已删除变量`);
+    toastr.success(t`Deleted variable`);
     return;
   }
   if (isArray.value) {
@@ -831,15 +831,15 @@ const deleteChild = (childKey: string | number) => {
     const cloned = source.slice();
     cloned.splice(index, 1);
     emit('update:data', cloned as unknown[]);
-    toastr.success(t`已删除变量`);
+    toastr.success(t`Deleted variable`);
     return;
   }
 };
 
 /**
- * 重命名对象的子键
- * @param {string|number} oldKey - 原始键名
- * @param {string|number} newKey - 新键名
+ * Rename sub-key of object
+ * @param {string|number} oldKey - Raw key name
+ * @param {string|number} newKey - New key name
  */
 const renameChildKey = (oldKey: string | number, newKey: string | number) => {
   if (!isObject.value) return;
@@ -900,9 +900,9 @@ const entries = computed<[string | number, unknown][]>(() => {
 });
 
 /**
- * 获取值的过滤器类型
- * @param {unknown} value - 要获取类型的值
- * @returns {FilterType|null} 过滤器类型，如果无法识别则返回null
+ * Get filter type of value
+ * @param {unknown} value - Value to get type of
+ * @returns {FilterType|null} Filter type, return if unrecognized null
  */
 const getFilterType = (value: unknown): FilterType | null => {
   if (Array.isArray(value)) return 'array';
@@ -916,10 +916,10 @@ const getFilterType = (value: unknown): FilterType | null => {
 };
 
 /**
- * 判断节点是否与当前过滤器匹配
- * @param {unknown} value - 要检查的值
- * @param {number} depth - 当前节点的深度
- * @returns {boolean} 是否匹配过滤器条件
+ * Judge if node matches current filter
+ * @param {unknown} value - Value to check
+ * @param {number} depth - Depth of current node
+ * @returns {boolean} Whether matches filter condition
  */
 const getNodeMatches = (value: unknown, depth: number): boolean => {
   const type = getFilterType(value);
@@ -996,7 +996,7 @@ let lastValueTapTime = 0;
 let keyClickTimer: number | null = null;
 
 /**
- * 清理键区域单击计时器，避免误触发折叠
+ * Clear click timer in key area, avoid accidental collapse trigger
  */
 const clearKeyClickTimer = () => {
   if (keyClickTimer !== null) {
@@ -1006,8 +1006,8 @@ const clearKeyClickTimer = () => {
 };
 
 /**
- * 处理键区域的触摸事件，双击触发编辑
- * @param {TouchEvent} event - 触摸事件对象
+ * Handle touch events in key area, double tap to trigger edit
+ * @param {TouchEvent} event - Touch event object
  */
 const handleKeyAreaTouchEnd = (event: TouchEvent) => {
   selectCurrentNode();
@@ -1021,8 +1021,8 @@ const handleKeyAreaTouchEnd = (event: TouchEvent) => {
 };
 
 /**
- * 处理值区域的触摸事件，双击触发编辑
- * @param {TouchEvent} event - 触摸事件对象
+ * Handle touch events in value area, double tap to trigger edit
+ * @param {TouchEvent} event - Touch event object
  */
 const handleValueTouchEnd = (event: TouchEvent) => {
   const now = event.timeStamp;
@@ -1035,7 +1035,7 @@ const handleValueTouchEnd = (event: TouchEvent) => {
 };
 
 /**
- * 打开“添加子变量/元素”对话框，并在当前对象/数组下新增一项
+ * Open "Add Sub-variable/Element" dialog, and add a new item under current object/array
  */
 const openAddChild = () => {
   if (isPrimitive.value) return;
@@ -1047,16 +1047,16 @@ const openAddChild = () => {
           const source = (props.data || {}) as Record<string, unknown>;
           const key = String(payload.key || '').trim();
           if (!key) {
-            toastr.error(t`键名不能为空`, t`新增变量失败`);
+            toastr.error(t`Key name cannot be empty`, t`Add variable failed`);
             return false;
           }
           if (Object.prototype.hasOwnProperty.call(source, key)) {
-            toastr.error(t`键名已存在`, t`新增变量失败`);
+            toastr.error(t`Key name already exists`, t`Add variable failed`);
             return false;
           }
           const updated = { ...source, [key]: payload.value } as Record<string, unknown>;
           emit('update:data', updated);
-          toastr.success(t`已添加到对象`);
+          toastr.success(t`Added to object`);
           return true;
         }
         if (isArray.value) {
@@ -1064,7 +1064,7 @@ const openAddChild = () => {
           const updated = source.slice();
           updated.push(payload.value);
           emit('update:data', updated);
-          toastr.success(t`已添加到数组`);
+          toastr.success(t`Added to array`);
           return true;
         }
         return false;
@@ -1075,44 +1075,44 @@ const openAddChild = () => {
 };
 
 /**
- * 清空顶层内容：对象 -> {}，数组 -> []，原始值 -> {}
+ * Clear top-level content: Object -> {}, Array -> [], Primitive -> {}
  */
 const clearRoot = () => {
   if (!isRoot.value) return;
   if (isObject.value) {
     emit('update:data', {} as Record<string, unknown>);
-    toastr.success(t`已清空对象`);
+    toastr.success(t`Cleared object`);
     return;
   }
   if (isArray.value) {
     emit('update:data', [] as unknown[]);
-    toastr.success(t`已清空数组`);
+    toastr.success(t`Cleared array`);
     return;
   }
   emit('update:data', {} as Record<string, unknown>);
-  toastr.success(t`已重置为对象`);
+  toastr.success(t`Reset to object`);
 };
 
 /**
- * 删除当前行（请求父级删除），带二次确认
+ * Delete current row (request parent deletion), with confirmation
  */
 const confirmAndDeleteSelf = () => {
   if (props.nodeKey === null || props.parentType === null) return;
-  const msg = t`确定要删除此变量吗？此操作不可撤销`;
+  const msg = t`Are you sure you want to delete this variable? This operation cannot be undone`;
 
   const { open: openDeleteConfirm } = useModal({
     component: Popup,
     attrs: {
       buttons: [
         {
-          name: t`确定`,
+          name: t`OK`,
           shouldEmphasize: true,
           onClick: close => {
             emit('delete-self');
             close();
           },
         },
-        { name: t`取消` },
+        { name: t`Cancel` },
       ],
     },
     slots: {

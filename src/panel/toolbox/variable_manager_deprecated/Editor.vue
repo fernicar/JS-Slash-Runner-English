@@ -25,7 +25,7 @@
               @click="openRootCreatorModal"
             >
               <i class="fa-solid fa-plus"></i>
-              <span>{{ t`新增变量` }}</span>
+              <span>{{ t`Add Variable` }}</span>
             </div>
             <div
               :class="[
@@ -34,11 +34,11 @@
                   ? 'cursor-pointer text-(--warning) hover:bg-(--warning)/15'
                   : 'cursor-not-allowed text-(--warning)/60 opacity-60',
               ]"
-              :title="hasVariables ? t`删除全部` : t`暂无可删除的变量`"
+              :title="hasVariables ? t`Delete All` : t`No variables to delete`"
               @click="clearAllVariables"
             >
               <i class="fa-solid fa-trash"></i>
-              <span>{{ t`删除全部` }}</span>
+              <span>{{ t`Delete All` }}</span>
             </div>
           </div>
           <template v-if="writable_variables.length > 0">
@@ -61,7 +61,7 @@
               th-text-sm text-(--SmartThemeBodyColor)/70
             "
           >
-            {{ t`暂无变量，点击上方“新增变量”创建` }}
+            {{ t`No variables, click "Add Variable" above to create` }}
           </div>
         </template>
         <TextMode v-else-if="props.currentView === 'text'" v-model:data="variables" :search-input="props.searchInput" />
@@ -92,8 +92,8 @@ const props = defineProps<{
 const variables = defineModel<Record<string, any>>({ required: true });
 
 /**
- * 为变量创建历史记录管理器
- * 配置深度监听、容量限制和快照选项
+ * Create history manager for variables
+ * Configure deep watch, capacity limit, and snapshot options
  */
 const { history, commit, undo, redo, canUndo, canRedo } = useRefHistory(variables, {
   deep: true,
@@ -108,14 +108,14 @@ const createRootVariable = (payload: RootVariablePayload): boolean => {
   const keyResult = rootVariableKeySchema.safeParse(payload.key);
   if (!keyResult.success) {
     keyResult.error.issues.forEach(issue => {
-      toastr.error(issue.message, '键名校验失败');
+      toastr.error(issue.message, 'Key name validation failed');
     });
     return false;
   }
 
   const key = keyResult.data;
   if (Object.prototype.hasOwnProperty.call(variables.value, key)) {
-    toastr.error(`键名 "${key}" 已存在`, '新增变量失败');
+    toastr.error(`Key name "${key}" already exists`, 'Add variable failed');
     return false;
   }
 
@@ -124,7 +124,7 @@ const createRootVariable = (payload: RootVariablePayload): boolean => {
     ...variables.value,
   };
 
-  toastr.success(`已创建根变量 "${key}"`, '新增变量成功');
+  toastr.success(`Created root variable "${key}"`, 'Add variable successful');
   return true;
 };
 
@@ -143,12 +143,12 @@ const openRootCreatorModal = () => {
 
 const clearAllVariables = () => {
   if (!hasVariables.value) {
-    toastr.info(t`当前没有可删除的变量`, t`删除全部`);
+    toastr.info(t`No variables to delete`, t`Delete all`);
     return;
   }
 
   variables.value = {};
-  toastr.success(t`已删除全部变量`, t`删除成功`);
+  toastr.success(t`Deleted all variables`, t`Delete successful`);
 };
 
 defineExpose({
@@ -181,12 +181,12 @@ const renameVariable = (oldKey: string | number, newKey: string | number) => {
   const source = String(oldKey);
   const target = String(newKey || '').trim();
   if (!target) {
-    toastr.error('键名不能为空', '重命名失败');
+    toastr.error('Key name cannot be empty', 'Rename failed');
     return;
   }
   if (source === target) return;
   if (Object.prototype.hasOwnProperty.call(variables.value, target)) {
-    toastr.error(`键名 "${target}" 已存在`, '重命名失败');
+    toastr.error(`Key name "${target}" already exists`, 'Rename failed');
     return;
   }
   const entries = Object.entries(variables.value).map(([k, v]) => (k === source ? [target, v] : [k, v]));

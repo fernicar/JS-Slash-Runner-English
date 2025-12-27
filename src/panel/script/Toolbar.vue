@@ -2,19 +2,19 @@
   <div class="flex gap-0.25">
     <Button type="tavern" @click="openCreator('script')">
       <i class="fa-solid fa-scroll" />
-      <small>{{ `+ ` + t`脚本` }}</small>
+      <small>{{ `+ ` + t`Script` }}</small>
     </Button>
     <Button type="tavern" @click="openCreator('folder')">
       <i class="fa-solid fa-folder-plus" />
-      <small>{{ `+ ` + t`文件夹` }}</small>
+      <small>{{ `+ ` + t`Folder` }}</small>
     </Button>
     <Button type="tavern" @click="openImport">
       <i class="fa-solid fa-file-import" />
-      <small>{{ t`导入` }}</small>
+      <small>{{ t`Import` }}</small>
     </Button>
     <Button type="tavern" @click="openBuiltin">
       <i class="fa-solid fa-archive" />
-      <small>{{ t`内置库` }}</small>
+      <small>{{ t`Built-in Library` }}</small>
     </Button>
   </div>
 </template>
@@ -99,15 +99,15 @@ async function handleImport(target: 'global' | 'character' | 'preset', files_lis
           script_tree.scripts.forEach(script => {
             script.id = uuidv4();
           });
-          toastr.success(t`成功导入脚本文件夹 '${script_tree.name}'`);
+          toastr.success(t`Successfully imported script folder '${script_tree.name}'`);
         } else {
-          toastr.success(t`成功导入脚本 '${script_tree.name}'`);
+          toastr.success(t`Successfully imported script '${script_tree.name}'`);
         }
         getStoreFormType(target).script_trees.push(script_tree);
       } catch (err) {
         const error = err as Error;
         console.error(error);
-        toastr.error(error.message, t`导入脚本文件 '${file.name}' 失败`);
+        toastr.error(error.message, t`Failed to import script file '${file.name}'`);
       }
     }),
   );

@@ -4,25 +4,25 @@ type MacroLikeContext = {
 };
 
 type RegisterMacroLikeReturn = {
-  /** 取消注册 */
+  /** Unregister */
   unregister: () => void;
 };
 
 /**
- * 注册一个新的助手宏
+ * Register a new assistant macro
  *
- * @param regex 匹配的正则表达式
- * @param replace 针对匹配到的文本所要进行的替换
+ * @param regex The regular expression to match
+ * @param replace The replacement to perform on the matched text
  *
  * @example
- * // 注册一个统计行数的宏
+ * // Register a macro that counts lines
  * registerMacros(
  *   /<count_lines>(.*?)<count_lines>/gi,
  *   context => content.split('\n').length
  * );
  *
- * @returns 后续操作
- *   - `unregister`: 取消注册
+ * @returns Subsequent actions
+ *   - `unregister`: Unregister
  */
 declare function registerMacroLike(
   regex: RegExp,
@@ -30,8 +30,8 @@ declare function registerMacroLike(
 ): RegisterMacroLikeReturn;
 
 /**
- * 取消注册一个助手宏
+ * Unregister an assistant macro
  *
- * @param regex 助手宏的正则表达式
+ * @param regex The regular expression of the assistant macro
  */
 declare function unregisterMacroLike(regex: RegExp): void;

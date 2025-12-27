@@ -50,27 +50,27 @@ export function getCharWorldbookNames(character_name: LiteralUnion<'current', st
 }
 export async function rebindCharWorldbooks(character_name: 'current', char_worldbooks: CharWorldbooks): Promise<void> {
   if (character_name !== 'current') {
-    throw Error(`目前不支持对非当前角色卡调用 bindCharWorldbooks`);
+    throw Error(`Currently calling bindCharWorldbooks for non-current character cards is not supported`);
   }
-  // TODO: 重做 characters.ts, 然后直接访问后端来修改这里
+  // TODO: Refactor characters.ts, then access the backend directly to modify this
   return setCurrentCharLorebooks(char_worldbooks);
 }
 
 export function getChatWorldbookName(chat_name: 'current'): string | null {
   if (chat_name !== 'current') {
-    throw Error(`目前不支持对非当前聊天调用 getChatWorldbookName`);
+    throw Error(`Currently calling getChatWorldbookName for non-current chats is not supported`);
   }
   return getChatLorebook();
 }
 export async function rebindChatWorldbook(chat_name: 'current', worldbook_name: string): Promise<void> {
   if (chat_name !== 'current') {
-    throw Error(`目前不支持对非当前聊天调用 getChatWorldbookName`);
+    throw Error(`Currently calling getChatWorldbookName for non-current chats is not supported`);
   }
   await setChatLorebook(worldbook_name);
 }
 export async function getOrCreateChatWorldbook(chat_name: 'current', worldbook_name?: string): Promise<string> {
   if (chat_name !== 'current') {
-    throw Error(`目前不支持对非当前聊天调用 getChatWorldbookName`);
+    throw Error(`Currently calling getChatWorldbookName for non-current chats is not supported`);
   }
   return await getOrCreateChatLorebook(worldbook_name);
 }
@@ -372,12 +372,12 @@ export async function deleteWorldbook(worldbook_name: string): Promise<boolean> 
   return await deleteWorldInfo(worldbook_name);
 }
 
-// TODO: rename 需要处理世界书绑定
+// TODO: rename needs to handle worldbook binding
 // export function renameWorldbook(old_name: string, new_name: string): boolean;
 
 export async function getWorldbook(worldbook_name: string): Promise<WorldbookEntry[]> {
   if (!getWorldbookNames().includes(worldbook_name)) {
-    throw Error(`未能找到世界书 '${worldbook_name}'`);
+    throw Error(`Failed to find worldbook '${worldbook_name}'`);
   }
   const original_worldbook_entries = await loadWorldInfo(worldbook_name).then(
     data => (data! as { entries: { [uid: number]: _OriginalWorldbookEntry & _ImplicitKeys } }) ?? {},
@@ -392,7 +392,7 @@ export async function replaceWorldbook(
   options?: ReplaceWorldbookOptions,
 ): Promise<void> {
   if (!getWorldbookNames().includes(worldbook_name)) {
-    throw Error(`未能找到世界书 '${worldbook_name}'`);
+    throw Error(`Failed to find worldbook '${worldbook_name}'`);
   }
   await createOrReplaceWorldbook(worldbook_name, worldbook, options);
 }

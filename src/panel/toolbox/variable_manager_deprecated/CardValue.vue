@@ -129,8 +129,8 @@ type ContentType = 'string' | 'number' | 'boolean' | 'nil';
 type Primitive = string | number | boolean | null | undefined;
 
 /**
- * 发射删除事件
- * 向父组件发送删除当前变量的信号，包含变量名和内容
+ * Emit delete event
+ * Send delete current variable signal to parent, including variable name and content
  */
 const emitDelete = () => {
   emit('delete', {
@@ -140,23 +140,23 @@ const emitDelete = () => {
 };
 
 /**
- * 计算内容类型
- * 根据变量的实际值确定其数据类型，用于UI显示和格式化
- * @returns {'string'|'number'|'boolean'|'nil'} 内容的数据类型
+ * Calculate content type
+ * Determine data type based on actual variable value, used for UI display and formatting
+ * @returns {'string'|'number'|'boolean'|'nil'} Data type of content
  */
 const contentType = computed<ContentType>(() => {
   const v = content.value;
   if (v === null || v === undefined) return 'nil';
   const t = typeof v;
   if (t === 'string' || t === 'number' || t === 'boolean') return t;
-  // 兜底为字符串展示
+  // Fallback to string display
   return 'string';
 });
 
 /**
- * 格式化显示值
- * 将变量的原始值转换为适合UI显示的字符串格式
- * @returns {string} 格式化后的显示字符串
+ * Format display value
+ * Convert variable raw value to string format suitable for UI display
+ * @returns {string} Formatted display string
  */
 const formattedValue = computed(() => {
   const v = content.value;
@@ -176,7 +176,7 @@ const formattedValue = computed(() => {
 
 const isSearching = computed(() => props.searchInput !== null);
 
-// 搜索命中时自动展开
+// Auto-expand when search hit
 const searchMatched = computed(() => {
   if (!isSearchingUtil(props.searchInput)) return false;
   const q = props.searchInput as string | RegExp;
@@ -194,7 +194,7 @@ watch(
 );
 
 /**
- * 计算输入框的内联样式
+ * Calculate inline style for input box
  */
 const valueInputInlineStyle = computed(() => {
   if (!valueInputSize.value) return {};
@@ -205,7 +205,7 @@ const valueInputInlineStyle = computed(() => {
 });
 
 /**
- * 将原始值格式化为编辑时显示的字符串
+ * Format raw value to string displayed during editing
  */
 const formatValueForEdit = (value: Primitive): string => {
   if (value === null) return 'null';
@@ -214,7 +214,7 @@ const formatValueForEdit = (value: Primitive): string => {
 };
 
 /**
- * 松散地解析字符串值为对应的JavaScript值
+ * Loosely parse string value to corresponding JavaScript value
  */
 const parseLooseValue = (raw: string): unknown => {
   const trimmed = raw.trim();
@@ -236,7 +236,7 @@ const parseLooseValue = (raw: string): unknown => {
 };
 
 /**
- * 根据当前值的类型强制转换输入的字符串值
+ * Force convert input string value based on current value type
  */
 const coerceValue = (raw: string): { value: unknown; success: boolean } => {
   const currentType = contentType.value;
@@ -271,7 +271,7 @@ const coerceValue = (raw: string): { value: unknown; success: boolean } => {
 };
 
 /**
- * 完成值编辑状态，清理相关资源
+ * Finish value edit state, clean up related resources
  */
 const finishValueEditing = () => {
   isEditingValue.value = false;
@@ -280,11 +280,11 @@ const finishValueEditing = () => {
     stopValueOutside = null;
   }
   valueInputSize.value = null;
-  toastr.success(t`成功编辑值`);
+  toastr.success(t`Successfully edited value`);
 };
 
 /**
- * 开始编辑值，初始化编辑状态和事件监听
+ * Start editing value, initialize edit state and event listeners
  */
 const startValueEditing = () => {
   if (isEditingValue.value) return;
@@ -306,7 +306,7 @@ const startValueEditing = () => {
 };
 
 /**
- * 保存值编辑结果，如果值有变化则触发更新
+ * Save value edit result, trigger update if value changed
  */
 const saveValueEditing = () => {
   if (!isEditingValue.value) return;
@@ -323,7 +323,7 @@ const saveValueEditing = () => {
 };
 
 /**
- * 取消值编辑，恢复原始值
+ * Cancel value edit, restore raw value
  */
 const cancelValueEditing = () => {
   if (!isEditingValue.value) return;
@@ -332,7 +332,7 @@ const cancelValueEditing = () => {
 };
 
 /**
- * 处理值输入框的键盘事件
+ * Handle keyboard events in value input box
  */
 const handleValueInputKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Enter' && !event.shiftKey) {
@@ -347,7 +347,7 @@ const handleValueInputKeydown = (event: KeyboardEvent) => {
 let lastValueTapTime = 0;
 
 /**
- * 处理值区域的触摸事件，双击触发编辑
+ * Handle touch events in value area, double tap to trigger edit
  */
 const handleValueTouchEnd = (event: TouchEvent) => {
   const now = event.timeStamp;
@@ -359,7 +359,7 @@ const handleValueTouchEnd = (event: TouchEvent) => {
   lastValueTapTime = now;
 };
 
-// 监听值变化，自动更新编辑草稿
+// Listen for value changes, auto-update edit draft
 watch(
   () => content.value,
   newValue => {
@@ -369,7 +369,7 @@ watch(
   },
 );
 
-// 组件卸载前清理资源
+// Clean up resources before component unmount
 onBeforeUnmount(() => {
   if (stopValueOutside) {
     stopValueOutside();

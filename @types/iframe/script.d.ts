@@ -1,13 +1,13 @@
 /**
- * 获取按钮对应的事件类型, **只能在脚本中使用**
+ * Get the event type corresponding to the button, **can only be used within scripts**
  *
- * @param button_name 按钮名
- * @returns 事件类型
+ * @param button_name Button name
+ * @returns Event type
  *
  * @example
- * const event_type = getButtonEvent('按钮名');
+ * const event_type = getButtonEvent('Button Name');
  * eventOn(event_type, () => {
- *   console.log('按钮被点击了');
+ *   console.log('Button clicked');
  * });
  */
 declare function getButtonEvent(button_name: string): string;
@@ -18,50 +18,50 @@ type ScriptButton = {
 };
 
 /**
- * 获取脚本的按钮列表, **只能在脚本中使用**
+ * Get the script's button list, **can only be used within scripts**
  *
- * @returns 按钮数组
+ * @returns Button array
  *
  * @example
- * // 在脚本内获取当前脚本的按钮设置
+ * // Get the button settings of the current script within the script
  * const buttons = getScriptButtons();
  */
 declare function getScriptButtons(): ScriptButton[];
 
 /**
- * 完全替换脚本的按钮列表, **只能在脚本中使用**
+ * Completely replace the script's button list, **can only be used within scripts**
  *
- * @param buttons 按钮数组
- *
- * @example
- * // 在脚本内设置脚本按钮为一个"开始游戏"按钮
- * replaceScriptButtons([{name: '开始游戏', visible: true}])
+ * @param buttons Button array
  *
  * @example
- * // 点击"前往地点"按钮后，切换为地点选项按钮
- * eventOnButton("前往地点" () => {
- *   replaceScriptButtons([{name: '学校', visible: true}, {name: '商店', visible: true}])
+ * // Set script buttons to a "Start Game" button within the script
+ * replaceScriptButtons([{name: 'Start Game', visible: true}])
+ *
+ * @example
+ * // After clicking the "Go to Location" button, switch to location option buttons
+ * eventOnButton("Go to Location", () => {
+ *   replaceScriptButtons([{name: 'School', visible: true}, {name: 'Shop', visible: true}])
  * })
  */
 declare function replaceScriptButtons(buttons: ScriptButton[]): void;
 
 /**
- * 为脚本按钮列表末尾添加不存在的按钮, 不会重复添加同名按钮, **只能在脚本中使用**
+ * Append non-existent buttons to the end of the script button list; will not add duplicate buttons with the same name. **Can only be used within scripts**
  *
  * @param buttons
  *
  * @exmaple
- * // 新增 "重新开始" 按钮
- * appendInexistentScriptButtons([{name: '重新开始', visible: true}]);
+ * // Add a new "Restart" button
+ * appendInexistentScriptButtons([{name: 'Restart', visible: true}]);
  */
 declare function appendInexistentScriptButtons(buttons: ScriptButton[]): void;
 
-/** 获取脚本作者注释 */
+/** Get script author comments */
 declare function getScriptInfo(): string;
 
 /**
- * 替换脚本作者注释
+ * Replace script author comments
  *
- * @param info 新的作者注释
+ * @param info New author comments
  */
 declare function replaceScriptInfo(info: string): void;

@@ -22,7 +22,7 @@
           absolute top-1/2 right-0.5 z-2 flex h-1.5 w-1.5 -translate-y-[50%] cursor-pointer border-none bg-transparent
           text-(--SmartThemeBodyColor) opacity-80
         "
-        title="清除"
+        title="Clear"
         @click="onClear"
       >
         <i class="fa-solid fa-xmark TH-SearchBar--clear-icon" />
@@ -40,7 +40,7 @@ const props = withDefaults(
     clearable?: boolean;
   }>(),
   {
-    placeholder: '请输入文本...',
+    placeholder: 'Please enter text...',
     debounce: 300,
     clearable: true,
   },

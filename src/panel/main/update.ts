@@ -11,7 +11,7 @@ export async function getLatestVersion(): Promise<string> {
       `https://gitlab.com/api/v4/projects/${encodeURIComponent('novi028/JS-Slash-Runner')}/repository/files/manifest.json/raw?ref=main`,
     );
     if (!response.ok) {
-      throw new Error(`获取最新版本号失败: ${response.status} ${response.statusText}`);
+      throw new Error(`Failed to get the latest version number: ${response.status} ${response.statusText}`);
     }
     max_version = _.get(JSON.parse(await response.text()), 'version');
   }
@@ -27,7 +27,7 @@ async function getFullChangelog(): Promise<string> {
     `https://gitlab.com/api/v4/projects/${encodeURIComponent('novi028/JS-Slash-Runner')}/repository/files/CHANGELOG.md/raw?ref=main`,
   );
   if (!response.ok) {
-    throw new Error(`获取最新更新日志失败: ${response.status} ${response.statusText}`);
+    throw new Error(`Failed to get the latest changelog: ${response.status} ${response.statusText}`);
   }
   return await response.text();
 }
@@ -42,8 +42,8 @@ async function getChangelogBetween(min_version: string, max_version: string): Pr
   if (compare(min_version, max_version, '>=')) {
     const max_version_match = matches.find(match => match[1] === max_version);
     if (!max_version_match) {
-      const info = t`获取更新日志失败`;
-      toastr.error(info, t`酒馆助手`);
+      const info = t`Failed to get changelog`;
+      toastr.error(info, t`Tavern Helper`);
       throw new Error(info);
     }
     start_index = max_version_match.index;
@@ -53,16 +53,16 @@ async function getChangelogBetween(min_version: string, max_version: string): Pr
   } else {
     const min_version_match = matches.find(match => match[1] === min_version);
     if (!min_version_match) {
-      const info = t`无法找到版本 '${min_version}' 的日志`;
-      toastr.error(info, t`酒馆助手`);
+      const info = t`Could not find changelog for version '${min_version}'`;
+      toastr.error(info, t`Tavern Helper`);
       throw new Error(info);
     }
     start_index = min_version_match.index;
 
     const max_version_match = matches.find(match => match[1] === max_version);
     if (!max_version_match) {
-      const info = t`无法找到版本 '${max_version}' 的日志`;
-      toastr.error(info, t`酒馆助手`);
+      const info = t`Could not find changelog for version '${max_version}'`;
+      toastr.error(info, t`Tavern Helper`);
       throw new Error(info);
     }
     end_index = max_version_match.index;
@@ -77,37 +77,37 @@ export async function getChangelogHtml(): Promise<string> {
 
 export async function update() {
   const reload = () => {
-    toastr.success(t`酒馆助手更新成功, 准备刷新页面以生效...`, t`酒馆助手`);
+    toastr.success(t`Tavern Helper updated successfully. Preparing to refresh the page to take effect...`, t`Tavern Helper`);
     setTimeout(() => location.reload(), 3000);
   };
 
   const extension_id = getTavernHelperExtensionId();
 
-  toastr.info(t`正在更新酒馆助手...`, t`酒馆助手`);
+  toastr.info(t`Updating Tavern Helper...`, t`Tavern Helper`);
   const update_response = await updateExtension(extension_id);
   if (update_response.ok) {
     if ((await update_response.json()).isUpToDate) {
-      toastr.success(t`酒馆助手已是最新版本, 无需更新`, t`酒馆助手`);
+      toastr.success(t`Tavern Helper is already the latest version, no update needed`, t`Tavern Helper`);
     } else {
       reload();
     }
     return true;
   }
   const comfirm_reinstall = await callGenericPopup(
-    t`更新失败: ${(await update_response.text()) || update_response.statusText}` +
+    t`Update failed: ${(await update_response.text()) || update_response.statusText}` +
       '\n' +
-      t`是否尝试通过卸载重装来更新? (以防由于网络问题重装没能成功, 请先复制 \`https://gitlab.com/novi028/JS-Slash-Runner\`)`,
+      t`Would you like to try updating by uninstalling and reinstalling? (In case the reinstallation fails due to network issues, please copy \`https://gitlab.com/novi028/JS-Slash-Runner\` first)`,
     POPUP_TYPE.CONFIRM,
   );
   if (!comfirm_reinstall) {
     return;
   }
 
-  toastr.info(t`正在卸载重装酒馆助手...`, t`酒馆助手`);
+  toastr.info(t`Uninstalling and reinstalling Tavern Helper...`, t`Tavern Helper`);
   const reinstall_response = await reinstallExtension(extension_id);
   if (!reinstall_response.ok) {
     const text = await reinstall_response.text();
-    toastr.error(text || reinstall_response.statusText, t`更新酒馆助手失败`, { timeOut: 5000 });
+    toastr.error(text || reinstall_response.statusText, t`Failed to update Tavern Helper`, { timeOut: 5000 });
     return false;
   }
 

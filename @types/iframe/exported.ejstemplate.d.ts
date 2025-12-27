@@ -1,26 +1,26 @@
 /**
- * 提示词模板语法插件所提供的额外功能, 必须额外安装提示词模板语法插件, 具体内容见于 https://github.com/zonde306/ST-Prompt-Template
- * 你也可以在酒馆页面按 f12, 在控制台中输入 `window.EjsTemplate` 来查看当前提示词模板语法所提供的接口
+ * Extra functionality provided by the Prompt Template Syntax plugin. The Prompt Template Syntax plugin must be installed separately; see https://github.com/zonde306/ST-Prompt-Template for details.
+ * You can also press F12 on the SillyTavern page and type `window.EjsTemplate` in the console to view the interfaces provided by the current prompt template syntax.
  */
 declare const EjsTemplate: {
   /**
-   * 对文本进行模板语法处理
-   * @note `context` 一般从 `prepareContext` 获取, 若要修改则应直接修改原始对象
+   * Performs template syntax processing on text
+   * @note `context` is generally obtained from `prepareContext`; if modification is needed, the original object should be modified directly.
    *
-   * @param code 模板代码
-   * @param context 执行环境 (上下文)
-   * @param options ejs 参数
-   * @returns 对模板进行计算后的内容
+   * @param code Template code
+   * @param context Execution environment (context)
+   * @param options EJS parameters
+   * @returns The content after template evaluation
    *
    * @example
-   * // 使用提示词模板语法插件提供的函数创建一个临时的酒馆正则, 对消息楼层进行一次处理
+   * // Use a function provided by the Prompt Template Syntax plugin to create a temporary SillyTavern regex to process message floors once
    * await EjsTemplate.evalTemplate('<%_ await activateRegex(/<thinking>.*?<\/thinking>/gs, '') _%>')
    *
    * @example
    * const env    = await EjsTemplate.prepareContext({ a: 1 });
    * const result = await EjsTemplate.evalTemplate('a is <%= a _%>', env);
    * => result === 'a is 1'
-   * // 但这种用法更推荐用 _.template 来做, 具体见于 https://lodash.com/docs/4.17.15#template
+   * // However, it is recommended to use _.template for this type of usage; see https://lodash.com/docs/4.17.15#template for details
    * const compiled = _.template('hello <%= user %>!');
    * const result   = compiled({ 'user': 'fred' });;
    * => result === 'hello user!'
@@ -28,84 +28,84 @@ declare const EjsTemplate: {
   evaltemplate: (code: string, context?: Record<string, any>, options?: Record<string, any>) => Promise<string>;
 
   /**
-   * 创建模板语法处理使用的执行环境 (上下文)
+   * Creates an execution environment (context) for template syntax processing
    *
-   * @param additional_context 附加的执行环境 (上下文)
-   * @param last_message_id 合并消息变量的最大 ID; 默认为所有
-   * @returns 执行环境 (上下文)
+   * @param additional_context Additional execution environment (context)
+   * @param last_message_id Maximum ID for merging message variables; defaults to all
+   * @returns Execution environment (context)
    */
   prepareContext: (additional_context?: Record<string, any>, last_message_id?: number) => Promise<Record<string, any>>;
 
   /**
-   * 检查模板是否存在语法错误
-   * 并不会实际执行
+   * Checks if the template has syntax errors
+   * Does not actually execute
    *
-   * @param content 模板代码
-   * @param output_line_count 发生错误时输出的附近行数; 默认为 4
-   * @returns 语法错误信息, 无错误返回空字符串
+   * @param content Template code
+   * @param output_line_count Number of surrounding lines to output when an error occurs; defaults to 4
+   * @returns Syntax error information, returns an empty string if no error
    */
   getSyntaxErrorInfo: (code: string, output_line_count?: number) => Promise<string>;
 
   /**
-   * 获取全局变量、聊天变量、消息楼层变量的并集
+   * Gets the union of global variables, chat variables, and message floor variables
    *
-   * @param end_message_id 要合并的消息楼层变量最大楼层数
-   * @returns 合并后的变量
+   * @param end_message_id Maximum floor number of message floor variables to merge
+   * @returns Merged variables
    */
   allVariables: (end_message_id?: number) => Record<string, any>;
 
   /**
-   * 设置提示词模板语法插件的设置
+   * Updates the settings for the Prompt Template Syntax plugin
    *
-   * @param features 设置
+   * @param features Settings
    */
   setFeatures: (
     features: Partial<{
-      /** 是否启用扩展 */
+      /** Whether to enable the extension */
       enabled: boolean;
 
-      /** 处理生成内容 */
+      /** Process generated content */
       generate_enabled: boolean;
-      /** 生成时注入 [GENERATE] 世界书条目 */
+      /** Inject [GENERATE] World Info entries during generation */
       generate_loader_enabled: boolean;
-      /** 生成时注入 @INJECT 世界书条目 */
+      /** Inject @INJECT World Info entries during generation */
       inject_loader_enabled: boolean;
 
-      /** 处理楼层消息 */
+      /** Process floor messages */
       render_enabled: boolean;
-      /** 渲染楼层时注入 [RENDER] 世界书条目 */
+      /** Inject [RENDER] World Info entries during floor rendering */
       render_loader_enabled: boolean;
-      /** 处理代码块 */
+      /** Process code blocks */
       code_blocks_enabled: boolean;
-      /** 处理原始消息内容 */
+      /** Process raw message content */
       raw_message_evaluation_enabled: boolean;
-      /** 生成时忽略楼层消息处理 */
+      /** Ignore floor message processing during generation */
       filter_message_enabled: boolean;
-      /** 处理楼层深度限制 (-1=无限制) */
+      /** Floor depth limit processing (-1=unlimited) */
       depth_limit: number;
 
-      /** 自动保存变量更新 */
+      /** Auto-save variable updates */
       autosave_enabled: boolean;
-      /** 立即加载世界书 */
+      /** Preload World Info immediately */
       preload_worldinfo_enabled: boolean;
-      /** 禁用 with 语句块 */
+      /** Disable 'with' blocks */
       with_context_disabled: boolean;
-      /** 控制台显示详细信息 */
+      /** Show detailed info in console */
       debug_enabled: boolean;
-      /** 旧设定兼容模式，世界书中的 GENERATE/RENDER/INJECT 条目禁用时视为启用 */
+      /** Legacy compatibility mode: GENERATE/RENDER/INJECT entries in World Info are treated as enabled when disabled */
       invert_enabled: boolean;
 
-      /** 缓存 (实验性) (0=禁用, 1=全部, 2=仅世界书) */
+      /** Cache (experimental) (0=disabled, 1=all, 2=World Info only) */
       cache_enabled: number;
-      /** 缓存大小 */
+      /** Cache size */
       cache_size: number;
-      /** 缓存 Hash 函数 */
+      /** Cache Hash function */
       cache_hasher: 'h32ToString' | 'h64ToString';
     }>,
   ) => void;
 
   /**
-   * 重置提示词模板语法插件的设置
+   * Resets the settings for the Prompt Template Syntax plugin
    */
   resetFeatures: () => void;
 };

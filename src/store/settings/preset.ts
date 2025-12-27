@@ -7,7 +7,7 @@ function getSettings(id: string): PresetSettings {
   const settings = _.get(preset_manager.getPresetList().presets[Number(id)], 'extensions.tavern_helper', {});
   const parsed = PresetSettings.safeParse(settings);
   if (!parsed.success) {
-    toastr.warning(parsed.error.message, t`[酒馆助手]读取预设数据失败, 将使用空数据`);
+    toastr.warning(parsed.error.message, t`[TavernHelper] Failed to read preset data, will use empty data`);
     return PresetSettings.parse({});
   }
   return PresetSettings.parse(parsed.data);
@@ -31,7 +31,7 @@ const saveSettingsToFileDebounced = _.debounce(saveSettingsToFile, 1000);
 export const usePresetSettingsStore = defineStore('preset_settings', () => {
   const id = ref<string>(preset_manager.getSelectedPreset());
   const name = ref<string>(Object.keys(preset_manager.getPresetList().preset_names)[Number(id.value)]);
-  // 切换预设时刷新 id 和 settings
+  // Refresh id and ... when switching preset settings
   eventSource.makeFirst(event_types.OAI_PRESET_CHANGED_AFTER, () => {
     const new_id = preset_manager.getSelectedPreset();
     const new_name = Object.keys(preset_manager.getPresetList().preset_names)[Number(new_id)];
@@ -42,14 +42,14 @@ export const usePresetSettingsStore = defineStore('preset_settings', () => {
   });
 
   const settings = ref<PresetSettings>(getSettings(id.value));
-  // 切换预设时刷新 settings, 但不触发 settings 保存
+  // Refresh settings when switching preset, but do not trigger settings save
   watch([id, name], ([new_id]) => {
     ignoreUpdates(() => {
       settings.value = getSettings(new_id);
     });
   });
 
-  // 在某预设内修改 settings 时保存
+  // Save when modifying settings within a preset
   const { ignoreUpdates } = watchIgnorable(
     settings,
     new_settings => {
@@ -61,6 +61,6 @@ export const usePresetSettingsStore = defineStore('preset_settings', () => {
     { deep: true },
   );
 
-  // 监听 id 不能正确反映导入新预设时的情况, 在外应该监听 name
+  // Listening to id does not correctly reflect import of new preset, should listen outside name
   return { id: readonly(id), name: readonly(name), settings };
 });

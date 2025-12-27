@@ -3,7 +3,7 @@ import { eventSource } from '@sillytavern/script';
 import { extension_settings } from '@sillytavern/scripts/extensions';
 
 function recalculateElement($send_form: JQuery<HTMLElement>): HTMLElement {
-  // $('#qr--bar') 要求 id 唯一, 因此此处不使用
+  // $('#qr--bar') requires a unique ID, so it is not used here
   let $possible_qr_bar = $send_form.find('div').filter(function () {
     return $(this).attr('id') === 'qr--bar';
   });

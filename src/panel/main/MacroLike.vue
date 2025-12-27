@@ -1,8 +1,8 @@
 <template>
   <Item type="box">
-    <template #title>{{ t`禁用酒馆助手宏` }}</template>
+    <template #title>{{ t`Disable Tavern Helper Macros` }}</template>
     <template #description>
-      {{ t`编写变量角色卡而非测试/游玩角色卡时，打开此开关，避免 \{\{get_message_variable::变量\}\} 等宏被替换` }}
+      {{ t`When writing variable character cards instead of testing/playing character cards, turn on this switch to avoid macros like \{\{get_message_variable::variable\}\} being replaced` }}
     </template>
     <template #content>
       <Toggle :id="`TH-macro-disabled`" v-model="disabled" />

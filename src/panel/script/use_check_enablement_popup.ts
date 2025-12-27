@@ -26,18 +26,18 @@ export function useCheckEnablementPopup(
         attrs: {
           buttons: [
             {
-              name: t`确认`,
+              name: t`Confirm`,
               shouldEmphasize: true,
               onClick: close => {
                 preset_scripts.enabled = true;
                 close();
               },
             },
-            { name: t`取消` },
+            { name: t`Cancel` },
           ],
         },
         slots: {
-          default: t`<div><h4>此预设包含酒馆助手可用的嵌入式脚本</h4><h4>是否现在就启用它们?</h4><small>您可以选择否, 稍后在“酒馆助手-脚本库-预设脚本”中手动启用它们</small></div>`,
+          default: t`<div><h4>This preset contains embedded scripts compatible with Tavern Assistant</h4><h4>Enable them now?</h4><small>You can choose no and manually enable them later in "Tavern Assistant - Script Library - Preset Scripts"</small></div>`,
         },
       }).open();
     }
@@ -82,18 +82,18 @@ export function useCheckEnablementPopup(
         attrs: {
           buttons: [
             {
-              name: t`确认`,
+              name: t`Confirm`,
               shouldEmphasize: true,
               onClick: close => {
                 character_scripts.enabled = true;
                 close();
               },
             },
-            { name: t`取消` },
+            { name: t`Cancel` },
           ],
         },
         slots: {
-          default: `<div><h4>此角色包含酒馆助手可用的嵌入式脚本</h4><h4>是否现在就启用它们?</h4><small>您可以选择否, 稍后在“酒馆助手-脚本库-角色脚本”中手动启用它们</small></div>`,
+          default: `<div><h4>This character contains embedded scripts compatible with Tavern Assistant</h4><h4>Enable them now?</h4><small>You can choose no and manually enable them later in "Tavern Assistant - Script Library - Character Scripts"</small></div>`,
         },
       }).open();
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-full flex-col gap-1 overflow-hidden p-1 text-(--SmartThemeBodyColor)">
     <select v-model="selected_iframe_id">
-      <option value="all_iframes">{{ t`所有日志` }}</option>
+      <option value="all_iframes">{{ t`All Logs` }}</option>
       <option v-for="id in iframe_ids" :key="id" :value="id">
         {{ formatIframeLabel(id) }}
       </option>
@@ -11,7 +11,7 @@
       <div class="flex items-center gap-0.5">
         <div
           class="flex h-2 w-2 cursor-pointer items-center justify-center text-(--SmartThemeQuoteColor)"
-          :title="t`过滤`"
+          :title="t`Filter`"
           @click="is_filter_opened = !is_filter_opened"
         >
           <i class="fa-solid fa-filter" />
@@ -19,9 +19,9 @@
         <SearchBar
           v-model="search_input"
           class="grow rounded-sm bg-transparent th-text-base text-(--mainTextColor)"
-          :placeholder="t`搜索日志内容...`"
+          :placeholder="t`Search log content...`"
         />
-        <div class="flex h-2 w-2 cursor-pointer items-center justify-center" :title="t`清除日志`" @click="clearLogs">
+        <div class="flex h-2 w-2 cursor-pointer items-center justify-center" :title="t`Clear Logs`" @click="clearLogs">
           <i class="fa-solid fa-brush" />
         </div>
       </div>
@@ -30,19 +30,19 @@
         <div class="flex gap-1">
           <div class="flex items-center gap-0.5">
             <input v-model="level_filters.debug" type="checkbox" />
-            {{ t`详细` }}
+            {{ t`Verbose` }}
           </div>
           <div class="flex items-center gap-0.5">
             <input v-model="level_filters.info" type="checkbox" />
-            {{ t`信息` }}
+            {{ t`Info` }}
           </div>
           <div class="flex items-center gap-0.5">
             <input v-model="level_filters.warn" type="checkbox" />
-            {{ t`警告` }}
+            {{ t`Warning` }}
           </div>
           <div class="flex items-center gap-0.5">
             <input v-model="level_filters.error" type="checkbox" />
-            {{ t`错误` }}
+            {{ t`Error` }}
           </div>
         </div>
       </Teleport>
@@ -109,9 +109,9 @@ const logs = computed(() => {
 });
 
 /**
- * 将 iframe_id 转换为更友好的显示文本
- * 例：TH-script-测试-b677a17a-933c-40e8-b4b8-6e229f382f52
- * 显示为：脚本 | 测试
+ * Convert iframe_id to friendlier display text
+ * Ex: TH-script-Test-b677a17a-933c-40e8-b4b8-6e229f382f52
+ * Display as: Script | Test
  */
 const formatIframeLabel = (id: string): string => {
   const regex = /TH-(script|message)--(.*)--(.*)/;
@@ -120,9 +120,9 @@ const formatIframeLabel = (id: string): string => {
     return id;
   }
   if (match[1] === 'script') {
-    return t`脚本` + ` | ${match[2]}`;
+    return t`Script` + ` | ${match[2]}`;
   }
-  return t`消息` + ` | 第${match[2]}楼-第${match[3]}个界面`;
+  return t`Message` + ` | Floor ${match[2]}-Interface ${match[3]}`;
 };
 
 const clearLogs = () => {
@@ -144,7 +144,7 @@ const clearLogs = () => {
   white-space: pre-wrap;
 }
 
-/* 仅普通条目之间：在两条之间的间隙中线居中 */
+/* Only between normal entries: center in the gap between two lines */
 .TH-log--item:has(.TH-log--normal) + .TH-log--item:has(.TH-log--normal)::before {
   content: '';
   position: absolute;
@@ -156,7 +156,7 @@ const clearLogs = () => {
   pointer-events: none;
 }
 
-/* 级别底色 */
+/* Level Background Color */
 .TH-log--item > .TH-log--warn {
   background: rgba(255, 208, 0, 0.4);
 }

@@ -37,22 +37,22 @@ export function useListener(
     });
 
     socket.on('connect', () => {
-      console.info('[Listener] 成功连接至服务器');
+      console.info('[Listener] Successfully connected to server');
       connected.value = true;
     });
 
     socket.on('connect_error', (error: Error) => {
       if (enabled_echo.value) {
-        toastr.error(t`${error.name}: ${error.message}`, t`[酒馆助手]连接实时监听器出错, 尝试重连...`);
+        toastr.error(t`${error.name}: ${error.message}`, t`[Tavern Assistant] Error connecting to live listener, attempting to reconnect...`);
       }
       console.error(`${error.name}: ${error.message}${error.stack ?? ''}`);
       connected.value = socket?.connected ?? false;
     });
     socket.on('disconnect', (reason, details) => {
       if (enabled_echo.value) {
-        toastr.warning(t`${reason}`, t`[酒馆助手]实时监听器断开连接`);
+        toastr.warning(t`${reason}`, t`[Tavern Assistant] Live listener disconnected`);
       }
-      console.info(`[Listener] 与服务器断开连接: ${reason}\n${details}`);
+      console.info(`[Listener] Disconnected from server: ${reason}\n${details}`);
       connected.value = socket?.connected ?? false;
     });
 

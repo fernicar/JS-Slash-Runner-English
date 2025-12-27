@@ -47,7 +47,7 @@ onMounted(() => {
       },
       mode: mode,
       parser: {
-        // @ts-expect-error destr 是可以使用的
+        // @ts-expect-error destr is available for use
         parse: safeDestr,
         stringify: JSON.stringify,
       },
@@ -85,7 +85,7 @@ onMounted(() => {
       return;
     }
 
-    // TODO: 性能如何?
+    // TODO: How is the performance?
     const diff = detailedDiff(old_content, new_content);
 
     const has_deletions = !_.isEmpty(diff.deleted);
@@ -107,11 +107,11 @@ onMounted(() => {
     };
 
     if (has_deletions) {
-      // 给将被删除的节点加类，先播放删除动画
+      // Add classes to nodes that will be deleted and play the deletion animation first
       editor_instance.updateProps({
         onClassName: path => (_.has(diff.deleted, path) ? 'jse-custom-deleted' : undefined),
       });
-      // 延迟一段时间后播放添加和更新动画
+      // Play addition and update animations after a delay
       _.delay(play_addition_and_update_animation, ANIMATION_TIME);
     } else {
       play_addition_and_update_animation();
@@ -125,88 +125,88 @@ onBeforeUnmount(() => {
 
 <style>
 :root {
-  /* 整体背景 */
+  /* Overall background */
   --jse-background-color: var(--SmartThemeBlurTintColor);
-  /* 主题色 */
+  /* Theme color */
   --jse-theme-color: color-mix(in srgb, var(--SmartThemeQuoteColor) 20%, transparent);
-  /* 文本颜色 */
+  /* Text color */
   --jse-text-color: var(--SmartThemeBodyColor);
-  /* 工具栏文本颜色 */
+  /* Toolbar text color */
   --jse-menu-color: var(--SmartThemeEmColor);
-  /* 工具栏的按钮的主题色高亮 */
+  /* Toolbar button theme color highlight */
   --jse-theme-color-highlight: var(--white20a);
-  /* 键名称的颜色 */
+  /* Key name color */
   --jse-key-color: var(--SmartThemeQuoteColor);
-  /* 选中的变量的背景色 */
+  /* Background color for selected variables */
   --jse-selection-background-color: color-mix(in srgb, var(--SmartThemeQuoteColor) 20%, transparent);
   --jse-selection-background-inactive-color: color-mix(in srgb, var(--SmartThemeQuoteColor) 20%, transparent);
-  /* 下拉箭头的背景色 */
+  /* Background color for dropdown arrows */
   --jse-context-menu-pointer-hover-background: #b2b2b2;
   --jse-context-menu-pointer-background: #b2b2b2;
-  /* 分隔符（也就是冒号）的颜色 */
+  /* Delimiter (i.e., colon) color */
   --jse-delimiter-color: var(--SmartThemeEmColor);
-  /* 路径显示面板的文本颜色 */
+  /* Path display panel text color */
   --jse-panel-button-color: var(--SmartThemeEmColor);
-  /* 路径显示面板的背景色 */
+  /* Path display panel background color */
   --jse-panel-background: var(--SmartThemeBlurTintColor);
-  /* 路径显示面板的文本颜色 */
+  /* Path display panel text color */
   --jse-panel-color-readonly: var(--SmartThemeEmColor);
-  /* 路径显示面板的边框颜色 */
+  /* Path display panel border color */
   --jse-panel-border: var(--SmartThemeEmColor);
-  /* 路径显示面板的背景高亮颜色 */
+  /* Path display panel background highlight color */
   --jse-panel-button-background-highlight: color-mix(in srgb, var(--SmartThemeQuoteColor) 20%, transparent);
-  /* 缩进标记的颜色 */
+  /* Indent marker color */
   --indent-markers: var(--SmartThemeEmColor);
 
-  /* 弹窗（不是上下文菜单）的背景 */
+  /* Modal (not context menu) background */
   --jse-modal-background: var(--SmartThemeBlurTintColor);
-  /* 下拉列表字号 */
+  /* Dropdown list font size */
   --jse-svelte-select-font-size: var(--mainFontSize);
-  /* 上下文菜单字号 */
+  /* Context menu font size */
   --jse-font-size: var(--mainFontSize);
-  /* 上下文菜单内边距 */
+  /* Context menu padding */
   --jse-padding: calc(var(--mainFontSize) * 0.5);
-  /* 文本模式的搜索面板字号大小 */
+  /* Text mode search panel font size */
   --jse-font-size-text-mode-search: calc(var(--mainFontSize) * 0.9);
 
-  /* 弹窗选择框背景 */
+  /* Modal select box background */
   --jse-svelte-select-background: var(--SmartThemeShadowColor);
-  /* 下拉列表背景 */
+  /* Dropdown list background */
   --list-background: var(--SmartThemeShadowColor);
-  /* 下拉列表项选中背景 */
+  /* Dropdown list item active background */
   --jse-item-is-active-bg: var(--SmartThemeQuoteColor);
-  /* 下拉列表项聚焦边框 */
+  /* Dropdown list item focused border */
   --border-focused: var(--SmartThemeQuoteColor);
-  /* 下拉列表项悬停背景 */
+  /* Dropdown list item hover background */
   --item-hover-bg: rgb(from var(--SmartThemeChatTintColor) r g b / 1);
-  /* 按钮文本颜色 */
+  /* Button text color */
   --jse-button-primary-color: var(--SmartThemeBodyColor);
-  /* 键值的字号大小 */
+  /* Key-value font size */
   --jse-font-size-mono: var(--mainFontSize);
 
-  /* 变量：字符串颜色 */
+  /* Variable: String color */
   --jse-value-color-string: var(--SmartThemeBodyColor);
-  /* 变量：数字颜色 */
+  /* Variable: Number color */
   --jse-value-color-number: rgb(255 79 79);
-  /* 变量：布尔值颜色 */
+  /* Variable: Boolean color */
   --jse-value-color-boolean: rgb(195 118 210);
-  /* 变量：null颜色 */
+  /* Variable: Null color */
   --jse-value-color-null: var(--crimson70a);
-  /* 变量：url颜色 */
+  /* Variable: URL color */
   --jse-value-color-url: rgb(122 151 90);
 
-  /* 编辑框的边框 */
+  /* Editor box outline */
   --jse-edit-outline: (1px solid var(--grey5050a));
-  /* 选中行背景色 */
+  /* Active line background color */
   --jse-active-line-background-color: color-mix(in srgb, var(--SmartThemeQuoteColor) 20%, transparent);
 
-  /* 缩进标记背景色 */
+  /* Indent marker background color */
   --jse-indent-marker-bg-color: var(--grey5050a);
-  /* 缩进标记选中背景色 */
+  /* Indent marker active background color */
   --jse-indent-marker-active-bg-color: var(--grey5050a);
-  /* 折叠项的链接颜色 */
+  /* Link color for collapsed items */
   --jse-collapsed-items-link-color: var(--SmartThemeEmColor);
-  /* 标签的背景色 */
+  /* Tag background color */
   --jse-tag-background: var(--grey5050a);
 }
 

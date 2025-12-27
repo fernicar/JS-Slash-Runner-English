@@ -1,29 +1,29 @@
 /**
- * 运行 Slash 命令, 注意如果命令写错了将不会有任何反馈
+ * Executes a Slash command; note that if the command is incorrect, no feedback will be provided.
  *
- * 能使用的命令请参考[编写模板](https://stagedog.github.io/青空莉/工具经验/实时编写前端界面或脚本/)的 `slash_command.txt` 或[命令手册](https://rentry.org/sillytavern-script-book).
+ * For available commands, please refer to `slash_command.txt` in [Writing Templates](https://stagedog.github.io/青空莉/工具经验/实时编写前端界面或脚本/) or the [Command Manual](https://rentry.org/sillytavern-script-book).
  *
- * @param command 要运行的 Slash 命令
- * @returns Slash 管道结果, 如果命令出错或执行了 `/abort` 则返回 `undefined`
+ * @param command The Slash command to run
+ * @returns The Slash pipe result; returns `undefined` if the command fails or `/abort` is executed.
  *
- * @throws Slash 命令出错时, 将会抛出错误
- *
- * @example
- * // 在酒馆界面弹出提示语 `运行成功!`
- * triggerSlash('/echo severity=success 运行成功!');
- * // 但更建议你直接用 toastr 弹出提示
- * toastr.success('运行成功!');
+ * @throws An error will be thrown if the Slash command fails.
  *
  * @example
- * // 获取当前聊天消息最后一条消息对应的 id
+ * // Pop up a notification "Run successful!" on the tavern interface
+ * triggerSlash('/echo severity=success Run successful!');
+ * // However, it is recommended to use toastr directly for notifications
+ * toastr.success('Run successful!');
+ *
+ * @example
+ * // Get the ID of the last message in the current chat
  * const last_message_id = await triggerSlash('/pass {{lastMessageId}}');
- * // 但更建议你用酒馆助手函数
+ * // However, it is recommended to use the tavern helper functions
  * const last_message = getLastMessageId();
  *
  * @example
- * // 创建一条用户输入到消息楼层末尾
- * await createChatMessages([{ role: 'user', content: '你好' }]);
- * // 触发 AI 回复
+ * // Create a user input at the end of the message list
+ * await createChatMessages([{ role: 'user', content: 'Hello' }]);
+ * // Trigger AI reply
  * await triggerSlash('/trigger');
  */
 declare function triggerSlash(command: string): Promise<string>;

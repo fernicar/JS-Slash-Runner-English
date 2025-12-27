@@ -7,7 +7,7 @@
     "
     @click="is_collapsed = !is_collapsed"
   >
-    <span> {{ t`第 ${normalized_message_id} 楼` }} </span>
+    <span> {{ t`Floor ${normalized_message_id}` }} </span>
     <div class="flex items-center justify-center">
       <i class="fa-solid" :class="is_collapsed ? 'fa-chevron-down' : 'fa-chevron-up'"></i>
     </div>
@@ -57,7 +57,7 @@ watch(
     const new_variables = get_variables_without_clone({ type: 'message', message_id: props.messageId });
     if (!_.isEqual(variables.value, new_variables)) {
       ignoreUpdates(() => {
-        // 用户可能用 delete 等直接修改对象内部, 因此要拷贝一份从而能被 _.isEqual 判定
+        // User might use delete etc. to modify object internals directly, so copy it to be checkable by _.isEqual
         variables.value = klona(new_variables);
       });
     }

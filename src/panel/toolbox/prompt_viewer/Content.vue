@@ -15,7 +15,7 @@
             "
             @click="is_expanded[index] = false"
           >
-            {{ t`收起内容` }}<i class="fa-solid fa-chevron-up"></i>
+            {{ t`Collapse` }}<i class="fa-solid fa-chevron-up"></i>
           </div>
         </div>
         <div v-else @click="is_expanded[index] = true">
@@ -26,7 +26,7 @@
               border-(--SmartThemeBorderColor) px-1 py-0.5 th-text-sm text-(--SmartThemeQuoteColor)
             "
           >
-            {{ t`展开` }} {{ (item.match(/\n/g)?.length ?? 0) + 1 }} {{ t`行隐藏内容` }}
+            {{ t`Expand` }} {{ (item.match(/\n/g)?.length ?? 0) + 1 }} {{ t`hidden lines` }}
             <i class="fa-solid fa-chevron-down" />
           </div>
         </div>
@@ -45,7 +45,7 @@ const props = defineProps<{
   matchedOnly: boolean;
 }>();
 
-/** 除了匹配到文本的那一行外, 上下要额外显示几行 */
+/** Number of extra lines to show above and below the matched text line */
 const NEARBY_LINE_COUNT = 2;
 
 const is_expanded = ref<boolean[]>([]);

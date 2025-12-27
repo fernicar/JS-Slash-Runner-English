@@ -7,7 +7,7 @@
           <i class="fa-solid" :class="model.enabled ? 'fa-toggle-on' : 'fa-toggle-off'"></i>
         </div>
       </div>
-      <!-- 音量 -->
+      <!-- Volume -->
       <div class="flex items-center gap-0.25">
         <div class="cursor-pointer" @click="model.muted = !model.muted">
           <i class="fa-solid" :class="[model.muted ? 'fa-volume-xmark' : 'fa-volume-low']"></i>
@@ -69,7 +69,7 @@
         </select>
       </div>
       <div class="flex items-center gap-0.25">
-        <div class="menu_button interactable" :title="t`播放列表`" @click="openPlayList">
+        <div class="menu_button interactable" :title="t`Playlist`" @click="openPlayList">
           <i class="fa-solid fa-list-ol" />
         </div>
         <div
@@ -121,10 +121,10 @@ const model_playing = computed({
 const modeTitle = computed(() => {
   return (
     {
-      repeat_all: t`重复播放所有曲目`,
-      repeat_one: t`重复播放当前曲目`,
-      shuffle: t`随机播放`,
-      play_one_and_stop: t`播放当前曲目并停止`,
+      repeat_all: t`Repeat all tracks`,
+      repeat_one: t`Repeat current track`,
+      shuffle: t`Shuffle`,
+      play_one_and_stop: t`Play current track and stop`,
     }[model.value.mode] ?? ''
   );
 });
@@ -162,7 +162,7 @@ const modeIconClass = computed(() => {
   syncRef(volume, controls.volume, { transform: { ltr: value => value / 100, rtl: value => value * 100 } });
 }
 
-// 监听 playlist 变化，自动选择第一个曲目
+// Watch for playlist changes, automatically select the first track
 watchEffect(() => {
   if (!model.value.src && model.value.playlist.length > 0) {
     model.value.src = model.value.playlist[0].url;
@@ -170,7 +170,7 @@ watchEffect(() => {
 });
 
 /**
- * 当前音频播放结束时的处理
+ * Handle logic when current audio playback ends
  */
 const onEnded = () => {
   controls.ended.value = false;

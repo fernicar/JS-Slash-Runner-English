@@ -1,113 +1,113 @@
 type VariableOptionNormal = {
-  /** 对聊天变量 (`'chat'`)、当前预设 (`'preset'`) 或全局变量 (`'global'`) 进行操作 */
+  /** Operate on chat variables (`'chat'`), current preset (`'preset'`), or global variables (`'global'`) */
   type: 'chat' | 'preset' | 'global';
 };
 type VariableOptionCharacter = {
   /**
-   * 对当前角色卡 (`'character'`) 进行操作
+   * Operate on the current character card (`'character'`)
    *
-   * @throws 如果没有打开角色卡, 将会抛出错误
+   * @throws If no character card is open, an error will be thrown
    */
   type: 'character';
 };
 type VariableOptionMessage = {
-  /** 对消息楼层变量 (`message`) 进行操作 */
+  /** Operate on message entry variables (`message`) */
   type: 'message';
   /**
-   * 指定要获取变量的消息楼层号, 如果为负数则为深度索引, 例如 `-1` 表示获取最新的消息楼层; 默认为 `'latest'`
+   * Specify the message entry number to get variables from. If it's a negative number, it acts as a depth index (e.g., `-1` means the latest message entry); defaults to `'latest'`
    *
-   * @throws 如果提供的消息楼层号 `message_id` 超出了范围 `[-chat.length, chat.length)`, 将会抛出错误
+   * @throws If the provided `message_id` is out of the range `[-chat.length, chat.length)`, an error will be thrown
    */
   message_id?: number | 'latest';
 };
 type VariableOptionScript = {
-  /** 对脚本变量 (`'script'`) 进行操作 */
+  /** Operate on script variables (`'script'`) */
   type: 'script';
-  /** 指定要操作变量的脚本 ID; 如果在脚本内调用, 则无须指定, 当然你也可以用 `getScriptId()` 获取该脚本 ID */
+  /** Specify the script ID to operate on; if called within a script, it does not need to be specified. You can also use `getScriptId()` to get the current script ID */
   script_id?: string;
 };
 type VariableOptionExtension = {
-  /** 对扩展变量 (`'extension'`) 进行操作 */
+  /** Operate on extension variables (`'extension'`) */
   type: 'extension';
-  /** 指定要操作变量的扩展 ID */
+  /** Specify the extension ID to operate on */
   extension_id: string;
 };
 type VariableOption = VariableOptionNormal | VariableOptionCharacter | VariableOptionMessage | VariableOptionScript | VariableOptionExtension;
 
 /**
- * 获取变量表
+ * Get the variable table
  *
- * @param option 要操作的变量类型
+ * @param option The variable type to operate on
  *
- * @returns 变量表
+ * @returns The variable table
  *
  * @example
- * // 获取所有聊天变量并弹窗输出结果
+ * // Get all chat variables and output the result in an alert
  * const variables = getVariables({type: 'chat'});
  * alert(variables);
  *
  * @example
- * // 获取所有全局变量
+ * // Get all global variables
  * const variables = getVariables({type: 'global'});
- * // 酒馆助手内置了 lodash 库, 你能用它做很多事, 比如查询某个变量是否存在
- * if (_.has(variables, "神乐光.好感度")) {
+ * // Tavern Assistant has a built-in lodash library, which you can use for many things, such as checking if a variable exists
+ * if (_.has(variables, "HikariKagura.Affection")) {
  *   ...
  * }
  *
  * @example
- * // 获取倒数第二楼层的聊天变量
+ * // Get the chat variables for the second-to-last message entry
  * const variables = getVariables({type: 'message', message_id: -2});
  *
  * @example
- * // 在脚本内获取该脚本绑定的变量
+ * // Get the variables bound to the current script from within the script
  * const variables = getVariables({type: 'script'});
  */
 declare function getVariables(option: VariableOption): Record<string, any>;
 
 /**
- * 完全替换变量表为 `variables`
+ * Completely replace the variable table with `variables`
  *
- * 之所以提供这么直接的函数, 是因为酒馆助手内置了 lodash 库:
- *   `insertOrAssignVariables` 等函数其实就是先 `getVariables` 获取变量表, 用 lodash 库处理, 再 `replaceVariables` 替换变量表.
+ * This direct function is provided because Tavern Assistant has a built-in lodash library:
+ *   Functions like `insertOrAssignVariables` actually call `getVariables` first, process it with lodash, and then use `replaceVariables` to update the table.
  *
- * @param variables 要用于替换的变量表
- * @param option 要操作的变量类型
- *
- * @example
- * // 执行前的聊天变量: `{爱城华恋: {好感度: 5}}`
- * replaceVariables({神乐光: {好感度: 5, 认知度: 0}});
- * // 执行后的聊天变量: `{神乐光: {好感度: 5, 认知度: 0}}`
+ * @param variables The variable table to use for replacement
+ * @param option The variable type to operate on
  *
  * @example
- * // 删除 `{神乐光: {好感度: 5}}` 变量
+ * // Chat variables before execution: `{KarenAijo: {Affection: 5}}`
+ * replaceVariables({HikariKagura: {Affection: 5, Awareness: 0}});
+ * // Chat variables after execution: `{HikariKagura: {Affection: 5, Awareness: 0}}`
+ *
+ * @example
+ * // Delete the `{HikariKagura: {Affection: 5}}` variable
  * let variables = getVariables();
- * _.unset(variables, "神乐光.好感度");
+ * _.unset(variables, "HikariKagura.Affection");
  * replaceVariables(variables);
  *
  * @example
- * // 在脚本内替换该脚本绑定的变量
- * replaceVariables({神乐光: {好感度: 5, 认知度: 0}}, {type: 'script'});
+ * // Replace the variables bound to the current script from within the script
+ * replaceVariables({HikariKagura: {Affection: 5, Awareness: 0}}, {type: 'script'});
  */
 declare function replaceVariables(variables: Record<string, any>, option: VariableOption): void;
 
 /**
- * 用 `updater` 函数更新变量表
+ * Update the variable table using an `updater` function
  *
- * @param updater 用于更新变量表的函数. 它应该接收变量表作为参数, 并返回更新后的变量表.
- * @param option 要操作的变量类型
+ * @param updater The function used to update the variable table. It should receive the current table as an argument and return the updated table.
+ * @param option The variable type to operate on
  *
- * @returns 更新后的变量表
+ * @returns The updated variable table
  *
  * @example
- * // 删除 `{神乐光: {好感度: 5}}` 变量
+ * // Delete the `{HikariKagura: {Affection: 5}}` variable
  * updateVariablesWith(variables => {
- *   _.unset(variables, "神乐光.好感度");
+ *   _.unset(variables, "HikariKagura.Affection");
  *   return variables;
  * });
  *
  * @example
- * // 更新 "爱城华恋.好感度" 为原来的 2 倍, 如果该变量不存在则设置为 0
- * updateVariablesWith(variables => _.update(variables, "爱城华恋.好感度", value => value ? value * 2 : 0), {type: 'chat'});
+ * // Update "KarenAijo.Affection" to double its value, or set to 0 if the variable doesn't exist
+ * updateVariablesWith(variables => _.update(variables, "KarenAijo.Affection", value => value ? value * 2 : 0), {type: 'chat'});
  */
 declare function updateVariablesWith(
   updater: (variables: Record<string, any>) => Record<string, any>,
@@ -115,12 +115,12 @@ declare function updateVariablesWith(
 ): Record<string, any>;
 
 /**
- * 用 `updater` 函数更新变量表
+ * Update the variable table using an asynchronous `updater` function
  *
- * @param updater 用于更新变量表的函数. 它应该接收变量表作为参数, 并返回更新后的变量表.
- * @param option 要操作的变量类型
+ * @param updater The function used to update the variable table. It should receive the table as an argument and return the updated table.
+ * @param option The variable type to operate on
  *
- * @returns 更新后的变量表
+ * @returns The updated variable table
  *
  * @example
  * await updateVariablesWith(async variables => {await update(variables); return variables;}, {type: 'chat'});
@@ -131,53 +131,53 @@ declare function updateVariablesWith(
 ): Promise<Record<string, any>>;
 
 /**
- * 插入或修改变量值, 取决于变量是否存在.
+ * Insert or modify variable values, depending on whether the variables exist.
  *
- * @param variables 要更新的变量
- *   - 如果变量不存在, 则新增该变量
- *   - 如果变量已经存在, 则修改该变量的值
- * @param option 要操作的变量类型
+ * @param variables The variables to update
+ *   - If the variable does not exist, it will be added
+ *   - If the variable already exists, its value will be modified
+ * @param option The variable type to operate on
  *
- * @returns 更新后的变量表
+ * @returns The updated variable table
  *
  * @example
- * // 执行前变量: `{爱城华恋: {好感度: 5}}`
- * await insertOrAssignVariables({爱城华恋: {好感度: 10}, 神乐光: {好感度: 5, 认知度: 0}}, {type: 'chat'});
- * // 执行后变量: `{爱城华恋: {好感度: 10}, 神乐光: {好感度: 5, 认知度: 0}}`
+ * // Variables before execution: `{KarenAijo: {Affection: 5}}`
+ * await insertOrAssignVariables({KarenAijo: {Affection: 10}, HikariKagura: {Affection: 5, Awareness: 0}}, {type: 'chat'});
+ * // Variables after execution: `{KarenAijo: {Affection: 10}, HikariKagura: {Affection: 5, Awareness: 0}}`
  */
 declare function insertOrAssignVariables(variables: Record<string, any>, option: VariableOption): Record<string, any>;
 
 /**
- * 插入新变量, 如果变量已经存在则什么也不做
+ * Insert new variables; does nothing if the variables already exist
  *
- * @param variables 要插入的变量
- *   - 如果变量不存在, 则新增该变量
- *   - 如果变量已经存在, 则什么也不做
- * @param option 要操作的变量类型
+ * @param variables The variables to insert
+ *   - If the variable does not exist, it will be added
+ *   - If the variable already exists, nothing will be done
+ * @param option The variable type to operate on
  *
- * @returns 更新后的变量表
+ * @returns The updated variable table
  *
  * @example
- * // 执行前变量: `{爱城华恋: {好感度: 5}}`
- * await insertVariables({爱城华恋: {好感度: 10}, 神乐光: {好感度: 5, 认知度: 0}}, {type: 'chat'});
- * // 执行后变量: `{爱城华恋: {好感度: 5}, 神乐光: {好感度: 5, 认知度: 0}}`
+ * // Variables before execution: `{KarenAijo: {Affection: 5}}`
+ * await insertVariables({KarenAijo: {Affection: 10}, HikariKagura: {Affection: 5, Awareness: 0}}, {type: 'chat'});
+ * // Variables after execution: `{KarenAijo: {Affection: 5}, HikariKagura: {Affection: 5, Awareness: 0}}`
  */
 declare function insertVariables(variables: Record<string, any>, option: VariableOption): Record<string, any>;
 
 /**
- * 删除变量, 如果变量不存在则什么也不做
+ * Delete a variable; does nothing if the variable does not exist
  *
- * @param variable_path 要删除的变量路径
- *   - 如果变量不存在, 则什么也不做
- *   - 如果变量已经存在, 则删除该变量
- * @param option 要操作的变量类型
+ * @param variable_path The path of the variable to delete
+ *   - If the variable does not exist, nothing will be done
+ *   - If the variable exists, it will be deleted
+ * @param option The variable type to operate on
  *
- * @returns 更新后的变量表, 以及是否成功删除变量
+ * @returns The updated variable table and whether the deletion successfully occurred
  *
  * @example
- * // 执行前变量: `{爱城华恋: {好感度: 5}}`
- * await deleteVariable("爱城华恋.好感度", {type: 'chat'});
- * // 执行后变量: `{爱城华恋: {}}`
+ * // Variables before execution: `{KarenAijo: {Affection: 5}}`
+ * await deleteVariable("KarenAijo.Affection", {type: 'chat'});
+ * // Variables after execution: `{KarenAijo: {}}`
  */
 declare function deleteVariable(
   variable_path: string,
@@ -185,18 +185,18 @@ declare function deleteVariable(
 ): { variables: Record<string, any>; delete_occurred: boolean };
 
 /**
- * 为变量管理器注册一个变量结构. 注册后, 变量管理器上将会按变量结构对变量进行校验
+ * Register a variable schema for the Variable Manager. Once registered, variables will be validated against this schema in the Variable Manager UI.
  *
- * **这只是方便使用变量管理器这一 UI 查看和管理变量, 对于代码层面没有任何影响**
+ * **This is only for convenience when viewing and managing variables via the Variable Manager UI; it has no effect at the code level.**
  *
- * @param schema zod 库表示的变量结构
- * @param option 要注册变量结构的变量类型
+ * @param schema The variable structure represented using the zod library
+ * @param option The variable type to register the schema for
  *
  * @example
- * // 注册消息楼层变量的结构为 stat_data 内有一个 好感度 数值变量
+ * // Register the schema for message entry variables where 'stat_data' contains an 'Affection' numeric variable
  * registerVariableSchema(z.object({
  *   stat_data: z.object({
- *     好感度: z.number(),
+ *     Affection: z.number(),
  *   }),
  * }), {type: 'message'});
  */

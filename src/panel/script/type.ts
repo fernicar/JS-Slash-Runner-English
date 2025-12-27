@@ -1,7 +1,7 @@
 import { ScriptButton } from '@/type/scripts';
 
 export const ScriptForm = z.object({
-  name: z.string().nonempty('脚本名称不能为空'),
+  name: z.string().nonempty('Script name cannot be empty'),
   content: z.string(),
   info: z.string(),
   button: z.object({
@@ -13,7 +13,7 @@ export const ScriptForm = z.object({
 export type ScriptForm = z.infer<typeof ScriptForm>;
 
 export const ScriptFolderForm = z.object({
-  name: z.string().nonempty('文件夹名称不能为空'),
+  name: z.string().nonempty('Folder name cannot be empty'),
   icon: z.string(),
   color: z.string(),
 });

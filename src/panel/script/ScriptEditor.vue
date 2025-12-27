@@ -1,44 +1,44 @@
 <template>
-  <Popup :buttons="[{ name: t`确认`, shouldEmphasize: true, onClick: close => submit(close) }, { name: t`取消` }]">
+  <Popup :buttons="[{ name: t`Confirm`, shouldEmphasize: true, onClick: close => submit(close) }, { name: t`Cancel` }]">
     <DefineMaximizeButton v-slot="{ activate }">
       <i class="fa-solid fa-maximize interactable cursor-pointer" @click="activate"></i>
     </DefineMaximizeButton>
     <div class="flex h-full flex-col flex-wrap items-center gap-0.25 overflow-y-auto text-left">
-      <div class="my-0.5 th-text-md font-bold">{{ props.script !== undefined ? t`编辑脚本` : t`创建新脚本` }}</div>
+      <div class="my-0.5 th-text-md font-bold">{{ props.script !== undefined ? t`Edit Script` : t`Create New Script` }}</div>
       <div class="TH-script-editor-container">
-        <strong>{{ t`脚本名称` }}</strong>
+        <strong>{{ t`Script Name` }}</strong>
         <input v-model="script.name" type="text" class="text_pole" />
       </div>
       <div class="TH-script-editor-container">
         <div class="flex items-center gap-[5px]">
-          <strong>{{ t`脚本内容` }}</strong>
+          <strong>{{ t`Script Content` }}</strong>
           <MaximizeButton @click="() => openMaximize('content')"></MaximizeButton>
         </div>
         <textarea
           v-model="script.content"
-          :placeholder="t`脚本的 JavaScript 代码`"
+          :placeholder="t`JavaScript code for the script`"
           rows="3"
           class="text_pole font-(family-name:--monoFontFamily)!"
         />
       </div>
       <div class="TH-script-editor-container">
         <div class="flex items-center gap-[5px]">
-          <strong>{{ t`作者备注` }}</strong>
+          <strong>{{ t`Author's Notes` }}</strong>
           <MaximizeButton @click="() => openMaximize('info')"></MaximizeButton>
         </div>
         <textarea
           v-model="script.info"
-          :placeholder="t`脚本备注, 例如作者名、版本和注意事项等, 支持简单的 markdown 和 html`"
+          :placeholder="t`Script notes, such as author name, version, and precautions, supports simple markdown and html`"
           rows="3"
           class="text_pole font-(family-name:--monoFontFamily)!"
         />
       </div>
       <div class="TH-script-editor-container">
         <div class="flex flex-wrap items-center justify-center gap-[5px]">
-          <strong>{{ t`变量列表` }}</strong>
+          <strong>{{ t`Variable List` }}</strong>
           <MaximizeButton @click="() => openMaximize('data')"></MaximizeButton>
         </div>
-        <small>{{ t`绑定到脚本的变量, 会随脚本一同导出` }}</small>
+        <small>{{ t`Variables bound to the script will be exported with it` }}</small>
         <div
           :class="[
             `
@@ -56,12 +56,12 @@
         <div class="flex w-full items-center justify-between">
           <div class="flex flex-col">
             <div class="flex flex-wrap items-center gap-[5px]">
-              <strong>{{ t`按钮` }}</strong>
+              <strong>{{ t`Buttons` }}</strong>
               <div class="menu_button interactable" @click="addButton">
                 <i class="fa-solid fa-plus"></i>
               </div>
             </div>
-            <small>{{ t`需配合代码里的 getButtonEvent 使用` }}</small>
+            <small>{{ t`Needs to be used with getButtonEvent in the code` }}</small>
           </div>
           <Toggle id="TH-script-editor-button-enabled-toggle" v-model="script.button.enabled" class="mr-[5px]" />
         </div>
@@ -82,7 +82,7 @@
             >
               <span class="TH-handle cursor-grab select-none">☰</span>
               <input v-model="button.visible" type="checkbox" />
-              <input v-model="button.name" class="text_pole" type="text" :placeholder="t`按钮名称`" />
+              <input v-model="button.name" class="text_pole" type="text" :placeholder="t`Button Name`" />
               <div class="menu_button interactable" :data-index="index" @click="deleteButton(index)">
                 <i class="fa-solid fa-trash"></i>
               </div>
@@ -138,7 +138,7 @@ const submit = (close: () => void) => {
   close();
 };
 
-// 外部“放大编辑器”弹窗：按需创建并在确认时回写，避免单文件多 Popup 冲突
+// External "Maximize Editor" popup: Created on demand and written back upon confirmation to avoid conflicts with multiple Popups in a single file
 type MaximizeTarget = 'content' | 'info' | 'data';
 const hideInlineDataEditor = ref(false);
 
@@ -158,7 +158,7 @@ function openMaximize(target: MaximizeTarget) {
         } else if (payload.target === 'info' && typeof payload.text === 'string') {
           script.value.info = payload.text;
         } else if (payload.target === 'data' && payload.data) {
-          // 一次性替换，减少深度 diff 带来的渲染/计算成本
+          // Replace all at once to reduce rendering/calculation costs from deep diffing
           script.value.data = klona(payload.data);
         }
         if (target === 'data') hideInlineDataEditor.value = false;

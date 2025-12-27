@@ -1,7 +1,7 @@
 import { InjectionPrompt } from '@/function/inject';
 
 /**
- * 角色类型（复制自@sillytavern/script以避免依赖）
+ * Role types (copied from @sillytavern/script to avoid dependency)
  */
 export const extension_prompt_roles = {
   SYSTEM: 0,
@@ -10,7 +10,7 @@ export const extension_prompt_roles = {
 } as const;
 
 /**
- * 自定义API配置接口
+ * Custom API configuration interface
  */
 export type CustomApiConfig = {
   apiurl?: string;
@@ -26,7 +26,7 @@ export type CustomApiConfig = {
 };
 
 /**
- * 生成配置接口（使用预设）
+ * Generation configuration interface (using presets)
  */
 export type GenerateConfig = {
   generation_id?: string;
@@ -40,7 +40,7 @@ export type GenerateConfig = {
 };
 
 /**
- * 原始生成配置接口（不使用预设）
+ * Raw generation configuration interface (not using presets)
  */
 export type GenerateRawConfig = {
   generation_id?: string;
@@ -55,7 +55,7 @@ export type GenerateRawConfig = {
 };
 
 /**
- * 角色提示词接口
+ * Role prompt interface
  */
 export type RolePrompt = {
   role: 'system' | 'assistant' | 'user';
@@ -64,16 +64,16 @@ export type RolePrompt = {
 };
 
 /**
- * 覆盖配置接口
+ * Override configuration interface
  */
 export type Overrides = {
-  world_info_before?: string; // 世界书(角色定义前)
-  persona_description?: string; // 用户描述
-  char_description?: string; // 角色描述
-  char_personality?: string; // 角色性格
-  scenario?: string; // 场景
-  world_info_after?: string; // 世界书(角色定义后)
-  dialogue_examples?: string; // 对话示例
+  world_info_before?: string; // World Info (before character definitions)
+  persona_description?: string; // User description
+  char_description?: string; // Character description
+  char_personality?: string; // Character personality
+  scenario?: string; // Scenario
+  world_info_after?: string; // World Info (after character definitions)
+  dialogue_examples?: string; // Dialogue examples
   chat_history?: {
     with_depth_entries?: boolean;
     author_note?: string;
@@ -82,7 +82,7 @@ export type Overrides = {
 };
 
 /**
- * 内置提示词类型
+ * Built-in prompt types
  */
 export type BuiltinPrompt =
   | 'world_info_before'
@@ -96,7 +96,7 @@ export type BuiltinPrompt =
   | 'user_input';
 
 /**
- * 默认内置提示词顺序
+ * Default built-in prompt order
  */
 export const builtin_prompt_default_order: BuiltinPrompt[] = [
   'world_info_before',
@@ -111,7 +111,7 @@ export const builtin_prompt_default_order: BuiltinPrompt[] = [
 ];
 
 /**
- * 基础数据接口
+ * Base data interface
  */
 export type BaseData = {
   characterInfo: {
@@ -137,7 +137,7 @@ export type BaseData = {
 };
 
 /**
- * 详细配置命名空间
+ * Detailed configuration namespace
  */
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace detail {
@@ -146,34 +146,34 @@ export namespace detail {
     content: string;
   };
 
-  // 覆盖配置类型
+  // Override configuration type
   export type OverrideConfig = {
-    world_info_before?: string; // 世界书（角色定义之前的部分）
-    persona_description?: string; // 用户描述
-    char_description?: string; // 角色描述
-    char_personality?: string; // 角色高级定义-性格
-    scenario?: string; // 场景
-    world_info_after?: string; // 世界书（角色定义之后的部分）
-    dialogue_examples?: string; // 角色高级定义-对话示例
+    world_info_before?: string; // World Info (part before character definitions)
+    persona_description?: string; // User description
+    char_description?: string; // Character description
+    char_personality?: string; // Character advanced definitions - personality
+    scenario?: string; // Scenario
+    world_info_after?: string; // World Info (part after character definitions)
+    dialogue_examples?: string; // Character advanced definitions - dialogue examples
 
-    with_depth_entries?: boolean; // 世界书深度
-    author_note?: string; // 作者注释
-    chat_history?: RolePrompt[]; // 聊天历史
+    with_depth_entries?: boolean; // World Info depth
+    author_note?: string; // Author's Note
+    chat_history?: RolePrompt[]; // Chat history
   };
 
-  // 内置提示词条目类型
+  // Built-in prompt entry type
   export type BuiltinPromptEntry =
-    | 'world_info_before' // 世界书(角色定义前)
-    | 'persona_description' // 用户描述
-    | 'char_description' // 角色描述
-    | 'char_personality' // 角色性格
-    | 'scenario' // 场景
-    | 'world_info_after' // 世界书(角色定义后)
-    | 'dialogue_examples' // 对话示例
-    | 'chat_history' // 聊天历史
-    | 'user_input'; // 用户输入
+    | 'world_info_before' // World Info (before character definitions)
+    | 'persona_description' // User description
+    | 'char_description' // Character description
+    | 'char_personality' // Character personality
+    | 'scenario' // Scenario
+    | 'world_info_after' // World Info (after character definitions)
+    | 'dialogue_examples' // Dialogue examples
+    | 'chat_history' // Chat history
+    | 'user_input'; // User input
 
-  // 生成参数类型
+  // Generation parameter type
   export type GenerateParams = {
     generation_id?: string;
     user_input?: string;
@@ -189,7 +189,7 @@ export namespace detail {
 }
 
 /**
- * 角色类型映射
+ * Role type mapping
  */
 export const roleTypes: Record<
   'system' | 'user' | 'assistant',
@@ -201,7 +201,7 @@ export const roleTypes: Record<
 };
 
 /**
- * 默认提示词顺序
+ * Default prompt order
  */
 export const default_order: detail.BuiltinPromptEntry[] = [
   'world_info_before',
@@ -216,7 +216,7 @@ export const default_order: detail.BuiltinPromptEntry[] = [
 ];
 
 /**
- * 角色名称行为常量
+ * Character name behavior constants
  */
 export const character_names_behavior = {
   NONE: -1,

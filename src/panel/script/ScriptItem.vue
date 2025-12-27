@@ -21,7 +21,7 @@
       <Highlighter :query="search_input">{{ script.name }}</Highlighter>
     </div>
     <div class="flex flex-nowrap items-center gap-[5px]">
-      <!-- 脚本开关 -->
+      <!-- Script toggle -->
       <div class="cursor-pointer" :class="{ enabled: script.enabled }" @click="script.enabled = !script.enabled">
         <i class="fa-solid" :class="[script.enabled ? 'fa-toggle-on' : 'fa-toggle-off']" />
       </div>
@@ -30,24 +30,24 @@
           <i class="fa-solid" :class="icon"></i>
         </div>
       </DefineToolButton>
-      <ToolButton :name="t`查看作者备注`" icon="fa-info-circle" @click="openScriptInfo" />
-      <ToolButton :name="t`编辑脚本`" icon="fa-pencil" @click="openScriptEditor" />
+      <ToolButton :name="t`View Author's Notes`" icon="fa-info-circle" @click="openScriptInfo" />
+      <ToolButton :name="t`Edit Script`" icon="fa-pencil" @click="openScriptEditor" />
       <ToolButton
         v-show="!showMoreActions"
         ref="moreActionsRef"
-        :name="t`更多操作`"
+        :name="t`More Actions`"
         icon="fa-ellipsis-h"
         @click="showMoreActions = true"
       />
-      <ToolButton v-show="showMoreActions" :name="t`复制脚本`" icon="fa-copy" @click="copyScript" />
+      <ToolButton v-show="showMoreActions" :name="t`Copy Script`" icon="fa-copy" @click="copyScript" />
       <ToolButton
         v-show="showMoreActions"
-        :name="t`移动脚本`"
+        :name="t`Move Script`"
         icon="fa-arrow-right-arrow-left"
         @click="openMoveConfirm"
       />
-      <ToolButton v-show="showMoreActions" :name="t`导出脚本`" icon="fa-file-export" @click="exportScript" />
-      <ToolButton :name="t`删除脚本`" icon="fa-trash" @click="openDeleteConfirm" />
+      <ToolButton v-show="showMoreActions" :name="t`Export Script`" icon="fa-file-export" @click="exportScript" />
+      <ToolButton :name="t`Delete Script`" icon="fa-trash" @click="openDeleteConfirm" />
     </div>
   </div>
 </template>
@@ -116,10 +116,10 @@ const openScriptInfo = () =>
     component: Popup,
     attrs: {
       width: 'wide',
-      buttons: [{ name: t`关闭` }],
+      buttons: [{ name: t`Close` }],
     },
     slots: {
-      default: `<div class='p-1.5 text-left'>${script.value.info ? renderMarkdown(script.value.info) : t`未填写作者备注`}</div>`,
+      default: `<div class='p-1.5 text-left'>${script.value.info ? renderMarkdown(script.value.info) : t`No author's notes provided`}</div>`,
     },
   }).open();
 
@@ -128,18 +128,18 @@ const { open: openDeleteConfirm } = useModal({
   attrs: {
     buttons: [
       {
-        name: t`确定`,
+        name: t`Confirm`,
         shouldEmphasize: true,
         onClick: close => {
           emit('delete', script.value.id);
           close();
         },
       },
-      { name: t`取消` },
+      { name: t`Cancel` },
     ],
   },
   slots: {
-    default: t`<div>确定要删除脚本吗? 此操作无法撤销</div>`,
+    default: t`<div>Are you sure you want to delete this script? This action cannot be undone.</div>`,
   },
 });
 
@@ -170,7 +170,7 @@ const createExportPayload = async (option: ScriptExportOptions): Promise<ScriptE
   if (option.should_strip_data) {
     _.set(to_export, 'data', {});
   }
-  const filename = await getSanitizedFilename(t`酒馆助手脚本-${to_export.name}.json`);
+  const filename = await getSanitizedFilename(t`Tavern-Helper-Script-${to_export.name}.json`);
   const data = JSON.stringify(to_export, null, 2);
   return { filename, data };
 };
@@ -192,25 +192,25 @@ const exportScript = () => {
     attrs: {
       buttons: [
         {
-          name: t`包含数据导出`,
+          name: t`Export with Data`,
           onClick: close => {
             void downloadExport({ should_strip_data: false });
             close();
           },
         },
         {
-          name: t`清除数据导出`,
+          name: t`Export without Data`,
           shouldEmphasize: true,
           onClick: close => {
             void downloadExport({ should_strip_data: true });
             close();
           },
         },
-        { name: t`取消`, onClick: close => close() },
+        { name: t`Cancel`, onClick: close => close() },
       ],
     },
     slots: {
-      default: t`<div>'${script.value.name}' 脚本包含脚本变量，是否要清除？如有 API Key 等敏感数据，注意清除</div>`,
+      default: t`<div>The script '${script.value.name}' contains variables. Would you like to clear them? Please be careful to clear sensitive data such as API Keys.</div>`,
     },
   }).open();
 };

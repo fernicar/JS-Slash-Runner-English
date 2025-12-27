@@ -1,4 +1,4 @@
-/** @deprecated 请使用 `WolrdbookEntry` */
+/** @deprecated Please use `WolrdbookEntry` */
 type LorebookEntry = {
   uid: number;
   display_index: number;
@@ -38,38 +38,38 @@ type LorebookEntry = {
   delay: number | null;
 };
 
-/** @deprecated 请使用 `getWorldbook` */
+/** @deprecated Please use `getWorldbook` */
 type GetLorebookEntriesOption = {
   filter?: 'none' | Partial<LorebookEntry>;
 };
 
-/** @deprecated 请使用 `getWorldbook` */
+/** @deprecated Please use `getWorldbook` */
 declare function getLorebookEntries(lorebook: string): Promise<LorebookEntry[]>;
 
-/** @deprecated 请使用 `replaceWorldbook` */
+/** @deprecated Please use `replaceWorldbook` */
 declare function replaceLorebookEntries(lorebook: string, entries: Partial<LorebookEntry>[]): Promise<void>;
 
-/** @deprecated 请使用 `updateWorldbookWith` */
+/** @deprecated Please use `updateWorldbookWith` */
 type LorebookEntriesUpdater =
   | ((entries: LorebookEntry[]) => Partial<LorebookEntry>[])
   | ((entries: LorebookEntry[]) => Promise<Partial<LorebookEntry>[]>);
 
-/** @deprecated 请使用 `updateWorldbookWith` */
+/** @deprecated Please use `updateWorldbookWith` */
 declare function updateLorebookEntriesWith(lorebook: string, updater: LorebookEntriesUpdater): Promise<LorebookEntry[]>;
 
-/** @deprecated 请使用 `replaceWorldbook` */
+/** @deprecated Please use `replaceWorldbook` */
 declare function setLorebookEntries(
   lorebook: string,
   entries: Array<Pick<LorebookEntry, 'uid'> & Partial<LorebookEntry>>,
 ): Promise<LorebookEntry[]>;
 
-/** @deprecated 请使用 `createWorldbookEntries` */
+/** @deprecated Please use `createWorldbookEntries` */
 declare function createLorebookEntries(
   lorebook: string,
   entries: Partial<LorebookEntry>[],
 ): Promise<{ entries: LorebookEntry[]; new_uids: number[] }>;
 
-/** @deprecated 请使用 `deleteWorldbookEntries` */
+/** @deprecated Please use `deleteWorldbookEntries` */
 declare function deleteLorebookEntries(
   lorebook: string,
   uids: number[],

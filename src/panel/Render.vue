@@ -1,16 +1,16 @@
 <template>
   <Item type="plain">
-    <template #title>{{ t`启用渲染器` }}</template>
-    <template #description>{{ t`启用后，符合条件的代码块将被渲染` }}</template>
+    <template #title>{{ t`Enable Renderer` }}</template>
+    <template #description>{{ t`When enabled, matching code blocks will be rendered` }}</template>
     <template #content>
       <Toggle id="TH-render-enabled" v-model="enabled" />
     </template>
   </Item>
   <Divider />
   <Item type="plain">
-    <template #title>{{ t`启用代码折叠` }}</template>
+    <template #title>{{ t`Enable Code Folding` }}</template>
     <template #description>
-      {{ t`折叠指定类型的代码块，当选择“仅前端”时，将只折叠可渲染成前端界面但没被渲染的代码块` }}
+      {{ t`Collapse specific types of code blocks. When "Frontend Only" is selected, only code blocks that can be rendered as frontend interfaces but aren't rendered will be collapsed` }}
     </template>
     <template #content>
       <RadioButtonGroup v-model="collapse_code_block" :options="collapse_code_block_options" />
@@ -18,9 +18,9 @@
   </Item>
   <Divider />
   <Item type="plain">
-    <template #title>{{ t`启用 Blob URL 渲染` }}</template>
+    <template #title>{{ t`Enable Blob URL Rendering` }}</template>
     <template #description>
-      {{ t`使用 Blob URL 渲染前端界面，更方便 f12 开发者工具调试，若界面出现渲染问题请尝试关闭此选项` }}
+      {{ t`Use Blob URL to render frontend interface, more convenient for f12 developer tools debugging. If interface rendering issues occur, try disabling this option` }}
     </template>
     <template #content>
       <Toggle id="TH-render-use-blob-url" v-model="use_blob_url" />
@@ -28,8 +28,8 @@
   </Item>
   <Divider />
   <Item type="plain">
-    <template #title>{{ t`渲染深度` }}</template>
-    <template #description>{{ t`设置需要渲染的楼层数，从最新楼层开始计数。为 0 时，将渲染所有楼层` }}</template>
+    <template #title>{{ t`Render Depth` }}</template>
+    <template #description>{{ t`Set the number of floors to render, counting from the latest floor. When 0, all floors will be rendered` }}</template>
     <template #content>
       <input v-model="depth" class="text_pole w-3.5!" type="number" :min="0" />
     </template>
@@ -50,7 +50,7 @@
         @click="enabled = !enabled"
       >
         <div class="fa-solid fa-puzzle-piece extensionsMenuExtensionButton" />
-        <span>{{ enabled ? t`关闭前端渲染` : t`开启前端渲染` }}</span>
+        <span>{{ enabled ? t`Disable Frontend Rendering` : t`Enable Frontend Rendering` }}</span>
       </div>
     </div>
   </Teleport>
@@ -71,15 +71,15 @@ const { enabled: macro_enabled } = toRefs(global_settings.settings.macro);
 
 const collapse_code_block_options = [
   {
-    label: t`全部`,
+    label: t`All`,
     value: 'all',
   },
   {
-    label: t`仅前端`,
+    label: t`Frontend Only`,
     value: 'frontend_only',
   },
   {
-    label: t`禁用`,
+    label: t`Disable`,
     value: 'none',
   },
 ];

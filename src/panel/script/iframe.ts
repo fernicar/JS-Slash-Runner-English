@@ -1,7 +1,7 @@
 import { parent_jquery_url, predefine_url } from '@/iframe/script_url';
 import third_party from '@/iframe/third_party_script.html?raw';
 
-// 由于 vue 内使用 `</script>` 存在 bug, 不得不分开写
+// Because there is a bug when using `</script>` within Vue, it must be written separately
 export function createSrcContent(content: string, use_blob_url: boolean) {
   return `<html>
 <head>

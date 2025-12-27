@@ -9,12 +9,12 @@ import { commonEnumProviders, enumIcons } from '@sillytavern/scripts/slash-comma
 import { SlashCommandEnumValue, enumTypes } from '@sillytavern/scripts/slash-commands/SlashCommandEnumValue';
 import { SlashCommandParser } from '@sillytavern/scripts/slash-commands/SlashCommandParser';
 
-/** @deprecated 酒馆助手脚本已自带按钮，不再需要 /STScript */
+/** @deprecated TavernHelper script already has buttons, no longer needed /STScript */
 export function audioEnable(_args: { type: string; state?: string }): string {
   return '';
 }
 
-/** @deprecated 酒馆助手脚本已自带按钮，不再需要 /STScript */
+/** @deprecated TavernHelper script already has buttons, no longer needed /STScript */
 export function audioPlay(args: { type: string; play?: string }): string {
   if (!['bgm', 'ambient'].includes(args.type)) {
     console.warn('WARN: Invalid arguments for /audioplaypause command');
@@ -28,7 +28,7 @@ export function audioPlay(args: { type: string; play?: string }): string {
   return '';
 }
 
-/** @deprecated 酒馆助手脚本已自带按钮，不再需要 /STScript */
+/** @deprecated TavernHelper script already has buttons, no longer needed /STScript */
 export function audioMode(args: any): string {
   if (!['bgm', 'ambient'].includes(args.type) || !['repeat', 'random', 'single', 'stop'].includes(args.mode)) {
     console.warn('WARN: Invalid arguments for /audiomode command');
@@ -49,7 +49,7 @@ export function audioMode(args: any): string {
   return '';
 }
 
-/** @deprecated 酒馆助手脚本已自带按钮，不再需要 /STScript */
+/** @deprecated TavernHelper script already has buttons, no longer needed /STScript */
 export function audioImport(args: { type: string; play?: string }, url: string): string {
   if (!['bgm', 'ambient'].includes(args.type)) {
     console.warn('WARN: Invalid arguments for /audioplaypause command');
@@ -82,7 +82,7 @@ export function audioImport(args: { type: string; play?: string }, url: string):
   return '';
 }
 
-/** @deprecated 酒馆助手脚本已自带按钮，不再需要 /STScript */
+/** @deprecated TavernHelper script already has buttons, no longer needed /STScript */
 export function audioSelect(args: { type: string }, url: string): string {
   if (!url) {
     console.warn('WARN: Missing URL for /audioselect command');
@@ -99,17 +99,17 @@ export function audioSelect(args: { type: string }, url: string): string {
   return '';
 }
 
-/** @deprecated 酒馆助手脚本已自带按钮，不再需要 /STScript */
+/** @deprecated TavernHelper script already has buttons, no longer needed /STScript */
 export function initSlashAudio() {
   SlashCommandParser.addCommandObject(
     SlashCommand.fromProps({
       name: 'audioenable',
-      // @ts-expect-error 实际可用，仅用于兼容旧应用，因此不考虑怎么修复类型错误
+      // @ts-expect-error Actually usable, only for compatibility with old apps, so ignoring type error fixes
       callback: audioEnable,
       namedArgumentList: [
         SlashCommandNamedArgument.fromProps({
           name: 'type',
-          description: '选择控制的播放器 (bgm 或 ambient)',
+          description: 'Select player to control (bgm or ambient)',
           typeList: [ARGUMENT_TYPE.STRING],
           enumList: [
             new SlashCommandEnumValue('bgm', null, enumTypes.enum, enumIcons.file),
@@ -119,7 +119,7 @@ export function initSlashAudio() {
         }),
         new SlashCommandNamedArgument(
           'state',
-          '打开或关闭播放器',
+          'Open or close player',
           [ARGUMENT_TYPE.STRING],
           false,
           false,
@@ -129,18 +129,18 @@ export function initSlashAudio() {
       ],
       helpString: `
         <div>
-            控制音乐播放器或音效播放器的开启与关闭。
+            Control opening and closing of music player or sound effect player 。
         </div>
         <div>
             <strong>Example:</strong>
             <ul>
                 <li>
                     <pre><code>/audioenable type=bgm state=true</code></pre>
-                    打开音乐播放器。
+                    Open music player 。
                 </li>
                 <li>
                     <pre><code>/audioenable type=ambient state=false</code></pre>
-                    关闭音效播放器。
+                    Close sound effect player 。
                 </li>
             </ul>
         </div>
@@ -151,12 +151,12 @@ export function initSlashAudio() {
   SlashCommandParser.addCommandObject(
     SlashCommand.fromProps({
       name: 'audioplay',
-      // @ts-expect-error 实际可用，仅用于兼容旧应用，因此不考虑怎么修复类型错误
+      // @ts-expect-error Actually usable, only for compatibility with old apps, so ignoring type error fixes
       callback: audioPlay,
       namedArgumentList: [
         SlashCommandNamedArgument.fromProps({
           name: 'type',
-          description: '选择控制的播放器 (bgm 或 ambient)',
+          description: 'Select player to control (bgm or ambient)',
           typeList: [ARGUMENT_TYPE.STRING],
           enumList: [
             new SlashCommandEnumValue('bgm', null, enumTypes.enum, enumIcons.file),
@@ -166,7 +166,7 @@ export function initSlashAudio() {
         }),
         new SlashCommandNamedArgument(
           'play',
-          '播放或暂停',
+          'Play or pause',
           [ARGUMENT_TYPE.STRING],
           true,
           false,
@@ -176,18 +176,18 @@ export function initSlashAudio() {
       ],
       helpString: `
         <div>
-            控制音乐播放器或音效播放器的播放与暂停。
+            Control play and pause of music player or sound effect player 。
         </div>
         <div>
             <strong>Example:</strong>
             <ul>
                 <li>
                     <pre><code>/audioplay type=bgm</code></pre>
-                    播放当前音乐。
+                    Play current music 。
                 </li>
                 <li>
                     <pre><code>/audioplay type=ambient play=false</code></pre>
-                    暂停当前音效。
+                    Pause current sound effect 。
                 </li>
             </ul>
         </div>
@@ -198,12 +198,12 @@ export function initSlashAudio() {
   SlashCommandParser.addCommandObject(
     SlashCommand.fromProps({
       name: 'audioselect',
-      // @ts-expect-error 实际可用，仅用于兼容旧应用，因此不考虑怎么修复类型错误
+      // @ts-expect-error Actually usable, only for compatibility with old apps, so ignoring type error fixes
       callback: audioSelect,
       namedArgumentList: [
         SlashCommandNamedArgument.fromProps({
           name: 'type',
-          description: '选择播放器类型 (bgm 或 ambient)',
+          description: 'Select player type (bgm or ambient)',
           typeList: [ARGUMENT_TYPE.STRING],
           enumList: [
             new SlashCommandEnumValue('bgm', null, enumTypes.enum, enumIcons.file),
@@ -215,18 +215,18 @@ export function initSlashAudio() {
       unnamedArgumentList: [new SlashCommandArgument('url', [ARGUMENT_TYPE.STRING], true)],
       helpString: `
         <div>
-            选择并播放音频。如果音频链接不存在，则先导入再播放。
+            Select and play audio. If audio link does not exist, import first then play 。
         </div>
         <div>
             <strong>Example:</strong>
             <ul>
                 <li>
                     <pre><code>/audioselect type=bgm https://example.com/song.mp3</code></pre>
-                    选择并播放指定的音乐。
+                    Select and play specified music 。
                 </li>
                 <li>
                     <pre><code>/audioselect type=ambient https://example.com/sound.mp3</code></pre>
-                    选择并播放指定的音效。
+                    Select and play specified sound effect 。
                 </li>
             </ul>
         </div>
@@ -237,12 +237,12 @@ export function initSlashAudio() {
   SlashCommandParser.addCommandObject(
     SlashCommand.fromProps({
       name: 'audioimport',
-      // @ts-expect-error 实际可用，仅用于兼容旧应用，因此不考虑怎么修复类型错误
+      // @ts-expect-error Actually usable, only for compatibility with old apps, so ignoring type error fixes
       callback: audioImport,
       namedArgumentList: [
         SlashCommandNamedArgument.fromProps({
           name: 'type',
-          description: '选择导入类型 (bgm 或 ambient)',
+          description: 'Select import type (bgm or ambient)',
           typeList: [ARGUMENT_TYPE.STRING],
           enumList: [
             new SlashCommandEnumValue('bgm', null, enumTypes.enum, enumIcons.file),
@@ -252,7 +252,7 @@ export function initSlashAudio() {
         }),
         SlashCommandNamedArgument.fromProps({
           name: 'play',
-          description: '导入后是否立即播放第一个链接',
+          description: 'Whether to play the first link immediately after import',
           typeList: [ARGUMENT_TYPE.BOOLEAN],
           defaultValue: 'true',
           isRequired: false,
@@ -261,18 +261,18 @@ export function initSlashAudio() {
       unnamedArgumentList: [new SlashCommandArgument('url', [ARGUMENT_TYPE.STRING], true)],
       helpString: `
         <div>
-            导入音频或音乐链接，并决定是否立即播放，默认为自动播放。可批量导入链接，使用英文逗号分隔。
+            Import audio or music links and decide whether to play immediately, defaults to auto-play. Can batch import links, separated by commas 。
         </div>
         <div>
             <strong>Example:</strong>
             <ul>
                 <li>
                     <pre><code>/audioimport type=bgm https://example.com/song1.mp3,https://example.com/song2.mp3</code></pre>
-                    导入 BGM 音乐并立即播放第一个链接。
+                    Import BGM music and immediately play the first link 。
                 </li>
                 <li>
                     <pre><code>/audioimport type=ambient play=false url=https://example.com/sound1.mp3,https://example.com/sound2.mp3 </code></pre>
-                    导入音效链接 (不自动播放)。
+                    Import sound effect link (do not auto-play)。
                 </li>
             </ul>
         </div>
@@ -287,7 +287,7 @@ export function initSlashAudio() {
       namedArgumentList: [
         SlashCommandNamedArgument.fromProps({
           name: 'type',
-          description: '选择控制的播放器 (bgm 或 ambient)',
+          description: 'Select player to control (bgm or ambient)',
           typeList: [ARGUMENT_TYPE.STRING],
           enumList: [
             new SlashCommandEnumValue('bgm', null, enumTypes.enum, enumIcons.file),
@@ -297,7 +297,7 @@ export function initSlashAudio() {
         }),
         SlashCommandNamedArgument.fromProps({
           name: 'mode',
-          description: '选择播放模式',
+          description: 'Select playback mode',
           typeList: [ARGUMENT_TYPE.STRING],
           enumList: [
             new SlashCommandEnumValue('repeat', null, enumTypes.enum),
@@ -310,26 +310,26 @@ export function initSlashAudio() {
       ],
       helpString: `
         <div>
-            设置音频播放模式。
+            Set audio playback mode 。
         </div>
         <div>
             <strong>Example:</strong>
             <ul>
                 <li>
                     <pre><code>/audiomode type=bgm mode=repeat</code></pre>
-                    设置音乐为循环播放模式。
+                    Set music to loop mode 。
                 </li>
                 <li>
                     <pre><code>/audiomode type=ambient mode=random</code></pre>
-                    设置音效为随机播放模式。
+                    Set sound effect to shuffle mode 。
                 </li>
                 <li>
                     <pre><code>/audiomode type=bgm mode=single</code></pre>
-                    设置音乐为单曲循环模式。
+                    Set music to single loop mode 。
                 </li>
                 <li>
                     <pre><code>/audiomode type=ambient mode=stop</code></pre>
-                    设置音效为停止播放模式。
+                    Set sound effect to stop mode 。
                 </li>
             </ul>
         </div>

@@ -1,7 +1,7 @@
 <template>
   <!-- prettier-ignore -->
   <div class="relative h-full w-full overflow-hidden">
-    <!-- 文本编辑：正常模式显示 textarea -->
+    <!-- Text edit: Normal mode display textarea -->
     <textarea
       v-show="!isSearching"
       ref="textareaRef"
@@ -11,7 +11,7 @@
       @blur="handleSave"
     ></textarea>
 
-    <!-- 搜索模式：隐藏 textarea，显示高亮 div（样式复制自 textarea） -->
+    <!-- Search mode: Hide textarea, show highlighted div (style copied from textarea） -->
     <div
       v-show="isSearching"
       ref="highlightRef"
@@ -43,9 +43,9 @@ const isInitialized = ref(false);
 const isSearching = computed(() => props.searchInput !== null);
 
 /**
- * 格式化对象为可读的JSON文本
- * @param {any} data - 要格式化的数据
- * @returns {string} 格式化后的JSON字符串
+ * Format object to readable JSON text
+ * @param {any} data - Data to format
+ * @returns {string} Formatted JSON string
  */
 const formatDataToText = (data: any): string => {
   try {
@@ -57,12 +57,12 @@ const formatDataToText = (data: any): string => {
 };
 
 /**
- * 解析文本为对象
- * @param {string} text - 要解析的JSON文本
- * @returns {Object} 解析结果
- * @returns {any} returns.data - 解析后的数据
- * @returns {boolean} returns.success - 是否解析成功
- * @returns {string} returns.error - 错误信息（如果有）
+ * Parse text to object
+ * @param {string} text - JSON text to parse
+ * @returns {Object} Parse Result
+ * @returns {any} returns.data - Parsed data
+ * @returns {boolean} returns.success - Whether parse successful
+ * @returns {string} returns.error - Error info (if any ）
  */
 const parseTextToData = (text: string): { data: any; success: boolean; error?: string } => {
   try {
@@ -75,7 +75,7 @@ const parseTextToData = (text: string): { data: any; success: boolean; error?: s
 };
 
 /**
- * 保存文本内容的更改
+ * Save text content changes
  */
 const handleSave = () => {
   if (!isDirty.value) return;
@@ -83,19 +83,19 @@ const handleSave = () => {
   const { data, success, error } = parseTextToData(textContent.value);
 
   if (!success) {
-    toastr.error(`JSON 格式错误: ${error || '未知错误'}`);
-    // 恢复原始内容
+    toastr.error(`JSON Format error: ${error || 'Unknown error'}`);
+    // Restore original content
     textContent.value = formatDataToText(props.data);
     isDirty.value = false;
     return;
   }
 
-  // 检查数据类型是否匹配
+  // Check if data type matches
   const isOriginalArray = Array.isArray(props.data);
   const isParsedArray = Array.isArray(data);
 
   if (isOriginalArray !== isParsedArray) {
-    toastr.error('数据类型不匹配，无法保存');
+    toastr.error('Data type mismatch, cannot save');
     textContent.value = formatDataToText(props.data);
     isDirty.value = false;
     return;
@@ -103,10 +103,10 @@ const handleSave = () => {
 
   emit('update:data', data);
   isDirty.value = false;
-  toastr.success('文本内容已保存');
+  toastr.success('Text content saved');
 };
 
-// 初始化文本内容
+// Initialize text content
 watch(
   () => props.data,
   newData => {
@@ -126,7 +126,7 @@ watch(textContent, () => {
   }
 });
 
-// 点击外部保存
+// Click outside to save
 const stopClickOutside = onClickOutside(textareaRef, () => {
   handleSave();
 });
@@ -138,7 +138,7 @@ onBeforeUnmount(() => {
 });
 
 /**
- * 复制 textarea 的关键样式到高亮容器，确保无感切换
+ * Copy textarea key styles to highlight container, ensure seamless switching
  */
 function copyTextareaStyles() {
   const ta = textareaRef.value;
@@ -175,7 +175,7 @@ function copyTextareaStyles() {
   hi.style.overflow = 'auto';
 }
 
-// 切换搜索视图时，同步滚动位置并复制样式
+// Sync scroll position and copy style when switching search view
 watch(isSearching, async val => {
   await nextTick();
   if (val) {

@@ -15,7 +15,7 @@
             class="fa-solid"
             :class="{ 'fa-arrow-up-short-wide': sync_bottom, 'fa-arrow-down-short-wide': !sync_bottom }"
           ></i>
-          <span>{{ sync_bottom ? t`追踪最新` : t`正序显示` }}</span>
+          <span>{{ sync_bottom ? t`Track Latest` : t`Normal Order` }}</span>
         </button>
         <div class="flex items-center gap-0.5">
           <input v-model="from" type="number" class="TH-floor-input" :min="0" :max="chat_length - 1" />
@@ -32,9 +32,9 @@
           {{ t`楼` }}
         </div>
       </div>
-      <div class="mr-0.5">{{ t`最新楼层号` }}: {{ chat_length - 1 }}</div>
+      <div class="mr-0.5">{{ t`Latest Floor Number` }}: {{ chat_length - 1 }}</div>
     </div>
-    <!-- 将 sync_bottom 作为 key, 从而在切换 sync_bottom 时刷新整个 VirtList, 避免存在大量空白 -->
+    <!-- Use sync_bottom as key, so entire VirtList refreshes when switching sync_bottom, avoiding large blank spaces -->
     <VirtList
       :key="sync_bottom ? 'bottom' : 'top'"
       item-key="message_id"

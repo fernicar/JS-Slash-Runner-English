@@ -13,7 +13,7 @@ useIntervalFn(() => {
   const new_variables = get_variables_without_clone({ type: 'chat' });
   if (!_.isEqual(variables.value, new_variables)) {
     ignoreUpdates(() => {
-      // 酒馆可能用 /flushvar 等直接修改对象内部, 因此要拷贝一份从而能被 _.isEqual 判定
+      // Tavern might use /flushvar etc. to directly modify the object internally, so a copy is required to be detected by _.isEqual
       variables.value = klona(new_variables);
     });
   }

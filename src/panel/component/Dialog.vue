@@ -36,7 +36,7 @@
                 relative z-20 flex cursor-pointer items-center justify-center rounded-md border-none bg-transparent
                 th-text-base!
               "
-              :title="is_collapsed ? t`展开` : t`折叠`"
+              :title="is_collapsed ? t`Expand` : t`Collapse`"
               @click="toggleCollapse"
             >
               <i :class="is_collapsed ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-up'"></i>
@@ -47,7 +47,7 @@
                 fa-solid fa-close relative z-20 flex cursor-pointer items-center justify-center rounded-md border-none
                 bg-transparent th-text-base!
               "
-              :title="t`关闭`"
+              :title="t`Close`"
               @click="emit('close')"
             ></div>
           </div>
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <!-- 调整大小手柄 -->
+      <!-- Resize handles -->
       <div
         v-for="handle in enabled_handles"
         :key="handle.name"
@@ -90,50 +90,50 @@ interface ResizeHandle {
 }
 
 /**
- * 对话框组件属性定义
+ * Dialog component props definition
  */
 const props = withDefaults(
   defineProps<{
-    // 桌面端宽度，单位可以是px、vw等
+    // Desktop width, unit can be px, vw, etc.
     width?: string | number;
-    // 桌面端高度，单位可以是px、vh等
+    // Desktop height, unit can be px, vh, etc.
     height?: string | number;
-    // 移动端高度，单位可以是px、vh等
+    // Mobile height, unit can be px, vh, etc.
     mobileHeight?: string | number;
-    // 标题文本，由外部传入
+    // Title text, passed from outside
     title?: string;
-    // 是否显示使用指南
+    // Whether to show usage guide
     showGuide?: boolean;
-    // 是否可拖拽
+    // Whether it is draggable
     draggable?: boolean;
-    // 是否可调整大小
+    // Whether it is resizable
     resizable?: boolean;
-    // 最小宽度
+    // Minimum width
     minWidth?: string | number;
-    // 最小高度
+    // Minimum height
     minHeight?: string | number;
-    // 最大宽度
+    // Maximum width
     maxWidth?: string | number;
-    // 最大高度
+    // Maximum height
     maxHeight?: string | number;
-    // 启用边缘吸附（仅PC端）
+    // Enable edge snapping (PC only)
     edgeSnap?: boolean;
-    // 边缘吸附触发距离
+    // Edge snap trigger distance
     snapDistance?: number;
-    // 调整大小手柄
+    // Resize handles
     handles?: Array<'tl' | 'tm' | 'tr' | 'mr' | 'br' | 'bm' | 'bl' | 'ml'>;
-    // 初始X位置（left）
+    // Initial X position (left)
     initialX?: number | string | (() => number);
-    // 初始Y位置（top）
+    // Initial Y position (top)
     initialY?: number | (() => number);
-    // 本地存储ID
+    // Local storage ID
     storageId?: string;
   }>(),
   {
     width: '60dvw',
     height: '70dvh',
     mobileHeight: '90%',
-    title: '未命名浮窗',
+    title: 'Untitled Floating Window',
     showGuide: false,
     draggable: true,
     resizable: true,
@@ -202,35 +202,35 @@ let dragLastMouseY = 0;
 const is_collapsed = ref(false);
 
 /**
- * 切换浮窗折叠/展开状态
- * @description 切换浮窗的折叠状态，折叠时只显示标题栏，展开时显示完整内容
- * 切换后会自动检查并调整边界位置
+ * Toggle floating window collapse/expand state
+ * @description Toggles the collapse state of the floating window. When collapsed, only the title bar is displayed.
+ * After toggling, it automatically checks and adjusts boundary positions.
  */
 function toggleCollapse() {
   is_resizing.value = false;
   resize_direction.value = '';
   is_collapsed.value = !is_collapsed.value;
 
-  // 折叠状态变化后检查边界
+  // Check boundaries after collapse state change
   setTimeout(() => {
     checkAndAdjustBounds();
   }, 10);
 }
 
 /**
- * 打开使用指南弹窗
- * @description 触发使用指南弹窗的显示，通过emit向父组件发送事件
+ * Open usage guide popup
+ * @description Triggers the display of the usage guide popup by emitting an event to the parent component.
  */
 function openGuidePopup() {
   emit('openGuidePopup');
 }
 
 /**
- * 统一的单位转换函数 - 将任何单位转换为像素值
- * @param {string | number} value - 需要转换的值，支持px、vw、vh、%、rem等单位
- * @param {'width' | 'height'} dimension - 维度类型，用于百分比计算的参考维度
- * @returns {number} 转换后的像素值
- * @description 支持多种CSS单位转换为像素值，包括视口单位、百分比、rem等
+ * Unified unit conversion function - Converts any unit to pixel values
+ * @param {string | number} value - Value to convert, supports units like px, vw, vh, %, rem, etc.
+ * @param {'width' | 'height'} dimension - Dimension type used as reference for percentage calculations
+ * @returns {number} Converted pixel value
+ * @description Supports converting various CSS units to pixels, including viewport units, percentages, rem, etc.
  */
 const convertToPixels = (value: string | number, dimension: 'width' | 'height' = 'width'): number => {
   if (typeof value === 'number') return value;
@@ -294,9 +294,9 @@ if (typeof window !== 'undefined') {
 }
 
 /**
- * 初始化浮窗大小
- * @description 根据props中的宽度和高度设置初始化浮窗大小，区分移动端和桌面端
- * 同时计算并保存初始宽高比
+ * Initialize floating window size
+ * @description Sets the initial size based on the width and height props, differentiating between mobile and desktop.
+ * Also calculates and saves the initial aspect ratio.
  */
 const initizeSize = () => {
   const target_width = is_mobile ? '100%' : props.width;
@@ -321,9 +321,9 @@ const throttledAdjustBounds = useThrottleFn(() => {
 }, 100);
 
 /**
- * 获取浮窗初始位置
- * @returns {object} 返回包含x和y坐标的位置对象
- * @description 根据props中的初始位置设置计算浮窗的初始位置，支持函数、字符串和数值格式
+ * Get initial position of floating window
+ * @returns {object} Returns position object containing x and y coordinates
+ * @description Calculates the initial position of the floating window based on props, supporting function, string, and numeric formats.
  */
 const getinitPosition = () => {
   const getInitValue = (value: number | string | (() => number), dimension: 'width' | 'height'): number => {
@@ -349,9 +349,9 @@ const y = ref(initial_position.y);
 const is_dragging = ref(false);
 
 /**
- * 获取本地存储键名
- * @returns {string | null} 返回存储键名，如果未提供storageId则返回null
- * @description 根据storageId生成唯一的本地存储键名，用于持久化浮窗状态
+ * Get local storage key name
+ * @returns {string | null} Returns storage key name, or null if storageId is not provided
+ * @description Generates a unique local storage key based on storageId to persist the floating window state.
  */
 function getStorageKey(): string | null {
   if (!props.storageId) {
@@ -363,7 +363,7 @@ function getStorageKey(): string | null {
 const __storage_key = getStorageKey();
 
 if (!props.storageId) {
-  console.warn('[TH-Dialog] storageId 未提供，状态将不会持久化到本地存储。');
+  console.warn('[TH-Dialog] storageId not provided, state will not be persisted to local storage.');
 }
 
 interface PositionStorage {
@@ -388,12 +388,12 @@ const size_storage = props.storageId
   : ref<SizeStorage>({});
 
 /**
- * 从持久化数据中提取数值
- * @param {Record<string, any>} obj - 包含持久化数据的对象
- * @param {readonly [string, string]} primary - 主要键名数组
- * @param {readonly [string, string]} fallback - 备用键名数组
- * @returns {{a?: number, b?: number} | null} 返回提取的数值对象或null
- * @description 从持久化存储中提取数值，优先使用主要键名，如果不存在则使用备用键名
+ * Extract values from persisted data
+ * @param {Record<string, any>} obj - Object containing persisted data
+ * @param {readonly [string, string]} primary - Array of primary key names
+ * @param {readonly [string, string]} fallback - Array of fallback key names
+ * @returns {{a?: number, b?: number} | null} Returns extracted numeric values or null
+ * @description Extracts numeric values from persistent storage, prioritizing primary keys, then fallbacks if necessary.
  */
 function pickPersistedValue(
   obj: Record<string, any>,
@@ -412,10 +412,10 @@ function pickPersistedValue(
 }
 
 /**
- * 保存浮窗位置到本地存储
- * @param {number} left - 左边距
- * @param {number} top - 上边距
- * @description 将浮窗的当前位置保存到本地存储中，仅在非移动端且有storageId时生效
+ * Save floating window position to local storage
+ * @param {number} left - Left margin
+ * @param {number} top - Top margin
+ * @description Saves current position to local storage; only active for non-mobile devices when storageId is present.
  */
 function savePosition(left: number, top: number) {
   if (!__storage_key || is_mobile) return;
@@ -423,15 +423,15 @@ function savePosition(left: number, top: number) {
     position_storage.value.left = left;
     position_storage.value.top = top;
   } catch (err) {
-    console.warn('[TH-Dialog] 保存位置失败:', err);
+    console.warn('[TH-Dialog] Failed to save position:', err);
   }
 }
 
 /**
- * 保存浮窗大小到本地存储
- * @param {number} width - 宽度
- * @param {number} height - 高度
- * @description 将浮窗的当前大小保存到本地存储中，移动端和桌面端分别存储不同的字段
+ * Save floating window size to local storage
+ * @param {number} width - Width
+ * @param {number} height - Height
+ * @description Saves current size to local storage, using different fields for mobile and desktop.
  */
 function saveSize(width: number, height: number) {
   if (!__storage_key) return;
@@ -443,14 +443,14 @@ function saveSize(width: number, height: number) {
       size_storage.value.height = height;
     }
   } catch (err) {
-    console.warn('[TH-Dialog] 保存大小失败:', err);
+    console.warn('[TH-Dialog] Failed to save size:', err);
   }
 }
 
 /**
- * 从本地存储加载浮窗位置
- * @returns {{left: number, top: number} | null} 返回加载的位置信息或null
- * @description 从本地存储中加载之前保存的浮窗位置，仅在非移动端且有storageId时生效
+ * Load floating window position from local storage
+ * @returns {{left: number, top: number} | null} Returns loaded position or null
+ * @description Loads previously saved position from local storage; only active for non-mobile devices when storageId is present.
  */
 function loadPosition(): { left: number; top: number } | null {
   if (!__storage_key || is_mobile) return null;
@@ -461,15 +461,15 @@ function loadPosition(): { left: number; top: number } | null {
       return { left: picked.a, top: picked.b };
     }
   } catch (err) {
-    console.warn('[TH-Dialog] 加载位置失败:', err);
+    console.warn('[TH-Dialog] Failed to load position:', err);
   }
   return null;
 }
 
 /**
- * 从本地存储加载浮窗大小
- * @returns {{width: number, height: number} | null} 返回加载的大小信息或null
- * @description 从本地存储中加载之前保存的浮窗大小，移动端和桌面端分别处理不同的存储字段
+ * Load floating window size from local storage
+ * @returns {{width: number, height: number} | null} Returns loaded size or null
+ * @description Loads previously saved size from local storage, handling mobile and desktop storage fields separately.
  */
 function loadSize(): { width: number; height: number } | null {
   if (!__storage_key) return null;
@@ -493,15 +493,15 @@ function loadSize(): { width: number; height: number } | null {
       return { width: widthValue, height: heightValue };
     }
   } catch (err) {
-    console.warn('[TH-Dialog] 加载大小失败:', err);
+    console.warn('[TH-Dialog] Failed to load size:', err);
   }
   return null;
 }
 
 /**
- * 检查并调整浮窗边界，确保不超出视口
- * @description 检查浮窗的位置和大小是否超出视口边界，如果超出则自动调整到合理范围内
- * 同时处理移动端和桌面端的不同边界限制逻辑
+ * Check and adjust floating window bounds to ensure it stays within the viewport
+ * @description Checks if position and size exceed viewport boundaries. If so, automatically adjusts them to a reasonable range.
+ * Handles different boundary restriction logic for mobile vs desktop.
  */
 function checkAndAdjustBounds() {
   const viewport_width = window.innerWidth;
@@ -509,7 +509,7 @@ function checkAndAdjustBounds() {
 
   let adjusted = false;
 
-  const max_width = viewport_width * 0.95; // 留出5%的边距
+  const max_width = viewport_width * 0.95; // Leave 5% margin
   const max_height = viewport_height * 0.95;
 
   if (is_mobile) {
@@ -523,7 +523,7 @@ function checkAndAdjustBounds() {
     adjusted = true;
   }
 
-  // 移动端不对高度做强制限制，避免输入法弹出导致压缩高度
+  // Mobile does not force height restrictions to prevent compression when input method pops up
   if (!is_mobile && dialog_size.value.height > max_height) {
     dialog_size.value.height = max_height;
     adjusted = true;
@@ -600,28 +600,28 @@ onBeforeUnmount(() => {
 });
 
 /*
- * 监听视口大小变化
+ * Listen for viewport size changes
  */
 useResizeObserver(document.body, () => {
   throttledAdjustBounds();
 });
 
 /**
- * 开始拖拽操作
- * @param {PointerEvent} event - 鼠标或触摸事件对象
- * @description 处理浮窗的拖拽开始逻辑，包括事件处理、边界检查、边缘吸附等功能
- * 支持拖拽过程中的实时位置更新和事件发射
+ * Start drag operation
+ * @param {PointerEvent} event - Mouse or touch event object
+ * @description Handles start logic for dragging the floating window, including event handling, boundary checks, and edge snapping.
+ * Supports real-time position updates and event emission during dragging.
  */
 /**
- * 边缘吸附检测 - 基于鼠标位置判断是否应该吸附到屏幕边缘
- * @param {number} mouseX - 鼠标X坐标
- * @param {number} _mouseY - 鼠标Y坐标（未使用）
- * @param {number} left - 当前浮窗左边距
- * @param {number} top - 当前浮窗上边距
- * @param {number} width - 当前浮窗宽度
- * @param {number} height - 当前浮窗高度
- * @returns {object} 返回吸附后的位置和大小信息
- * @description 检测鼠标是否靠近屏幕边缘，如果是则返回吸附到边缘的位置和全屏大小
+ * Edge snap detection - Determines if the window should snap to screen edges based on mouse position
+ * @param {number} mouseX - Mouse X coordinate
+ * @param {number} _mouseY - Mouse Y coordinate (unused)
+ * @param {number} left - Current floating window left margin
+ * @param {number} top - Current floating window top margin
+ * @param {number} width - Current floating window width
+ * @param {number} height - Current floating window height
+ * @returns {object} Returns snapped position and size information
+ * @description Detects if mouse is near screen edges; if so, returns position snapped to edge and full height.
  */
 const checkEdgeSnap = (mouseX: number, _mouseY: number, left: number, top: number, width: number, height: number) => {
   if (!props.edgeSnap || is_mobile) {
@@ -632,7 +632,7 @@ const checkEdgeSnap = (mouseX: number, _mouseY: number, left: number, top: numbe
   const screen_height = window.innerHeight;
   const snap_dist = props.snapDistance;
 
-  // 基于鼠标位置判断是否靠近左边缘
+  // Determine if near left edge based on mouse position
   if (mouseX <= snap_dist) {
     return {
       left: 0,
@@ -643,7 +643,7 @@ const checkEdgeSnap = (mouseX: number, _mouseY: number, left: number, top: numbe
     };
   }
 
-  // 基于鼠标位置判断是否靠近右边缘
+  // Determine if near right edge based on mouse position
   if (mouseX >= screen_width - snap_dist) {
     return {
       left: screen_width - width,
@@ -760,9 +760,9 @@ useDraggable(dialog_ref, {
 });
 
 /**
- * 调整大小手柄配置
- * @description 定义浮窗各个方向的调整大小手柄的样式和位置配置
- * 包括8个方向：左上、上、右上、右、右下、下、左下、左
+ * Resize handle configuration
+ * @description Defines the style and position configuration for each resize handle on the floating window.
+ * Includes 8 directions: top-left, top, top-right, right, bottom-right, bottom, bottom-left, left.
  */
 const handle_configs: Record<string, ResizeHandle> = {
   tl: {
@@ -859,8 +859,8 @@ const enabled_handles = computed(() => {
 });
 
 /**
- * 移动端专用调整大小逻辑
- * @description 仅允许通过底部手柄调节高度，始终保持全宽
+ * Mobile-specific resize logic
+ * @description Only allows height adjustment via the bottom handle, always maintaining full width.
  */
 const startMobileResize = (direction: string, event: PointerEvent) => {
   if (direction !== 'bottom') {
@@ -932,11 +932,11 @@ const startMobileResize = (direction: string, event: PointerEvent) => {
 };
 
 /**
- * 开始调整大小操作
- * @param {string} direction - 调整方向，如'tl', 'tm', 'tr'等
- * @param {PointerEvent} event - 鼠标或触摸事件对象
- * @description 处理浮窗的调整大小开始逻辑，支持8个方向的调整
- * 包括最小/最大尺寸限制、实时更新和事件发射
+ * Start resize operation
+ * @param {string} direction - Resize direction, e.g., 'tl', 'tm', 'tr', etc.
+ * @param {PointerEvent} event - Mouse or touch event object
+ * @description Handles start logic for resizing the floating window, supporting 8 directions.
+ * Includes min/max size constraints, real-time updates, and event emission.
  */
 const startResize = (direction: string, event: PointerEvent) => {
   if (!props.resizable || is_collapsed.value) return;
@@ -1042,9 +1042,9 @@ const startResize = (direction: string, event: PointerEvent) => {
 };
 
 /**
- * 对话框样式计算
- * @description 根据对话框大小、位置、状态等计算对话框样式
- * @returns {object} 返回对话框样式对象
+ * Dialog style calculation
+ * @description Calculates the dialog style based on size, position, state, etc.
+ * @returns {object} Returns the style object for the dialog
  */
 const dialog_style = computed(() => {
   const user_select = is_dragging.value || is_resizing.value ? ('none' as const) : ('auto' as const);
@@ -1062,7 +1062,7 @@ const dialog_style = computed(() => {
   } else {
     return {
       position: position,
-      // 避免触发布局与重绘
+      // Avoid triggering layout and paint
       transform: `translate3d(${x.value}px, ${y.value}px, 0)`,
       willChange: 'transform',
       left: '0px',

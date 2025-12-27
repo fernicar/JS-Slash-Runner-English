@@ -2,42 +2,42 @@
   <Popup
     :buttons="[
       {
-        name: t`确认`,
+        name: t`Confirm`,
         shouldEmphasize: true,
         onClick: submit,
       },
-      { name: t`取消` },
+      { name: t`Cancel` },
     ]"
   >
     <div class="flex flex-col gap-0.5">
       <div class="flex items-center justify-center gap-0.5">
-        <h3>{{ t`导入音频链接` }}</h3>
+        <h3>{{ t`Import Audio Links` }}</h3>
       </div>
 
-      <!-- Tab 切换按钮 -->
+      <!-- Tab Switch Buttons -->
       <div class="mb-0.5 flex items-center gap-0.25">
         <button
           class="menu_button interactable flex-1"
           :class="{ 'bg-(--SmartThemeQuoteColor)! font-bold filter-none!': active_tab === 'single' }"
           @click="active_tab = 'single'"
         >
-          {{ t`单个添加` }}
+          {{ t`Single Add` }}
         </button>
         <button
           class="menu_button interactable flex-1"
           :class="{ 'bg-(--SmartThemeQuoteColor)! font-bold filter-none!': active_tab === 'batch' }"
           @click="active_tab = 'batch'"
         >
-          {{ t`批量导入` }}
+          {{ t`Batch Import` }}
         </button>
       </div>
 
-      <!-- 单个添加模式 -->
+      <!-- Single Add Mode -->
       <div v-if="active_tab === 'single'" class="flex flex-col gap-0.5">
         <div v-for="(item, index) in items" :key="index" class="flex items-center gap-0.25">
           <div class="flex w-full gap-0.25">
-            <input v-model="item.title" type="text" :placeholder="t`标题（可选）`" class="text_pole flex-1" />
-            <input v-model="item.url" type="text" :placeholder="t`音频链接 URL`" class="text_pole flex-2" />
+            <input v-model="item.title" type="text" :placeholder="t`Title (Optional)`" class="text_pole flex-1" />
+            <input v-model="item.url" type="text" :placeholder="t`Audio Link URL`" class="text_pole flex-2" />
           </div>
           <button
             v-if="items.length > 1"
@@ -48,19 +48,19 @@
           </button>
         </div>
         <button class="menu_button interactable w-full!" @click="addItem">
-          <i class="fa-solid fa-plus"></i> {{ t`添加更多` }}
+          <i class="fa-solid fa-plus"></i> {{ t`Add More` }}
         </button>
       </div>
 
-      <!-- 批量导入模式 -->
+      <!-- Batch Import Mode -->
       <div v-else-if="active_tab === 'batch'" class="flex flex-col gap-0.5">
         <small>
-          {{ t`每行一个链接，可选格式：URL 或 URL,标题` }}
+          {{ t`One link per line, optional format: URL or URL,Title` }}
         </small>
         <textarea
           v-model="batch_text"
           :placeholder="
-            t`示例：&#10;https://example.com/audio1.mp3&#10;https://example.com/audio2.mp3,我的音乐&#10;https://example.com/audio3.mp3`
+            t`Example:&#10;https://example.com/audio1.mp3&#10;https://example.com/audio2.mp3,My Music&#10;https://example.com/audio3.mp3`
           "
           rows="10"
           class="text_pole font-(family-name:--monoFontFamily)!"
@@ -86,14 +86,14 @@ const submit = (close: () => void) => {
   let validItems: { title: string; url: string }[] = [];
 
   if (active_tab.value === 'single') {
-    // 单个添加模式：过滤出有效的项（至少有 URL）
+    // Single Add Mode: Filter valid items (at least has URL)
     validItems = items.value
       .filter(item => item.url.trim() !== '')
       .map(item => {
         const url = item.url.trim();
         const title = item.title.trim();
 
-        // 如果标题为空，自动从 URL 中提取标题
+        // If title is empty, automatically extract title from URL
         const finalTitle = title || handle_url_to_title(url);
 
         return {
@@ -102,13 +102,13 @@ const submit = (close: () => void) => {
         };
       });
   } else {
-    // 批量导入模式：解析多行文本
+    // Batch Import Mode: Parse multiline text
     validItems = batch_text.value
       .split('\n')
       .map(line => line.trim())
       .filter(line => line !== '')
       .map(line => {
-        // 使用英文逗号分隔 URL 和标题
+        // Use comma to separate URL and title
         const parts = line.split(',').map(part => part.trim());
         const url = parts[0];
         const title = parts[1] || handle_url_to_title(url);

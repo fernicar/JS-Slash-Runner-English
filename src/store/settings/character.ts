@@ -24,14 +24,14 @@ function getSettings(id: string | undefined): CharacterSettings {
     if (parsed.success) {
       saveSettingsDebounced(id as string, parsed.data);
     } else {
-      toastr.warning(parsed.error.message, t`[酒馆助手]迁移旧数据失败, 将使用空数据`);
+      toastr.warning(parsed.error.message, t`[TavernHelper] Failed to migrate old data, will use empty data`);
     }
   }
 
   const settings = Object.fromEntries(_.get(character, `data.extensions.${setting_field}`, []));
   const parsed = CharacterSettings.safeParse(settings);
   if (!parsed.success) {
-    toastr.warning(parsed.error.message, t`[酒馆助手]读取角色卡数据失败, 将使用空数据`);
+    toastr.warning(parsed.error.message, t`[TavernHelper] Failed to read character card data, will use empty data`);
     return CharacterSettings.parse({});
   }
   return CharacterSettings.parse(parsed.data);
@@ -39,7 +39,7 @@ function getSettings(id: string | undefined): CharacterSettings {
 
 const writeExtensionFieldDebounced = _.debounce(writeExtensionField, 1000);
 function saveSettingsDebounced(id: string, settings: CharacterSettings) {
-  // 酒馆的 `writeExtensionField` 会对对象进行合并, 因此要将对象转换为数组再存储
+  // Tavern's `writeExtensionField` merges objects, so convert object to array before storing
   const entries = Object.entries(settings);
   _.set(characters[id as unknown as number], `data.extensions.${setting_field}`, entries);
   writeExtensionFieldDebounced(Number(id), setting_field, entries);
@@ -48,7 +48,7 @@ function saveSettingsDebounced(id: string, settings: CharacterSettings) {
 export const useCharacterSettingsStore = defineStore('character_setttings', () => {
   const id = ref<string | undefined>(this_chid);
   const name = ref<string | undefined>(characters?.[this_chid as unknown as number]?.name);
-  // 切换角色卡时刷新 id
+  // Refresh when switching character cards id
   eventSource.makeFirst(event_types.CHAT_CHANGED, () => {
     const new_name = characters?.[this_chid as unknown as number]?.name;
     if (name.value !== new_name) {
@@ -59,21 +59,21 @@ export const useCharacterSettingsStore = defineStore('character_setttings', () =
 
   const settings = ref<CharacterSettings>(getSettings(id.value));
 
-  // 切换角色卡时刷新 settings, 但不触发 settings 保存
+  // Refresh settings when switching character cards, but do not trigger settings save
   watch([id, name], ([new_id]) => {
     ignoreUpdates(() => {
       settings.value = getSettings(new_id);
     });
   });
 
-  // 替换/更新角色卡时也刷新 settings, 但不触发 settings 保存
+  // Refresh settings when Replacing/Updating character card, but do not trigger settings save
   $('#character_replace_file').on('click', () => {
     eventSource.once(event_types.CHAT_CHANGED, () => {
       ignoreUpdates(async () => {
         const current_id = id.value;
         settings.value = getSettings(current_id);
 
-        // 并且替换世界书
+        // And replace Lorebook
         if ($('#world_button').hasClass('world_set')) {
           const book = characters[Number(current_id)]?.data?.character_book;
           if (book) {
@@ -87,7 +87,7 @@ export const useCharacterSettingsStore = defineStore('character_setttings', () =
     });
   });
 
-  // 导出角色卡前保存最新世界书
+  // Save latest Lorebook before exporting character card
   $('#export_button').on('click', async () => {
     const book_name = $('#character_world').val() as string;
     if (book_name) {
@@ -95,7 +95,7 @@ export const useCharacterSettingsStore = defineStore('character_setttings', () =
     }
   });
 
-  // 在某角色卡内修改 settings 时保存
+  // Save when modifying settings within a character card
   const { ignoreUpdates } = watchIgnorable(
     settings,
     new_settings => {
@@ -106,6 +106,6 @@ export const useCharacterSettingsStore = defineStore('character_setttings', () =
     { deep: true },
   );
 
-  // 监听 id 不能正确反映导入新角色卡时的情况, 在外应该监听 name
+  // Listening to id does not correctly reflect import of new character card, should listen outside name
   return { id: readonly(id), name: readonly(name), settings };
 });

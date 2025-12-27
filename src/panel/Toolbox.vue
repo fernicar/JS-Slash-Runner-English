@@ -1,26 +1,26 @@
 <template>
   <div class="flex flex-col gap-0.75">
     <Item type="box">
-      <template #title>{{ t`提示词查看器` }}</template>
-      <template #description>{{ t`查看当前提示词发送情况，窗口开启时会监听新的发送及时更新显示` }}</template>
+      <template #title>{{ t`Prompt Viewer` }}</template>
+      <template #description>{{ t`View current prompt transmission status; listens for new transmissions and updates display when window is open` }}</template>
       <template #content>
-        <Button @click="enable_prompt_viewer = true">{{ t`打开` }}</Button>
+        <Button @click="enable_prompt_viewer = true">{{ t`Open` }}</Button>
       </template>
     </Item>
 
     <Item type="box">
-      <template #title>{{ t`变量管理器` }}</template>
-      <template #description>{{ t`查看和管理全局、角色、聊天、消息楼层变量` }}</template>
+      <template #title>{{ t`Variable Manager` }}</template>
+      <template #description>{{ t`View and manage Global, Character, Chat, and Message Floor variables` }}</template>
       <template #content>
-        <Button @click="enable_variable_manager = true">{{ t`打开` }}</Button>
+        <Button @click="enable_variable_manager = true">{{ t`Open` }}</Button>
       </template>
     </Item>
 
     <Item type="box">
-      <template #title>{{ t`日志查看器` }}</template>
-      <template #description>{{ t`查看脚本和渲染界面的控制台日志` }}</template>
+      <template #title>{{ t`Log Viewer` }}</template>
+      <template #description>{{ t`View console logs of scripts and rendered interfaces` }}</template>
       <template #content>
-        <Button @click="enable_logger = true">{{ t`打开` }}</Button>
+        <Button @click="enable_logger = true">{{ t`Open` }}</Button>
       </template>
     </Item>
 
@@ -36,7 +36,7 @@
         @click="enable_prompt_viewer = true"
       >
         <div class="fa-solid fa-magnifying-glass extensionsMenuExtensionButton" />
-        <span>{{ t`提示词查看器` }}</span>
+        <span>{{ t`Prompt Viewer` }}</span>
       </div>
       <div
         class="list-group-item flex-container flexGap5 interactable"
@@ -45,7 +45,7 @@
         @click="enable_variable_manager = true"
       >
         <div class="fa-solid fa-square-root-variable extensionsMenuExtensionButton" />
-        <span>{{ t`变量管理器` }}</span>
+        <span>{{ t`Variable Manager` }}</span>
       </div>
       <div
         class="list-group-item flex-container flexGap5 interactable"
@@ -54,7 +54,7 @@
         @click="enable_logger = true"
       >
         <div class="fa-solid fa-file-invoice extensionsMenuExtensionButton" />
-        <span>{{ t`日志查看器` }}</span>
+        <span>{{ t`Log Viewer` }}</span>
       </div>
     </div>
   </Teleport>
@@ -62,7 +62,7 @@
   <Dialog
     v-if="enable_prompt_viewer"
     storage-id="prompt-viewer"
-    :title="t`提示词查看器`"
+    :title="t`Prompt Viewer`"
     :show-guide="true"
     @close="enable_prompt_viewer = false"
     @open-guide-popup="showPromptViewerHelp"
@@ -72,12 +72,12 @@
   <Dialog
     v-if="enable_variable_manager"
     storage-id="variable-manager"
-    :title="t`变量管理器`"
+    :title="t`Variable Manager`"
     @close="enable_variable_manager = false"
   >
     <VariableManager />
   </Dialog>
-  <Dialog v-if="enable_logger" storage-id="logger" :title="t`日志查看器`" @close="enable_logger = false">
+  <Dialog v-if="enable_logger" storage-id="logger" :title="t`Log Viewer`" @close="enable_logger = false">
     <Logger />
   </Dialog>
 </template>
@@ -98,7 +98,7 @@ const enable_variable_manager = ref<boolean>(false);
 const enable_logger = ref<boolean>(false);
 
 /**
- * 显示提示词查看器帮助信息
+ * Show Prompt Viewer help info
  */
 const { open: showPromptViewerHelp } = useModal({
   component: Popup,

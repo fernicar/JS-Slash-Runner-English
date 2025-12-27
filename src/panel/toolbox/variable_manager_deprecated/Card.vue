@@ -22,7 +22,7 @@
               text-[var(--SmartThemeBodyColor)] transition-all duration-200 ease-in-out
             "
             type="button"
-            :title="isCollapsed ? t`展开` : t`折叠`"
+            :title="isCollapsed ? t`Expand` : t`Collapse`"
             @click.stop="toggleCollapse"
           >
             <i
@@ -76,7 +76,7 @@
                 inline-flex cursor-pointer items-center justify-center border-none bg-none
                 text-[var(--SmartThemeBodyColor)]
               "
-              :title="t`菜单`"
+              :title="t`Menu`"
             >
               <i class="fa-regular fa-ellipsis"></i>
             </div>
@@ -90,11 +90,11 @@
                   @click="handleAddChildClick"
                 >
                   <i class="fa-solid fa-plus"></i>
-                  <span>{{ t`新增变量` }}</span>
+                  <span>{{ t`Add Variable` }}</span>
                 </div>
                 <div class="flex cursor-pointer items-center gap-0.5 text-(--warning)" @click="handleDeleteClick">
                   <i class="fa-regular fa-trash-can"></i>
-                  <span>{{ t`删除` }}</span>
+                  <span>{{ t`Delete` }}</span>
                 </div>
               </div>
             </template>
@@ -137,7 +137,7 @@ const props = withDefaults(
     collapsed?: boolean;
     defaultCollapsed?: boolean;
     searchInput: RegExp | null;
-    /** 是否允许通过菜单新增子变量 */
+    /** Whether to allow adding sub-variables via menu */
     allowAddChild?: boolean;
   }>(),
   {
@@ -159,12 +159,12 @@ const emit = defineEmits<{
 }>();
 
 /**
- * 计算显示名称（修复编码异常场景下的显示问题）
+ * Calculate display name (fix display issue in encoding anomaly scenarios ）
  */
 const displayNameFixed = computed(() => {
   const value = nameModel.value;
   if (value === undefined || value === null || `${value}`.trim() === '') {
-    return '未命名变量';
+    return 'Unnamed Variable';
   }
   return `${value}`;
 });
@@ -172,8 +172,8 @@ const displayNameFixed = computed(() => {
 const isCollapsed = ref(props.collapsed ?? props.defaultCollapsed ?? false);
 
 /**
- * 监听外部传入的collapsed属性变化
- * 当父组件主动控制折叠状态时，同步更新内部状态
+ * Listen for changes in externally passed collapsed property
+ * When parent component actively controls collapse status, sync update internal status
  */
 watch(
   () => props.collapsed,
@@ -186,8 +186,8 @@ watch(
 );
 
 /**
- * 监听内部折叠状态变化
- * 向父组件发出update:collapsed事件，保持双向绑定
+ * Listen for internal collapse status changes
+ * Emit update:collapsed event to parent, maintaining two-way binding
  */
 watch(
   () => isCollapsed.value,
@@ -197,9 +197,9 @@ watch(
 );
 
 /**
- * 切换卡片的折叠/展开状态
- * 只有在collapsible为true时才会执行切换
- * 更新内部状态并发出toggle-collapse事件
+ * Toggle card collapse/expand status
+ * Only execute toggle when collapsible is true
+ * Update internal status and emit toggle-collapse event
  */
 const toggleCollapse = () => {
   if (!props.collapsible) return;
@@ -319,13 +319,13 @@ const saveNameEditing = () => {
   const previous = typeof nameModel.value === 'string' ? nameModel.value : '';
   const nextName = nameDraft.value.trim();
   if (!nextName.length) {
-    toastr.error(t`键名不能为空`, t`编辑失败`);
+    toastr.error(t`Key name cannot be empty`, t`Edit failed`);
     return;
   }
   finishNameEditing();
   if (nextName === previous) return;
   nameModel.value = nextName;
-  toastr.success(t`已更新键名`, t`编辑成功`);
+  toastr.success(t`Updated key name`, t`Edit successful`);
 };
 
 const cancelNameEditing = () => {
@@ -392,15 +392,15 @@ watch(
 );
 
 /**
- * 注入树形结构全局控制对象
- * 用于响应全局的展开/折叠全部操作
+ * Inject tree structure global control object
+ * Used to respond to global Expand/Collapse All operations
  */
 const treeControl = inject(treeControlKey, null);
 
 if (treeControl) {
   /**
-   * 组件挂载时根据全局最后操作状态初始化折叠状态
-   * 如果最后操作为展开，则展开卡片；如果为折叠，则折叠卡片
+   * Initialize collapse status based on global last operation status when component mounts
+   * If last operation was expand, expand card; if collapse, collapse card
    */
   onMounted(() => {
     if (!props.collapsible) return;
@@ -412,8 +412,8 @@ if (treeControl) {
   });
 
   /**
-   * 监听全局折叠全部信号
-   * 当接收到折叠全部信号时，将卡片折叠
+   * Listen for global Collapse All signal
+   * Collapse card when receiving Collapse All signal
    */
   whenever(
     () => treeControl.collapseAllSignal.value,
@@ -424,8 +424,8 @@ if (treeControl) {
   );
 
   /**
-   * 监听全局展开全部信号
-   * 当接收到展开全部信号时，将卡片展开
+   * Listen for global Expand All signal
+   * Expand card when receiving Expand All signal
    */
   whenever(
     () => treeControl.expandAllSignal.value,
@@ -436,14 +436,14 @@ if (treeControl) {
   );
 }
 
-// 层级视觉样式计算
+// Hierarchy visual style calculation
 const depthColors = [
-  getComputedStyle(document.documentElement).getPropertyValue('--SmartThemeQuoteColor'), // 主题色 - level 0
-  '#8b5cf6', // 紫色 - level 1
-  '#ec4899', // 粉色 - level 2
-  '#f59e0b', // 橙色 - level 3
-  '#10b981', // 绿色 - level 4
-  '#06b6d4', // 青色 - level 5
+  getComputedStyle(document.documentElement).getPropertyValue('--SmartThemeQuoteColor'), // Theme Color - level 0
+  '#8b5cf6', // Purple - level 1
+  '#ec4899', // Pink - level 2
+  '#f59e0b', // Orange - level 3
+  '#10b981', // Green - level 4
+  '#06b6d4', // Cyan - level 5
 ];
 
 const getDepthColor = (depth: number): string => {
@@ -451,19 +451,19 @@ const getDepthColor = (depth: number): string => {
 };
 
 /**
- * 计算层级样式类名
- * 根据depth属性生成对应的CSS类名，用于控制视觉层级
- * 最大层级限制为5级
- * TODO：考虑层级大于5级的情况
+ * Calculate level style class name
+ * Generate corresponding CSS class name based on depth property, used to control visual hierarchy
+ * Max level limited to 5
+ * TODO： Consider cases where level is greater than 5
  */
 const depthClass = computed(() => {
   return `vm-card--depth-${Math.min(props.depth ?? 0, 5)}`;
 });
 
 /**
- * 计算层级指示器的内联样式
- * 生成左侧彩色条带的样式，包括宽度、背景色和透明度
- * 透明度会随着层级深度逐渐增加，增强视觉层次感
+ * Calculate inline style for level indicator
+ * Generate style for left colored strip, including width, background color, and opacity
+ * Opacity increases with level depth, enhancing visual hierarchy
  */
 const depthIndicatorStyle = computed(() => {
   const depth = props.depth ?? 0;
@@ -481,23 +481,23 @@ const appendToElement = computed(() => document.body);
 const isSearching = computed(() => props.searchInput !== null);
 
 /**
- * 展开动画：进入时
- * 设置初始高度为0
+ * Expand animation: On enter
+ * Set initial height to 0
  */
 const onEnter = (el: Element) => {
   const element = el as HTMLElement;
   element.style.height = '0';
   element.style.overflow = 'hidden';
   element.style.transition = 'height 0.2s ease-in-out';
-  // 强制浏览器重排
+  // Force browser reflow
   requestAnimationFrame(() => {
     element.style.height = `${element.scrollHeight}px`;
   });
 };
 
 /**
- * 展开动画：进入后
- * 清理内联样式，让内容自然显示
+ * Expand animation: After enter
+ * Clean inline styles, let content display naturally
  */
 const onAfterEnter = (el: Element) => {
   const element = el as HTMLElement;
@@ -507,23 +507,23 @@ const onAfterEnter = (el: Element) => {
 };
 
 /**
- * 折叠动画：离开时
- * 从当前高度过渡到0
+ * Collapse animation: On leave
+ * Transition from current height to 0
  */
 const onLeave = (el: Element) => {
   const element = el as HTMLElement;
   element.style.height = `${element.scrollHeight}px`;
   element.style.overflow = 'hidden';
   element.style.transition = 'height 0.2s ease-in-out';
-  // 强制浏览器重排
+  // Force browser reflow
   requestAnimationFrame(() => {
     element.style.height = '0';
   });
 };
 
 /**
- * 折叠动画：离开后
- * 清理样式
+ * Collapse animation: After leave
+ * Clean up style
  */
 const onAfterLeave = (el: Element) => {
   const element = el as HTMLElement;

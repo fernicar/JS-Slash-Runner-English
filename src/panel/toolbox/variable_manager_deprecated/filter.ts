@@ -11,7 +11,7 @@ export const createDefaultFilters = (): FiltersState => ({
 });
 
 /**
- * 识别值对应的筛选类型
+ * Identify filter type corresponding to value
  */
 export const getFilterType = (value: unknown): FilterType | null => {
   if (Array.isArray(value)) return 'array';
@@ -25,7 +25,7 @@ export const getFilterType = (value: unknown): FilterType | null => {
 };
 
 /**
- * 判断指定值或其子节点是否满足筛选条件
+ * Judge if specified value or its children meet filter conditions
  */
 export const matchesFilters = (
   value: unknown,

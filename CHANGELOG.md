@@ -1,54 +1,54 @@
 <!-- markdownlint-disable MD041 MD036 -->
 ## 4.3.13
 
-### 🗣提示词查看器
+### 🗣 Prompt Viewer
 
-- 让提示词查看器支持搜索一些特殊字符
+- Added support for searching special characters in Prompt Viewer
 
 ## 4.3.12
 
-### 📦函数
+### 📦 Function
 
-- `generateRaw` 在一些情况下用 `inject` 注入提示词失败的问题
+- `generateRaw` Issue where injecting prompts with `inject` failed in some cases
 
-### 🐛修复
+### 🐛 Fix
 
-- 对酒馆 `1.12.10`~`1.12.12` 版本的兼容性
+- Compatibility for Tavern versions `1.12.10`~`1.12.12`
 
 ## 4.3.11
 
-### 🎨渲染器
+### 🎨 Renderer
 
-- 修复一些极端条件下的 iframe blob 渲染方式高度不正确的问题
+- Fixed issue where iframe blob rendering height was incorrect under some extreme conditions
 
-### 📦函数
+### 📦 Function
 
-- 现在酒馆助手脚本注册的酒馆助手宏 `registerMacroLike` 会在脚本关闭时自动取消注册
+- Now TavernHelper macros registered by scripts via `registerMacroLike` will automatically unregister when the script is closed
 
 ## 4.3.10
 
-### 💬酒馆助手宏
+### 💬 TavernHelper Macros
 
-- 修复酒馆助手内置的变量宏在一些极端情况下不能正常获取变量的问题
+- Fixed issue where TavernHelper built-in variable macros could not retrieve variables normally in some extreme cases
 
-### 📦函数
+### 📦 Function
 
-- 补充了很多酒馆新版本提供的事件
-- 优化 `errorCatched` 捕获到的报错的显示
+- Added many events provided by the new version of Tavern
+- Optimized display of errors caught by `errorCatched`
 
 ## 4.3.9
 
-### 🎨渲染器
+### 🎨 Renderer
 
-- 修复一些极端条件下的 iframe blob 渲染方式高度不正确的问题
+- Fixed issue where iframe blob rendering height was incorrect under some extreme conditions
 
-### 💬酒馆助手宏
+### 💬 TavernHelper Macros
 
-- `{{get_message_variable::变量}}` 和 `{{format_message_variable::变量}}` 将会忽略以 `$` 开头的变量. 如对于 `{ $meta: {}, 好感度: 0 }`, `{{get_message_variable::stat_data}}` 将只会返回 `{ 好感度: 0 }`
+- `{{get_message_variable:: variable}}` and `{{format_message_variable::variable}}` will ignore variables starting with `$`. For example, for `{ $meta: {}, Favorability: 0 }`, `{{get_message_variable::stat_data}}` will only return `{ Favorability : 0 }`
 
-### 📦函数
+### 📦 Function
 
-- 现在 `generate` 和 `generateRaw` 的 `custom_api` 参数支持 `same_as_preset` 和 `unset` 值, 分别表示使用预设的值和不设置该参数. 如, 以下代码将会取消设置频率惩罚和存在惩罚, 方便不支持这些参数的模型.
+- Now `custom_api` parameter in `generate` and `generateRaw` supports `same_as_preset` and `unset` values, representing using the preset's value and unsetting the parameter respectively. E.g., the following code will unset frequency penalty and presence penalty, convenient for models that do not support these parameters.
 
   ```ts
   generate({
@@ -61,254 +61,254 @@
 
 ## 4.3.8
 
-### 🎨渲染器
+### 🎨 Renderer
 
-- 尝试修复 4.0 后渲染优化导致的某些酒馆美化下前端代码块无法正常隐藏的问题
+- Attempted to fix the issue where frontend code blocks could not be properly hidden under certain Tavern themes due to rendering optimizations after 4.0
 
 ## 4.3.7
 
-### 🔢变量管理器
+### 🔢 Variable Manager
 
-- 现在你可以在一个脚本中用 `registerVariableSchema` 为变量管理器注册 zod 变量结构, 如 `stat_data.好感度` 必须是一个数值; 注册后, 如果实际变量不满足要求, 变量管理器将会提示错误信息.
+- You can now use `registerVariableSchema` in a script to register zod variable schemas for Variable Manager, e.g., `stat_data.Favorability` must be a number; after registration, if the actual variable does not meet requirements, Variable Manager will show error message.
 
 ## 4.3.6
 
-### ⏫原生体验
+### ⏫ Native Experience
 
-- **`要加载 # 条消息`可以设置为任意非负数**: 原本酒馆只允许酒馆上方`人头`设置中的`要加载 # 条消息`设置为 5 的倍数, 现在你可以设置为任意非负数, 如设置为 `1` 来只显示聊天中最近的 1 楼消息, 从而让游玩酒馆更流畅.
+- **`Messages to Load` can be set to any non-negative number**: Originally Tavern only allowed setting `Messages to Load` in the top `Person Icon` settings to multiples of 5; now you can set it to any non-negative number, e.g., `1` to only show the most recent message in chat, making Tavern gameplay smoother.
 
 ## 4.3.5
 
-### 📕脚本库
+### 📕 Script Library
 
-- 内置`删除角色卡时删除绑定的主要世界书`脚本, 添加后, 在删除角色卡时将会自动删除角色卡绑定的主要世界书
+- Built-in `Delete Bound Main Lorebook when Deleting Character Card` script; once added, automatically deletes the main Lorebook bound to the character card when deleting the card
 
-### 🐛修复
+### 🐛 Fix
 
-- `appendAudioList` 函数在一些版本下无法使用的问题
-- `playAudio` 函数在一些情况下无法接续播放音频的问题
+- `appendAudioList` Issue where the function could not be used in some versions
+- `playAudio` Issue where function could not continue playing audio in some cases
 
 ## 4.3.4
 
-### 🗣提示词查看器
+### 🗣 Prompt Viewer
 
-- 为提示词条目身份添加图标 (如 `⚙️ system`), 方便区分不同身份的提示词条目
-- 延后提示词查看器对提示词的监听阶段, 从而让更多提示词处理脚本对提示词的处理能正确显示
+- Added icons to prompt entry roles (e.g., `⚙️ system`) to easily distinguish prompt entries of different roles
+- Delayed Prompt Viewer's prompt listening phase so that more prompt processing scripts' handling of prompts can be correctly displayed
 
 ## 4.3.3
 
-### 🗣提示词查看器
+### 🗣 Prompt Viewer
 
-- 新增了复制提示词功能, 可以复制所有提示词和单个提示词到剪贴板
+- Added Copy Prompt function, allowing copying all prompts or individual prompts to clipboard
 
-### 🔍日志查看器
+### 🔍 Log Viewer
 
-- 优化日志查看器的渲染性能
+- Optimized Log Viewer rendering performance
 
-### 🐛修复
+### 🐛 Fix
 
-- 让搜索框更正确地区分输入的是普通字符串还是/正则/
-- 修复 Blob 渲染模式高度不正确的问题
+- Made search box correctly distinguish between normal string input and /regex /
+- Fixed incorrect height in Blob render mode
 
 ## 4.3.2
 
-### ⏫原生体验
+### ⏫ Native Experience
 
-- **`要加载 # 条消息`将会实时去除旧楼层, 从而让游玩酒馆更流畅**: 如果设置`要加载 # 条消息`为 5, 则页面将最多显示 5 个楼层, 当发送新消息或收到新回复时, 旧楼层将会被自动移除.
+- **`Messages to Load` will remove old messages in real-time, making Tavern gameplay smoother**: If `Messages to Load` is set to 5, the page will display at most 5 messages. When a new message is sent or received, old messages will be automatically removed.
 
 ## 4.3.1
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复部分设备对脚本的兼容性
+- Fixed script compatibility on some devices
 
 ## 4.3.0
 
-### 🔍日志查看器
+### 🔍 Log Viewer
 
-- 新增了日志查看器功能, 前端界面、脚本中的所有通过 `console` (`console.info` 等) 所记录下的日志都可以在日志查看器中直接查看, **方便手机玩家向前端界面、脚本作者汇报错误.**
+- Added Log Viewer feature. All logs recorded via `console` (`console.info`, etc.) in the frontend and scripts can be viewed directly in the Log Viewer, **convenient for mobile players to report errors to frontend/script authors.**
 
 ## 4.2.1
 
-### 🐛修复
+### 🐛 Fix
 
-- 酒馆助手对酒馆 1.12.10 的兼容性, **但建议更新酒馆到 1.13.3~1.13.4**
-- 修复一些极小概率概率问题
+- TavernHelper compatibility with Tavern 1.12.10, **but it is recommended to update Tavern to 1.13.3~1.13.4**
+- Fixed some very low probability issues
 
 ## 4.2.0
 
-### ⏫原生体验
+### ⏫ Native Experience
 
-- **`替换/更新`角色卡将会更新世界书: 你不需要在`替换/更新`角色卡之前删除世界书了!**
-- **导出角色卡将始终导出最新世界书**
+- **`Replacing/Updating` character card will update Lorebook: You no longer need to delete the Lorebook before `Replacing/Updating` the character card !**
+- **Exporting character card will always export the latest Lorebook**
 
-### 📕脚本库
+### 📕 Script Library
 
-- 在`替换/更新`角色卡时重新加载角色脚本
+- Reload character script when `Replacing/Updating` a character card
 
-### 📦函数
+### 📦 Function
 
-- 现在 `eventOn` 等监听事件函数将会返回一个 `stop` 函数, 便于取消监听:
+- Now `eventOn` and other event listening functions will return a `stop` function to easily cancel listening :
 
   ```ts
-  // 监听消息接收, 当接收到消息时执行 listener
+  // Listen for message reception, execute when a message is received listener
   const { stop } = eventOn(tavern_events.MESSAGE_RECEIVED, listener);
 
-  // 取消监听
+  // Cancel listening
   stop();
   ```
 
-- 现在 `injectPrompts` 将会返回一个 `uninject` 函数, 便于取消提示词注入
+- Now `injectPrompts` returns an `uninject` function for easier prompt injection cancellation
 
 ## 4.1.5
 
-### 🐛修复
+### 🐛 Fix
 
-- 现在调整预设脚本将不会重新加载预设, 例如预设脚本的切换步骤按钮将正常生效
+- Adjusting a preset script will no longer reload the preset; for example, switch step buttons in the preset script will work normally
 
 ## 4.1.4
 
-### 💬酒馆助手宏
+### 💬 TavernHelper Macros
 
-- 新增 `{{format_message_variable::变量}}` 等 `{{format_xxx_variable}}` 宏. 相比起 `{{get_xxx_variable}}` 将变量显示为一行 JSON 字符串, `{{format_xxx_variable}}` 将变量显示为格式化后的 YAML 块:
+- Added `{{format_message_variable::variable}}` and other `{{format_xxx_variable}}` macros. Compared to `{{get_xxx_variable}}` which displays variables as a one-line JSON string, `{{format_xxx_variable}}` displays variables as a formatted YAML block :
 
   ```json
   // {{get_message_variable::stat_data}}
-  {"青空黎":{"性别":"男"},"络络":{"亲密度":10,"阅读日记数量":0,"拥有联系方式":false},"世界":{"当前星期":"星期三","当前日期":"4月4日","当前时间阶段":1,"下次响应界面选择判断":0,"当前主线事件ID":"无","当前主线事件阶段":0,"当前主线故事大纲":"无","主线事件冷却计数":0}}
+  {"Qingkong Li":{"Gender":"Male"},"Luoluo":{"Intimacy":10,"NumberOfDiariesRead":0,"HasContactInfo":false},"World":{"CurrentDay":"Wednesday","CurrentDate":"April 4th","CurrentTimePhase":1,"NextResponseInterfaceSelectionJudgment":0,"CurrentMainStoryEventID":"None","CurrentMainStoryEventPhase":0,"CurrentMainStoryOutline":"None","MainStoryEventCooldownCount":0}}
   ```
 
   ```yaml
   # {{format_message_variable::stat_data}}
-  青空黎:
-    性别: 男
-  络络:
-    亲密度: 10
-    阅读日记数量: 0
-    拥有联系方式: false
-  世界:
-    当前星期: 星期三
-    当前日期: 4月4日
-    当前时间阶段: 1
-    下次响应界面选择判断: 0
-    当前主线事件ID: 无
-    当前主线事件阶段: 0
-    当前主线故事大纲: 无
-    主线事件冷却计数: 0
+  Qingkong Li :
+    Gender: Male
+  Luoluo :
+    Intimacy : 10
+    Number of Diaries Read : 0
+    Has Contact Info : false
+  World :
+    Current Day: Wednesday
+    Current Date: April 4th
+    Current Time Phase : 1
+    Next Response Interface Selection Judgment : 0
+    Current Main Story Event ID: None
+    Current Main Story Event Phase : 0
+    Current Main Story Outline: None
+    Main Story Event Cooldown Count : 0
   ```
 
-### 📦函数
+### 📦 Function
 
-- 导出 `builtin.parseRegexFromString` 函数, 用于将 `/字符串/` 转换为正则表达式
+- Exported `builtin.parseRegexFromString` function to convert `/string/` into a regular expression
 
 ## 4.1.3
 
-### 🐛修复
+### 🐛 Fix
 
-- 角色变量管理器的标题应该显示为 "角色" 而不是角色卡名称
+- Character Variable Manager title should display as "Character" instead of Character Card name
 
 ## 4.1.2
 
-### 🐛修复
+### 🐛 Fix
 
-- `setChatMessages` 在一些边界情况下出错的问题
+- `setChatMessages` Issue where errors occurred in some edge cases
 
 ## 4.1.1
 
-### 🎨渲染器
+### 🎨 Renderer
 
-- 让折叠代码块功能只在启用渲染器时生效
+- Make code block collapsing function only take effect when Renderer is enabled
 
-### 📕脚本库
+### 📕 Script Library
 
-- 添加复制脚本按钮, 点击即可复制脚本到其他脚本库
-- 折叠"移动"、"复制"、"导出"、按钮, 点击"更多操作"按钮展开
-- 当在脚本编辑界面修改按钮名称或增多减少按钮时会触发重启脚本
+- Added a copy script button, click to copy the script to other script libraries
+- Collapsed "Move", "Copy", "Export" buttons, click "More Actions" button to expand
+- Modifying button names or increasing/decreasing buttons in the script editing interface will trigger a script restart
 
-### 📦函数
+### 📦 Function
 
-- 现在 `registerMacroLike` 对于同样的正则表达式只会注册一次
-- 补充 `unregisterMacroLike` 用于取消注册酒馆助手宏
-- 在文档中指出函数可能抛出的异常, 在类型定义文件中也用 `@throws` 来标注函数可能抛出的异常
+- Now `registerMacroLike` will only register the same regular expression once
+- Added `unregisterMacroLike` to unregister TavernHelper macros
+- Indicated exceptions that functions might throw in documentation, and used `@throws` to annotate potential exceptions in type definition files
 
-### 🐛修复
+### 🐛 Fix
 
-- 让 `getChatMessages` 和 `setChatMessages` 仅从 `chat_message.swipes.length` 判断 swipe 数量, 避免其他插件的影响
-- 让 `errorCatched` 函数处理 Promise 的方式更正确
-- `createChatMessages` 在一些边界情况下出错的问题
-- `generate` 和 `generateRaw` 不能将存在惩罚和频率惩罚自定义为 0 的问题
+- Made `getChatMessages` and `setChatMessages` determine swipe count solely from `chat_message.swipes.length` to avoid influence from other plugins
+- Made `errorCatched` function handle Promise more correctly
+- `createChatMessages` Issue where errors occurred in some edge cases
+- `generate` and `generateRaw` could not customize presence penalty and frequency penalty to 0
 
 ## 4.1.0
 
-### 📕脚本库
+### 📕 Script Library
 
-- 添加转移脚本按钮，点击即可将脚本转移到其他脚本库，当然你也可以直接拖拽脚本来转移脚本
-- 为脚本拖动添加动画效果
-- 优化脚本文件夹的拖动体验
+- Added Transfer Script button, click to transfer script to other libraries; of course, you can also directly drag scripts to transfer
+- Added animation effects for script dragging
+- Optimized script folder dragging experience
 
 ## 4.0.21
 
-### 🐛修复
+### 🐛 Fix
 
-- 内置库中`压缩相邻消息`脚本的链接地址错误
-- 让前端界面或脚本的 `window.SillyTavern` 始终指向酒馆的最新上下文而非前端界面或脚本初始化时的上下文
-- 假设脚本通过 `initializeGlobal` 向其他脚本共享出了接口, 而其他脚本通过 `waitGlobalInitialized` 等待了共享; 则之后即使共享接口的脚本重启, 它所共享出的接口依旧有效.
+- Incorrect link address for `Compress Adjacent Messages` script in built-in library
+- Ensure `window.SillyTavern` in frontend or scripts always points to Tavern's latest context instead of the context at initialization
+- Suppose a script shares an interface to other scripts via `initializeGlobal`, and other scripts wait for sharing via `waitGlobalInitialized`; then even if the sharing script restarts, the shared interface remains valid.
 
 ## 4.0.20
 
-### 🗣提示词查看器
+### 🗣 Prompt Viewer
 
-- 提示词查看器现在可以展示消息中的图片了
+- Prompt Viewer can now display images in messages
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复脚本库中文件夹可以拖动到文件夹内的错误嵌套行为, 注意文件夹本身是不支持嵌套的
-- 修复导入角色卡并切换角色卡时, 极小概率下角色数据没有跟着切换的问题
-- 保证一些玄学情况下脚本按钮依旧能够显示
+- Fixed incorrect nesting behavior where folders could be dragged into folders in Script Library; note that folders themselves do not support nesting
+- Fixed a very low probability issue where character data did not switch when importing and switching character cards
+- Ensured script buttons still display in some mysterious situations
 
 ## 4.0.19
 
-### 🗣提示词查看器
+### 🗣 Prompt Viewer
 
-- 提示词查看器现在可以展示使用中的模型和预设
+- Prompt Viewer can now display the model and preset in use
 
 ## 4.0.18
 
-### 🐛修复
+### 🐛 Fix
 
-- 编写参考中的 "酒馆 /STScript" 参考文件无法下载的问题; 当然更建议你直接使用[酒馆助手前端界面或脚本编写教程](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/基本用法/如何正确使用酒馆助手.html)
+- 编写参考中的 "酒馆 /STScript" 参考文件无法下载的问题; 当然更建议你直接使用[酒馆助手前端 Interface 或脚本编写教程](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/基本用法/如何正确使用酒馆助手.html)
 
 ## 4.0.17
 
-### 🐛修复
+### 🐛 Fix
 
-- 4.0.15 后提示词查看器和变量管理器在电脑上无法拖动或改变大小的问题
+- 4.0.15 Fixed issue where Prompt Viewer and Variable Manager could not be dragged or resized on PC after
 
 ## 4.0.16
 
-### 🐛修复
+### 🐛 Fix
 
-- 4.0.14 后脚本名字中有 - 时无法操控脚本变量的问题
+- 4.0.14 Fixed issue where script variables couldn't be controlled if the script name contained '-'
 
 ## 4.0.15
 
-### 🐛修复
+### 🐛 Fix
 
-- 提示词查看器和变量管理器在移动端初始高度过小的问题
-- 与 3.2.3 以前导出的带脚本角色卡的兼容性
+- Issue where initial height of Prompt Viewer and Variable Manager was too small on mobile
+- Compatibility with character cards containing scripts exported before 3.2.3
 
 ## 4.0.14
 
-### 📦函数
+### 📦 Function
 
-- 为 `generate` 和 `generateRaw` 的自定义 API 新增 `temperature` 等参数, 更方便的调用可能得重写整个函数了, 看情况再说
-- 导出 `builtin.duringGenerating` 函数, 用于判断酒馆是否正在请求生成
-- 导出 `builtin.renderMarkdown` 函数, 用于将 markdown 字符串转换为 HTML
-- 导出 `builtin.uuidv4` 函数, 用于生成 UUID
-- 为前端界面和脚本直接提供酒馆内置的 `showdown` 库, 并在编写模板中更新它的类型定义从而让 AI 知道
-- 新增 `reloadIframe` 函数, 便于在前端界面或脚本内重新加载该前端界面或脚本. 如在聊天文件切换时:
+- Added `temperature` and other parameters for custom API in `generate` and `generateRaw`. Easier calling might require rewriting the whole function, will see later
+- Exported `builtin.duringGenerating` function to check if Tavern is requesting generation
+- Exported `builtin.renderMarkdown` function to convert markdown strings to HTML
+- Exported `builtin.uuidv4` function to generate UUID
+- Provided Tavern's built-in `showdown` library directly to frontend and scripts, and updated its type definitions in writing templates so AI knows about it
+- Added `reloadIframe` function to facilitate reloading the frontend interface or script from within the frontend or script. E.g., when switching chat files :
 
   ```ts
-  // 当聊天文件变更时, 重新加载前端界面或脚本
+  // Reload the frontend interface or script when the chat file changes
   let current_chat_id = SillyTavern.getCurrentChatId();
   eventOn(tavern_events.CHAT_CHANGED, chat_id => {
     if (current_chat_id !== chat_id) {
@@ -318,522 +318,522 @@
   })
   ```
 
-### 🐛修复
+### 🐛 Fix
 
-- 在脚本库中选择 "包含数据导出" 时无法导出变量的问题
-- 4.0.10 后 `replaceVariables` 对脚本变量保存失效的问题
+- Issue where variables could not be exported when selecting "Export with Data" in Script Library
+- 4.0.10 Issue where `replaceVariables` failed to save script variables after
 
-### 🔧杂项
+### 🔧 Misc
 
-- 更换解析 markdown 所使用的库, 便于支持 raw html
+- Changed the library used for parsing markdown to support raw html
 
 ## 4.0.13
 
-### 🗣提示词查看器
+### 🗣 Prompt Viewer
 
-- 现在提示词查看器能正确估算带图片、视频消息的 token 数
+- Prompt Viewer can now correctly estimate token count for messages with images/videos
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复酒馆消息中有图片时, 酒馆助手宏会失效的问题
+- Fixed issue where TavernHelper macros failed when Tavern messages contained images
 
-### 📦函数
+### 📦 Function
 
-- 导出酒馆计算图片、视频 token 的接口到 `builtin.getImageTokenCost` 和 `builtin.getVideoTokenCost`
-- 调整 `tavern_events.GENERATE_AFTER_DATA` 等事件的参数[类型定义](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/iframe/exported.sillytavern.d.ts#L23), 现在能正确反映酒馆发送图片、视频给 AI 的情况
+- Exported Tavern's image/video token calculation interfaces to `builtin.getImageTokenCost` and `builtin.getVideoTokenCost`
+- 调整 `tavern_events.GENERATE_AFTER_DATA` 等事件的参数[类型定义](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/iframe/exported.sillytavern.d.ts#L23), Now 能正确反映酒馆发送图片、视频给 AI 的情况
 
 ## 4.0.12
 
-### 📕脚本库
+### 📕 Script Library
 
-- 将预设脚本库挪到了角色脚本库下面, 因为不常用
+- Moved Preset Script Library under Character Script Library as it is rarely used
 
-### 📦函数
+### 📦 Function
 
-- 将 `initializeGlobal` 和 `waitGlobalInitialized` 函数加入到 `TavernHelper` 接口中, 而不只是前端界面或脚本中可用, 便于扩展用它与脚本分享接口 (如 `waitGlobalInitialized('Mvu')` 来等待 `Mvu` 接口初始化完毕)
+- Added `initializeGlobal` and `waitGlobalInitialized` functions to the `TavernHelper` interface, making them available beyond just the frontend or scripts, facilitating extensions to share interfaces with scripts (e.g., `waitGlobalInitialized('Mvu')` to wait for the `Mvu` interface to initialize)
 
-### 🔧杂项
+### 🔧 Misc
 
-- 将全局 `TavernHelper` 接口的注册时间提前, 从而尝试解决一些设备、网络环境使用依赖于酒馆助手的插件时的问题
-- 取消使用酒馆 1.13.0 才有的某个功能, 从而恢复对酒馆 1.12.10 的兼容性
+- Moved up the registration time of the global `TavernHelper` interface to try and solve issues when using plugins dependent on TavernHelper on some devices/network environments
+- Cancelled use of a feature only available in Tavern 1.13.0, restoring compatibility with Tavern 1.12.10
 
 ## 4.0.11
 
-### 🎨渲染器
+### 🎨 Renderer
 
-- 调整酒馆助手宏渲染逻辑, 让它始终在前端界面渲染前渲染
+- Adjusted TavernHelper macro rendering logic to always render before the frontend interface
 
-### 🔧杂项
+### 🔧 Misc
 
-- 处理一些酒馆特殊设置引起的问题
+- Handled issues caused by some Tavern special settings
 
 ## 4.0.10
 
-### 🎨渲染器
+### 🎨 Renderer
 
-- 调整前端界面渲染逻辑, 避免某些设备上重新渲染
+- Adjusted frontend rendering logic to avoid re-rendering on some devices
 
-### 📕脚本库
+### 📕 Script Library
 
-- 调整脚本刷新逻辑, 使之更符合 3.0 的刷新逻辑
-- 调整脚本按钮的显示时延和插入逻辑, 使之与 [Samueras/GuidedGenerations-Extension](https://github.com/Samueras/GuidedGenerations-Extension) 等兼容, 不会让酒馆卡死
+- Adjusted script refresh logic to align with 3.0 refresh logic
+- 调整 Script Button 的显示时延和插入逻辑, 使之与 [Samueras/GuidedGenerations-Extension](https://github.com/Samueras/GuidedGenerations-Extension) 等兼容, 不会让酒馆卡死
 
-### 🔧杂项
+### 🔧 Misc
 
-- 恢复了前端界面、脚本间 lodash 库的隔离性, 避免 AI 误操作修改了 `_.remove` 等命令
+- Restored lodash library isolation between frontend and scripts to prevent AI from accidentally modifying commands like `_.remove`
 
 ## 4.0.9
 
-### 📕脚本库
+### 📕 Script Library
 
-- 切换角色卡时角色脚本可能加载失败的问题
+- Issue where character scripts might fail to load when switching character cards
 
 ## 4.0.8
 
-### 🎨渲染器
+### 🎨 Renderer
 
-- 修复了因未知原因导致重复渲染前端界面的问题, 虽然到现在我也不知道原因, 但反正修了 ()
+- Fixed an issue causing repeated rendering of the frontend interface due to unknown reasons; although I still don't know the cause, it's fixed anyway ()
 
-### 🔧杂项
+### 🔧 Misc
 
-- 为方便 QR 助手兼容，对 `<div class="qr--buttons">` 补充了 `id` 属性.
+- Added `id` attribute to `<div class="qr--buttons">` for easier QR Helper compatibility.
 
 ## 4.0.7
 
-### 🎨渲染器
+### 🎨 Renderer
 
-- 响应式设置渲染深度: 改变渲染深度后立即调整前端界面的渲染情况
-- 优化前端界面对高度的调整机制
-- 避免前端界面重复渲染
-- 调整折叠代码块的显示样式及逻辑
+- Responsive rendering depth setting: adjust frontend interface rendering immediately after changing render depth
+- Optimized the height adjustment mechanism for the frontend interface
+- Avoid frontend interface duplicate rendering
+- Adjusted the display style and logic of collapsed code blocks
 
-### 🗣提示词查看器
+### 🗣 Prompt Viewer
 
-- 修复神秘 Vue 导致的提示词查看器概率空白问题
+- Fixed a mysterious Vue issue causing the Prompt Viewer to occasionally be blank
 
 ## 4.0.6
 
-### 🔧杂项
+### 🔧 Misc
 
-- 将酒馆助手加载顺序调回 `"loading_order": 100`, 以期解决一些玄学问题
+- Adjusted TavernHelper loading order back to `"loading_order": 100` to solve some mysterious issues
 
 ## 4.0.5
 
-### 🔢变量管理器
+### 🔢 Variable Manager
 
-- 让新楼层出现时楼层变量的更新逻辑更符合直觉
+- Made floor variable update logic more intuitive when new messages appear
 
-### 🗣提示词查看器
+### 🗣 Prompt Viewer
 
-- 现在如果在 AI 回复途中打开提示词查看器, 不会再中断 AI 回复
+- Now opening Prompt Viewer during AI reply will no longer interrupt AI reply
 
 ## 4.0.4
 
-### 🎨渲染器
+### 🎨 Renderer
 
-- 现在流式过程中也会应用【折叠代码块】功能
+- Now 'Collapse Code Blocks' function is also applied during streaming
 
 ## 4.0.3
 
-### 🐛修复
+### 🐛 Fix
 
-- 4.0.0 后 `generate` 请求非流回复时会空回的问题
-- 现在 `generate` 使用非流时能正常进行工具调用
+- 4.0.0 Issue where `generate` returned empty response when requesting non-streaming reply after
+- Now `generate` can perform tool calls normally when using non-streaming
 
 ## 4.0.2
 
-### 🐛修复
+### 🐛 Fix
 
-- 更新按钮无法使用的问题
-- 让对旧数据的转换更正确
+- Fixed issue where the update button was unusable
+- Made conversion of old data more correct
 
 ## 4.0.1
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复前端界面与一些美化之间的冲突
+- Fixed conflict between frontend interface and some beautification themes
 
 ## 4.0.0
 
-**用 Vue + Pinia + TailwindCSS 完全重写了酒馆助手.**
+**Completely rewrote TavernHelper using Vue + Pinia + TailwindCSS.**
 
-### 🎨渲染器
+### 🎨 Renderer
 
-- 移除了 2.0.10 加入的【启用加载动画】选项, 渲染逻辑改为先显示界面再加载网络资源, 避免用户误认为前端界面加载很慢是酒馆助手导致的 (实际上, 加载慢应该考虑网络问题).
-- 为【折叠代码块】新增只折叠前端界面代码块的选项, 便于设置了渲染深度的玩家查看以前的消息.
+- Removed [Enable Loading Animation] option added in 2.0.10. Changed rendering logic to display interface first then load network resources, avoiding users mistakenly thinking TavernHelper causes slow frontend loading (actually, slow loading is likely a network issue).
+- Added option to [Collapse Code Blocks] to only collapse frontend interface code blocks, convenient for players who set render depth to view previous messages.
 
-### 📕脚本库
+### 📕 Script Library
 
-- 现在预设也可以绑定酒馆助手脚本了, 从而方便门之主写卡助手这类有配套脚本的预设, 及 SPreset 等可以绑定在预设上方便导入的脚本.
-- 移除脚本库的【移动到另一脚本库】按钮, 现在你可以直接将脚本拖动到另一个脚本库.
-- 移除了使用较少的脚本批量操作功能, 请将脚本放入同一文件夹后进行操作来替代.
-- 在脚本编辑界面, 为脚本按钮设置了总开关, 你可以方便地一键启用/禁用所有脚本按钮.
-- 为脚本编辑界面的脚本内容、作者备注、变量列表界面添加了全屏按钮, 便于查看和编辑.
+- Presets can now also bind TavernHelper scripts, facilitating presets with companion scripts like Gatekeeper's Card Writing Helper, and scripts like SPreset that can be bound to presets for easy import.
+- Removed the [Move to another Script Library] button from the Script Library; you can now directly drag scripts to another Script Library.
+- Removed rarely used script batch operation functions; please place scripts in the same folder and operate on them instead.
+- Added a master switch for script buttons in the script editing interface, allowing you to easily enable/disable all script buttons with one click.
+- Added full-screen buttons to script content, author notes, and variable list interfaces in script editor for easier viewing and editing.
 
-### 🔢变量管理器
+### 🔢 Variable Manager
 
-- 翻译并调整了 [svelte-jsoneditor](https://github.com/josdejong/svelte-jsoneditor) 作为新的变量管理器, 用 250mb 的数据进行测试没有卡顿.
-- 新的变量管理器支持【文本】、【树状】两种视图, 未来将继续支持【卡片】视图.
-- 你现在可以将变量管理器窗口拖动到最左边或最右边, 从而让窗口吸附在酒馆界面边缘.
-- 将变量管理器在移动端的显示逻辑改为始终吸顶显示.
+- 翻译并调整了 [svelte-jsoneditor](https://github.com/josdejong/svelte-jsoneditor) 作为新的 Variable Manager , 用 250mb 的数据进行测试没有卡顿.
+- The new Variable Manager supports [Text] and [Tree] views, and will continue to support [Card] view in the future.
+- You can now drag the Variable Manager window to the far left or right to snap it to the edge of the Tavern interface.
+- Changed Variable Manager display logic on mobile to always stick to top.
 
-### 🗣提示词查看器
+### 🗣 Prompt Viewer
 
-- 优化了提示词查看器的性能. 用 28179 楼聊天记录 (206.9mb) 进行测试, 虽然酒馆本身对提示词的处理变得慢, 但提示词查看器对它的显示没有卡顿.
-- 增加了等待画面和使用说明, 以说明提示词查看器**永远显示最新提示词**.
-- 增加了展开全部、折叠全部按钮, 并对于用户的折叠喜好进行记忆, 迎合不同的使用习惯.
-- 你现在可以将提示词查看器窗口拖动到最左边或最右边, 从而让窗口吸附在酒馆界面边缘.
-- 将提示词查看器在移动端的显示逻辑改为始终吸顶显示.
+- Optimized Prompt Viewer performance. Tested with 28,179 chat messages (206.9mb); although Tavern itself became slow in processing prompts, the Prompt Viewer displayed them without lag.
+- Added waiting screen and usage instructions to explain that Prompt Viewer **always displays the latest prompt**.
+- Added Expand All/Collapse All buttons and memory for user collapse preferences to cater to different usage habits.
+- You can now drag the Prompt Viewer window to the far left or right to snap it to the edge of the Tavern interface.
+- Changed Prompt Viewer display logic on mobile to always stick to top.
 
-### 🎧播放器
+### 🎧 Player
 
-- 新增音频标题功能. 你现在可以为导入的音频设置一个标题, 从而更方便地在 UI 中管理播放列表.
-- 调整音频导入 UI, 支持单个链接导入和批量导入两种模式.
-- 调整了音量控制器的位置, 方便移动端用户操作.
-- 移除了播放器的冷却时间和淡入淡出功能.
-- 为音频播放器制作了[新的函数接口](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/功能详情/播放音频/播放状态.html)
-- 不再维护 `/audioselect` 等快速回复命令 (旧角色卡不受影响), 因为酒馆助手脚本完全兼容和上位替代快速回复.
-- 不再维护 `audioenable`、`audioplay`、`audioMode` 等旧命令, 建议以新的 `playAudio`、`pauseAudio`、`setAudioSettings` 等函数代替.
+- Added audio title function. You can now set a title for imported audio to manage playlists more conveniently in the UI.
+- Adjusted Audio Import UI, supporting single link import and batch import modes.
+- Adjusted volume controller position for easier mobile operation.
+- Removed cooldown and fade-in/fade-out functions from the player.
+- 为音频 Player 制作了[新的 Function 接口](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/ Function 详情/播放音频/播放状态.html)
+- No longer maintaining Quick Reply commands like `/audioselect` (old character cards unaffected), as TavernHelper scripts are fully compatible and superior replacements for Quick Replies.
+- No longer maintaining old commands like `audioenable`, `audioplay`, `audioMode`; assume using new functions like `playAudio`, `pauseAudio`, `setAudioSettings` instead.
 
-### 🌐i18n 国际化
+### 🌐i18n Internationalization
 
-- 对酒馆助手进行了英文翻译. 现在酒馆语言选择英文时, 酒馆助手也将显示英文界面.
+- Translated TavernHelper into English. Now when Tavern's language is set to English, TavernHelper will also display in English.
 
-### 💬酒馆助手宏
+### 💬 TavernHelper Macros
 
-- 补充了 `{{get_character_variable::变量}}` 和 `{{get_preset_variable::变量}}`, 用于获取当前角色卡和预设的变量
+- Added `{{get_character_variable::variable}}` and `{{get_preset_variable::variable}}` to get variables for the current character card and preset
 
-### 📦函数
+### 📦 Function
 
-- `getVariables`、`replaceVariables` 等[变量相关函数](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/功能详情/变量/变量类型.html)现在支持处理预设变量 (`'preset'`) 和第三方插件常用的扩展变量 (`'extension'`).
-- 现在在脚本内操作脚本变量时, 你可以只写 `getVariables({type: 'script'})` 而不需要传入 `script_id` 参数.
-- `replaceVariables` 不再需要 `await`.
-- 新增 [`getAllEnabledScriptButtons`](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/功能详情/脚本额外功能.html#getallenabledscriptbuttons) 函数用于获取当前处于启用状态的所有脚本按钮, 方便 QR 助手对脚本按钮进行适配
-- 新增 `installExtension` 等[安装酒馆插件](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/功能详情/安装酒馆扩展.html)相关接口, 现在你可以简单地在酒馆助手中安装、更新、卸载酒馆插件了 (虽然已经有[自动安装插件脚本](https://stagedog.github.io/青空莉/作品集/)).
-- 新增 `getTavernHelperExtensionId` 函数用于获取酒馆助手扩展 ID.
-- 新增 `getTavernVersion` 函数用于[获取酒馆版本](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/功能详情/查询版本.html).
-- 为音频播放器制作了[新的函数接口](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/功能详情/播放音频/播放状态.html)
+- `getVariables`、`replaceVariables` 等[Variable 相关 Function](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/ Function 详情/ Variable / Variable 类型.html)Now 支持处理 Preset Variable (`'preset'`) 和第三方插件常用的扩展 Variable (`'extension'`).
+- Now when manipulating script variables inside a script, you can just write `getVariables({type: 'script'})` without passing the `script_id` parameter.
+- `replaceVariables` No longer needed `await`.
+- 新增 [`getAllEnabledScriptButtons`](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/ Function 详情/脚本额外 Function.html#getallenabledscriptbuttons) Function 用于获取当前处于启用状态的所有 Script Button , 方便 QR 助手对 Script Button 进行适配
+- 新增 `installExtension` 等[安装酒馆插件](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/ Function 详情/安装酒馆扩展.html)相关接口, Now 你可以简单地在酒馆助手中安装、更新、卸载酒馆插件了 (虽然已经有[自动安装插件脚本](https://stagedog.github.io/青空莉/作品集/)).
+- Added `getTavernHelperExtensionId` function to get the TavernHelper extension ID.
+- 新增 `getTavernVersion` Function 用于[获取酒馆版本](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/ Function 详情/查询版本.html).
+- 为音频 Player 制作了[新的 Function 接口](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/ Function 详情/播放音频/播放状态.html)
 
-### 🔧杂项
+### 🔧 Misc
 
-- 移除了主界面上的酒馆助手总开关. 如需要完全禁用酒馆助手, 请使用酒馆扩展管理按钮.
-- 插件主界面将会记忆用户最后选择的功能面板, 下次打开时会自动显示.
-- 补充了一些酒馆事件的类型定义, 请使用酒馆助手前端界面或脚本编写模板的作者[更新模板](https://stagedog.github.io/青空莉/工具经验/实时编写前端界面或脚本/如何更新模板/).
+- Removed the main TavernHelper toggle from the main interface. If you need to completely disable TavernHelper, please use the Tavern Extensions Manager button.
+- Plugin main interface will remember the user's last selected function panel and automatically display it next time.
+- 补充了一些酒馆事件的类型定义, 请使用酒馆助手前端 Interface 或脚本编写模板的作者[更新模板](https://stagedog.github.io/青空莉/工具经验/实时编写前端 Interface 或脚本/如何更新模板/).
 
 ### 3.6.13
 
-### ⏫功能
+### ⏫ Function
 
-- 为 `generate` 和 `generateRaw` 添加 `iframe_events.GENERATION_BEFORE_END` 事件, 以便在生成结束前由提示词模板等脚本更改结果
+- Added `iframe_events.GENERATION_BEFORE_END` event for `generate` and `generateRaw`, allowing scripts like prompt templates to modify the result before generation ends
 
 ## 3.6.12
 
-### 🐛修复
+### 🐛 Fix
 
-- 3.6.3 后 `replaceTavernRegexes` 成功修改正则，但正则界面对正则的显示没刷新
+- 3.6.3 After `replaceTavernRegexes` successfully modified regex, the regex interface display did not refresh
 
 ## 3.6.11
 
-### 💻界面
+### 💻 Interface
 
-- 移除了酒馆助手设置中的 `token 数过多提醒` 功能, 因为并没有解决答疑频道问类似问题人很多的问题; 需要此功能请在 `酒馆助手-内置库` 中添加 `token 数过多提醒脚本`
+- Removed `Excessive Token Warning` feature from TavernHelper settings, as it didn't solve the issue of many people asking similar questions in the support channel; if you need this feature, please add the `Excessive Token Warning Script` from `TavernHelper - Built-in Library``
 
-### ⏫功能
+### ⏫ Function
 
-**内置库:**
+**Built-in Library :**
 
-- 添加`token数过多提醒`脚本, 可以提醒你 token 数过多
+- Added `Excessive Token Warning` script, which can remind you when token count is too high
 
 ## 3.6.10
 
-### 💻界面
+### 💻 Interface
 
-- 提示词查看器上面的提示信息改为显示 5 秒后自动消失, 避免占用手机屏幕空间
+- Prompt info above Prompt Viewer now automatically disappears after 5 seconds to avoid taking up mobile screen space
 
 ## 3.6.9
 
-### 💻界面
+### 💻 Interface
 
-- 考虑到答疑频道提问这类问题的人有很多, 在酒馆助手设置中新增 `token 数过多提醒` 功能, 当聊天 token 数过多时会提醒你总结前文
+- Considering many people ask such questions in the support channel, added `Excessive Token Warning` in TavernHelper settings; it reminds you to summarize context when chat token count is too high
 
 ## 3.6.8
 
-### 🐛修复
+### 🐛 Fix
 
-- 与最新版提示词模板的消息楼层变量兼容性
+- Compatibility with message floor variables of the latest Prompt Template version
 
 ## 3.6.7
 
-### 🐛修复
+### 🐛 Fix
 
-- 让 `getChatMessages` 和 `replaceChatMessages` 对多 swipe 楼层的处理更为正确
+- Made `getChatMessages` and `replaceChatMessages` handle messages with multiple swipes more correctly
 
 ## 3.6.6
 
-### 💻界面
+### 💻 Interface
 
-- 在一些容易发问的地方提示**“酒馆助手正在完全重写”**
+- Added prompts in common FAQ areas stating **"TavernHelper is being completely rewritten"”**
 
 ## 3.6.5
 
-### ⏫功能
+### ⏫ Function
 
-- 补充 @zonde306 在酒馆 1.13.4 新增的事件 `tavern_events.WORLDINFO_ENTRIES_LOADED` 的[类型定义](https://github.com/N0VI028/JS-Slash-Runner/blob/3eb2beaa13e5f11626ff37e20d55b0f8e4cb3a60/%40types/iframe/event.d.ts#L381-L386), 监听该事件可以在世界书激活前调整预激活的世界书条目
-- 调整`tavern_events.WORLD_INFO_ACTIVATED` 的[类型定义](https://github.com/N0VI028/JS-Slash-Runner/blob/3eb2beaa13e5f11626ff37e20d55b0f8e4cb3a60/%40types/iframe/event.d.ts#L327-L329), 监听该事件可以在世界书激活后调整激活的世界书条目
+- 补充 @zonde306 在酒馆 1.13.4 新增的事件 `tavern_events.WORLDINFO_ENTRIES_LOADED` 的[类型定义](https://github.com/N0VI028/JS-Slash-Runner/blob/3eb2beaa13e5f11626ff37e20d55b0f8e4cb3a60/%40types/iframe/event.d.ts#L381-L386), 监听该事件可以在 Lorebook 激活前调整预激活的 Lorebook 条目
+- 调整`tavern_events.WORLD_INFO_ACTIVATED` 的[类型定义](https://github.com/N0VI028/JS-Slash-Runner/blob/3eb2beaa13e5f11626ff37e20d55b0f8e4cb3a60/%40types/iframe/event.d.ts#L327-L329), 监听该事件可以在 Lorebook 激活后调整激活的 Lorebook 条目
 
 ## 3.6.4
 
-### 💻界面
+### 💻 Interface
 
-- 将变量管理器的 `消息` 选项卡改为 `消息楼层` 选项卡, 避免歧义
-- 减少变量管理器消息楼层选项卡默认显示的楼层数, 暂时避免卡顿; 其余问题将在完全重写完酒馆助手后优化
+- Renamed `Message` tab in Variable Manager to `Message Floors` to avoid ambiguity
+- Reduced the default number of messages displayed in the Variable Manager message tab to temporarily avoid lag; remaining issues will be optimized after TavernHelper is completely rewritten
 
 ## 3.6.3
 
-### 💻界面
+### 💻 Interface
 
-- 在提示词查看器界面新增了一条说明 `💡 这个窗口打开时, 你也可以自己发送消息来刷新提示词发送情况`, 提醒对于 `generate` 和 `generateRaw` 也可以通过提示词查看器查看发送结果
+- Added a note in Prompt Viewer interface `💡 When this window is open, you can also send messages yourself to refresh prompt transmission status`, reminding that for `generate` and `generateRaw` you can also view transmission results via Prompt Viewer
 
-### ⏫功能
+### ⏫ Function
 
-- 优化 `replaceTavernRegexes` 的性能
+- Optimized `replaceTavernRegexes` performance
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复提示词模板和酒馆助手宏在消息楼层中的渲染顺序冲突, 导致 `{{get_message_variable::}}` 等宏不能正常显示的问题
+- Fixed rendering order conflict between prompt templates and TavernHelper macros in message floors, which caused macros like `{{get_message_variable::}}` to not display correctly
 
 ## 3.6.2
 
-### ⏫功能
+### ⏫ Function
 
-- 为前端和脚本默认置入了 [`pixi.js` 库](https://pixijs.com/), 便于制作 live2d、动画、播放器等.
-- 新增 `waitGlobalInitialized` 函数, 便于等待其他 iframe 中共享出来的全局接口初始化完毕, 并使之在当前 iframe 中可用. 如 `Mvu`:
+- 为前端和脚本默认置入了 [`pixi.js` 库](https://pixijs.com/), 便于制作 live2d、动画、 Player 等.
+- Added `waitGlobalInitialized` function to wait for global interfaces shared in other iframes to initialize and make them available in the current iframe. E.g. `Mvu`:
 
   ```typescript
   await waitGlobalInitialized('Mvu');
-  ...此后可以直接使用 Mvu
+  ...Can be used directly hereafter Mvu
   ```
 
-- 新增 `initializeGlobal` 函数, 便于将接口共享到全局, 使之在其他 iframe 中可用. 如 `Mvu`:
+- Added `initializeGlobal` function to facilitate sharing interfaces globally, making them available in other iframes. E.g. `Mvu`:
 
   ```typescript
   initializeGlobal('Mvu', Mvu);
-  ...此后其他 iframe 将能通过 `await waitGlobalInitialized('Mvu')` 来等待初始化完毕, 从而用 `Mvu` 为变量名访问该接口
+  ...Hereafter other iframes can wait for initialization via `await waitGlobalInitialized('Mvu')`, thus accessing the interface using `Mvu` as variable name
   ```
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复 `setLorebookSettings` 不能正确设置某些设置的问题
+- Fixed `setLorebookSettings` not correctly setting certain settings
 
 ## 3.6.1
 
-### ⏫功能
+### ⏫ Function
 
-- (破坏性) 将原本的 `Character` 重命名为 `RawCharacter`, 为之后制作角色卡接口 `Character` 腾位置, **请尽量迁移原来使用的 `Character` 为 `RawCharacter`**
+- (Destructive) Renamed original `Character` to `RawCharacter` to make room for future character card interface `Character`, **Please try to migrate originally used `Character` to `RawCharacter`**
 
-### 🐛修复
+### 🐛 Fix
 
-- 优化实时监听对脚本和前端界面的重新渲染方式
+- Optimized the re-rendering method for scripts and frontend interface during real-time listening
 
 ## 3.6.0
 
-### 💻界面
+### 💻 Interface
 
-- 移除了 `渲染器` 页面的 `启用渲染优化` 开关, 现在会**始终启用渲染优化**, 且不会影响其他代码块的高亮.
+- Removed `Enable Rendering Optimization` switch from `Renderer` page; rendering optimization is now **always enabled** and will not affect highlighting of other code blocks.
 
-### 🐛修复
+### 🐛 Fix
 
-- 确保了对 html 代码块中酒馆助手宏的替换发生在 html 代码块被渲染成前端界面前
+- Ensured that replacement of TavernHelper macros in html code blocks happens before html code blocks are rendered into frontend interface
 
 ## 3.5.1
 
-### 💻界面
+### 💻 Interface
 
-- 拆分 `调试模式` 和 `Blob URL 渲染` 为两个独立的设置
+- Split `Debug Mode` and `Blob URL Rendering` into two independent settings
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复 `insertOrAssignVariables`、`insertVariables` 和 `getAllVariables` 对数组合并方式的处理. 现在如果插入新数组, 将会覆盖旧数组, 而不是合并
+- Fixed array merge handling in `insertOrAssignVariables`, `insertVariables`, and `getAllVariables`. Now inserting a new array will overwrite the old array instead of merging
 
 ## 3.5.0
 
-### 💻界面
+### 💻 Interface
 
-- 现在你可以在酒馆助手设置中自行禁用 2.0.10 时添加的加载动画, 而不是期待作者在 html 里添加 `<!-- disable-default-loading -->` 来禁用
-- 现在启用调试模式还会将脚本和前端界面渲染为 Blob URL, 而不是自行在 html 里添加 `<!-- enable-blob-url-render -->` 来启用
+- You can now disable the loading animation added in 2.0.10 in TavernHelper settings, instead of expecting the author to add `<!-- disable-default-loading -->` in html
+- Enabling Debug Mode now also renders scripts and frontend as Blob URLs, instead of manually adding `<!-- enable-blob-url-render -->` in html to enable it
 
-### ⏫功能
+### ⏫ Function
 
-- 新增 `importRawChat` 函数, 便于像酒馆界面里那样导入聊天文件
-- 现在 `setChatMessages` 支持使用深度参数, 如 `setChatMessages([{ message_id: -1, message: '新的消息' }])` 表示修改最后一楼的正文
+- Added `importRawChat` function to facilitate importing chat files just like in the Tavern interface
+- Now `setChatMessages` supports using depth parameter, e.g., `setChatMessages([{ message_id: -1, message: 'New message' }])` means modifying the body of the last message
 
-### 🐛修复
+### 🐛 Fix
 
-- 让 `setChatMessages` 渲染结果更贴近酒馆原生
+- Made `setChatMessages` rendering result closer to Tavern native
 
 ## 3.4.21
 
-### ⏫功能
+### ⏫ Function
 
-- 使用 `stopGenerationById` 和 `stopAllGeneration` 时, 会发送 `tavern_events.GENERATION_STOPPED` 事件, 并携带停止的生成 ID
+- When using `stopGenerationById` and `stopAllGeneration`, `tavern_events.GENERATION_STOPPED` event will be sent, carrying the stopped generation ID
 
-### 🐛修复
+### 🐛 Fix
 
-- 让切换角色卡时对角色脚本的处理更正确, 例如在脚本卸载时使用 `replaceScriptButtons` 不会导致脚本被复制到其他角色卡中了
+- Made character script handling more correct when switching cards; e.g., using `replaceScriptButtons` during script unload will not cause the script to be copied to other cards
 
 ## 3.4.20
 
-### ⏫功能
+### ⏫ Function
 
-- 为脚本和前端界面加入 `jquery-ui-touch-punch` 库, 让手机也能正常使用 jQuery UI 组件
-- `generate`和`generateRaw`现在支持通过 `generation_id` 参数自定义生成ID，达到同时运行多个生成任务的效果，并支持通过 `stopGenerationById` 停止特定生成，`stopAllGeneration` 停止所有通过酒馆助手请求的生成（不包括酒馆自身请求）
+- Added `jquery-ui-touch-punch` library for scripts and frontend, allowing mobile devices to use jQuery UI components normally
+- `generate`and `generateRaw` now support customizing generation ID via `generation_id` parameter, achieving simultaneous execution of multiple generation tasks, and support stopping specific generation via `stopGenerationById`, and `stopAllGeneration` to stop all generations requested via TavernHelper (excluding Tavern's own requests ）
 
-### 🐛修复
+### 🐛 Fix
 
-- 避免 `createChatMessages` 在未要求未设置 `data` 时设置 `data` 为空对象, 导致 `{{get_message_variable}}` 不可用的问题
-- 修复酒馆助手宏在代码块内对含 `<user>` 文本的渲染问题
-- 修复 `importRawPreset` 在酒馆新版本不能正确导入预设的问题
-- 修复开关酒馆助手宏过快可能导致意外的问题
+- Prevented `createChatMessages` from setting `data` to an empty object when not requested/set, which made `{{get_message_variable}}` unusable
+- Fixed rendering issue of TavernHelper macros on text containing `<user>` within code blocks
+- Fixed `importRawPreset` not correctly importing presets in new Tavern versions
+- Fixed potential unexpected issues when toggling TavernHelper macros too quickly
 
 ## 3.4.19
 
-### 🐛修复
+### 🐛 Fix
 
-- 脚本按钮名称中不能有 `"` 的问题
-- 在手机点击脚本按钮会收起输入法的问题
+- Issue where script button names could not contain `"`
+- Issue where clicking a script button on mobile would collapse the input method
 
 ## 3.4.18
 
-### 🐛修复
+### 🐛 Fix
 
-- `getAllVariables` 可能获取不到当前楼层变量的问题
-- 修复 `replaceVariables` 在另一些情况下不能正确保存对脚本变量的修改的问题
+- `getAllVariables` Issue where current floor variables might not be retrieved
+- Fixed an issue where `replaceVariables` could not correctly save changes to script variables in other cases
 
 ## 3.4.17
 
-### ⏫功能
+### ⏫ Function
 
-- 在代码任意处写入注释`<!--enable-blob-url-render-->` 后将用 `blob-url` 渲染, 而不使用 `srcdoc`. 这种渲染更方便查看日志和调试, 但一些国产浏览器不支持.
-- 为了更好的 Vue 兼容性, 为 iframe 添加全局变量 `Vue` 和 `VueRouter`
+- Writing comment `<!--enable-blob-url-render-->` anywhere in the code will use `blob-url` rendering instead of `srcdoc`. This rendering is more convenient for viewing logs and debugging, but some domestic browsers do not support it.
+- For better Vue compatibility, added global variables `Vue` and `VueRouter`
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复与酒馆 1.12.10 的兼容性
+- Fixed compatibility with Tavern 1.12.10
 
 ## 3.4.16
 
-### ⏫功能
+### ⏫ Function
 
-- 新增导入酒馆角色卡、预设、世界书、酒馆正则功能 (`importRawCharacter` 等接口), 你可以直接从酒馆界面导出角色卡、预设、世界书、酒馆正则，而使用这些函数导入它们, 由此便于有人希望利用 gitlab、github 制作**自动更新角色卡、预设、世界书酒馆正则功能**, 具体见于[类型文件](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/function/import_raw.d.ts)
+- 新增导入酒馆角色卡、 Preset 、 Lorebook 、酒馆正则 Function (`importRawCharacter` 等接口), 你可以直接从酒馆 Interface 导出角色卡、 Preset 、 Lorebook 、酒馆正则，而使用这些 Function 导入它们, 由此便于有人希望利用 gitlab、github 制作**自动更新角色卡、 Preset 、 Lorebook 酒馆正则 Function**, 具体见于[类型文件](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/function/import_raw.d.ts)
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复 `setChatMessage` 在一些情况下渲染出错的问题
-- 修复某些框架不使用酒馆助手模板而依赖了有问题的代码, 在新版本不可用的问题
+- Fixed an issue where `setChatMessage` would render incorrectly in some cases
+- Fixed an issue where some frameworks relying on problematic code without using TavernHelper templates became unusable in the new version
 
 ## 3.4.15
 
-### ⏫功能
+### ⏫ Function
 
-- 新增 `injectPrompts` 和 `uninjectPrompts` 函数, 便于注入和移除提示词
+- Added `injectPrompts` and `uninjectPrompts` functions to facilitate injecting and removing prompts
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复 `replaceVariables` 在一些情况下不能正确保存对脚本变量的修改的问题
+- Fixed an issue where `replaceVariables` failed to correctly save changes to script variables in some cases
 
 ## 3.4.14
 
-### ⏫功能
+### ⏫ Function
 
-- 新增 `getScriptInfo` 和 `replaceScriptInfo` 函数, 便于获取和替换脚本作者注释
-- 对酒馆用于注册函数调用的函数 `SillyTavern.registerFunctionTool` 添加类型定义, 具体见于[类型文件](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/iframe/exported.sillytavern.d.ts)
+- Added `getScriptInfo` and `replaceScriptInfo` functions to facilitate getting and replacing script author notes
+- 对酒馆用于注册 Function 调用的 Function `SillyTavern.registerFunctionTool` 添加类型定义, 具体见于[类型文件](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/iframe/exported.sillytavern.d.ts)
 
 ## 3.4.13
 
-### 💻界面
+### 💻 Interface
 
-- 让脚本库中关闭的脚本像正则那样名字带有删除线
-- 变量管理器和提示词查看器的窗口大小添加记忆功能, 下次打开时会自动恢复到上次的大小
+- Made closed scripts in Script Library have strikethrough names like regexes
+- Added memory function for window size of Variable Manager and Prompt Viewer; it will automatically restore to the last size when opened next time
 
-### ⏫功能
+### ⏫ Function
 
-- 为 `getScriptButtons` 等脚本按钮函数移除 `script_id` 参数, 现在你可以在脚本中直接调用它们而无需传入 `getScriptId()` 参数 (以前的代码依旧有效):
+- Removed `script_id` parameter from script button functions like `getScriptButtons`; now you can call them directly in scripts without passing `getScriptId()` (previous code remains valid):
 
   ```typescript
-  // 以前
+  // Before
   const buttons = getScriptButtons(getScriptId());
 
-  // 现在
+  // Now
   const buttons = getScriptButtons();
   ```
 
-### 🐛修复
+### 🐛 Fix
 
-- 为流式 `generate` 函数补充 `iframe_events.GENERATION_STARTED` 事件
-- 修复 `createChatMessages` 对 `system` 消息的处理
+- Added `iframe_events.GENERATION_STARTED` event for streaming `generate` function
+- Fixed `createChatMessages` handling of `system` messages
 
 ## 3.4.12
 
-### 💻界面
+### 💻 Interface
 
-- 调整`酒馆助手设置-编写参考`的显示
-- 移除`酒馆助手设置-实时监听-监听地址`, 避免有人跳着看教程而填错
+- Adjusted display of `TavernHelper Settings - Writing Reference`
+- Removed `TavernHelper Settings - Real-time Listening - Listening Address` to avoid people skipping tutorial steps and filling it wrong
 
-### ⏫功能
+### ⏫ Function
 
-- 为前端界面添加 tailwindcss cdn 版支持. 其提供了很多预定义样式, 例如 `class="items-center"` 表示居中对齐.
-- 更新 `font-awesome` 图标库为 `@fortawesome/fontawesome-free` 版本
+- Added tailwindcss CDN support for the frontend. It provides many predefined styles, e.g., `class="items-center"` for center alignment.
+- Updated `font-awesome` icon library to `@fortawesome/fontawesome-free` version
 
-### 🐛修复
+### 🐛 Fix
 
-- 取消预设函数隐式将酒馆系统提示词 (Main Prompt、Auxiliary Prompt、Post-Instruction Prompt、Enhance Definition) 转换为一般提示词的功能, 因为这似乎会导致酒馆清空这几个条目.
+- Cancelled the feature where preset functions implicitly converted Tavern System Prompts (Main Prompt, Auxiliary Prompt, Post-Instruction Prompt, Enhance Definition) to general prompts, as this seemed to cause Tavern to clear these entries.
 
-  但酒馆系统提示词与一般提示词相比并无优势, 甚至缺少更改插入位置为聊天中的功能, 因此并不建议你使用.
+  However, Tavern System Prompts offer no advantage over general prompts and even lack the ability to change insertion position into the chat, so it is not recommended to use them.
 
-- 修复 `createChatMessages` 对 `refresh: none` 的处理
-- 修复 `createChatMessages` 在尾部插入消息时不会处理酒馆助手渲染的问题
-- 清理 `getWorldbook` 获取的 `recursion.delay_until`、`effect.sticky`、`effect.cooldown`、`effect.delay` 等字段, 将 `0` 等无效值转换为 `null`
-- 修复 `getPreset` 提取出的老预设存在的类型错误
+- Fixed `createChatMessages` handling of `refresh: none`
+- Fixed `createChatMessages` not processing TavernHelper rendering when inserting messages at the end
+- Cleaned up `recursion.delay_until`, `effect.sticky`, `effect.cooldown`, `effect.delay` etc. fields retrieved by `getWorldbook`, converting invalid values like `0` to `null`
+- Fixed type errors in old presets extracted by `getPreset`
 
 ## 3.4.11
 
-### ⏫功能
+### ⏫ Function
 
-- ~~趁没人用~~调整预设提示词条目的插入字段 (`prompt.position`), 添加新酒馆的插入顺序字段 (`prompt.injection_order`).
-- 将预设占位符提示词的 id 从 `snake_case` 改为 `camelCase`, 便于与酒馆界面交互.
+- ~~ Since no one is using it yet~~ Adjusted the insertion field (`prompt.position`) for preset prompt entries, added the insertion order field for new Tavern (`prompt.injection_order`).
+- Changed preset placeholder prompt IDs from `snake_case` to `camelCase` for easier interaction with Tavern interface.
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复了提示词查看器搜索功能的问题
-- 修复预设文件中可能不存在 `marker` 字段而导致预设函数不可用的问题
+- Fixed issues with the Prompt Viewer search function
+- Fixed an issue where the `marker` field might not exist in preset files, causing preset functions to be unusable
 
 ## 3.4.10
 
-### 💻界面
+### 💻 Interface
 
-- 在`酒馆助手设置-主设置-开发工具`中新增`禁用酒馆助手宏`功能, 方便使用写卡预设/世界书时, 将人设模板中的 `{{get_message_variable::变量}}` 等酒馆助手宏直接发给 AI 而不进行替换. 也就是说:
-  - 使用写卡预设时: 开启"酒馆助手"的`禁用酒馆助手宏`和关闭"提示词模板", 以便发送人设模板让 AI 给你输出人设
-  - 游玩/测试角色卡时: 关闭"酒馆助手"的`禁用酒馆助手宏`和关闭"提示词模板", 从而让酒馆助手宏和提示词模板 EJS 得到替换和执行处理,让动态提示词生效
+- Added `Disable TavernHelper Macros` in `TavernHelper Settings - Main Settings - Developer Tools`. This is convenient when using card creation presets/Lorebooks to send TavernHelper macros like `{{get_message_variable::variable}}` in character templates directly to AI without replacement. In other words :
+  - When using Card Creation Preset: Turn ON 'Disable TavernHelper Macros' in "TavernHelper" and turn OFF "Prompt Template", to send character templates for AI to output character settings
+  - When playing/testing character cards: Turn OFF 'Disable TavernHelper Macros' in "TavernHelper" and turn OFF "Prompt Template", so TavernHelper macros and Prompt Template EJS get replaced and executed, allowing dynamic prompts to take effect
 
 ## 3.4.9
 
-### 🐛修复
+### 🐛 Fix
 
-- 让酒馆助手的加载不再依赖于任何网络文件, 避免 `failed to load: [object Event]`
+- Made TavernHelper loading no longer depend on any network files, avoiding `failed to load: [object Event]`
 
 ## 3.4.8
 
-### 💻界面
+### 💻 Interface
 
-- 让变量管理器更紧凑
+- Made Variable Manager more compact
 
-### ⏫功能
+### ⏫ Function
 
-- **`generate`函数和 `generateRaw` 函数现在支持自定义 api 了**
+- **`generate`Function and `generateRaw` function now support custom APIs**
 
   ```typescript
   const result = await generate({
-    user_input: '你好',
+    user_input: 'Hello',
     custom_api: {
       apiurl: 'https://your-proxy-url.com',
       key: 'your-api-key',
@@ -843,228 +843,228 @@
   });
   ```
 
-- 新增 `getButtonEvent` 来获取脚本按钮对应的事件
-- 弃用 `eventOnButton`, 请使用 `eventOn(getButtonEvent('按钮名称'), 函数)` 代替
-- `generate` 和 `generateRaw` 现在可以自定义请求的API了
+- Added `getButtonEvent` to get the event corresponding to a script button
+- Deprecated `eventOnButton`, please use `eventOn(getButtonEvent('Button Name'), function)` instead
+- `generate` and `generateRaw` can now customize the requested API
 
-### 🐛修复
+### 🐛 Fix
 
-- `createWorldbookEntries` 和 `deleteWorldbookEntries` 不可用的问题
-- 修改变量管理器嵌套卡片的排版，扩大文本显示范围
+- `createWorldbookEntries` and `deleteWorldbookEntries` unavailable issue
+- Modified layout of nested cards in Variable Manager to expand text display area
 
 ## 3.4.7
 
-### ⏫功能
+### ⏫ Function
 
-- 优化事件监听的性能
+- Optimized event listener performance
 
-### 🐛修复
+### 🐛 Fix
 
-- 尝试修复切换角色卡时事件监听没能正确卸载的问题
+- Attempted to fix event listeners not properly unloading when switching character cards
 
 ## 3.4.6
 
-### 🐛修复
+### 🐛 Fix
 
-- 移除不常使用的油猴兼容性设置，想要使用相关功能请直接安装原作者的[油猴脚本](https://greasyfork.org/zh-CN/scripts/503174-sillytavern-st%E9%85%92%E9%A6%86-html%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E5%99%A8)
-- 修复在 QR 启用但没有显示任何 QR 组，并且启用了复数个拥有按钮的脚本时，按钮无法正确显示的问题
+- 移除不常使用的油猴兼容性设置，想要使用相关 Function 请直接安装原作者的[油猴脚本](https://greasyfork.org/zh-CN/scripts/503174-sillytavern-st%E9%85%92%E9%A6%86-html%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E5%99%A8)
+- Fixed issue where buttons failed to display correctly when QR is enabled but no QR groups are shown, and multiple scripts with buttons are enabled
 
 ## 3.4.5
 
-### ⏫功能
+### ⏫ Function
 
-- 优化 `replacePreset` 和 `updatePresetWith` 的性能
+- Optimized performance of `replacePreset` and `updatePresetWith`
 
 ## 3.4.4
 
-### 📚脚本库
+### 📚 Script Library
 
-**内置库:**
+**Built-in Library :**
 
-- 添加`预设条目更多按钮`脚本, 可以一键新建/复制条目到某条目附近
+- Added `Preset Entry More Buttons` script, allowing one-click creation/copying of entries near a specific entry
 - 移除了不太常用的[`样式加载`](https://discord.com/channels/1291925535324110879/1354783717910122496)和容易被误用的[`资源预载`](https://discord.com/channels/1291925535324110879/1354791063935520898)脚本, 需要请查看脚本原帖
 
-### 🐛修复
+### 🐛 Fix
 
-- `replacePreset` 不能正确处理预设提示词 id 冲突的问题
+- `replacePreset` Issue where preset prompt ID conflicts were not handled correctly
 
 ## 3.4.3
 
-### ⏫功能
+### ⏫ Function
 
-- 为预设和世界书操作新增可选选项 `render:'debounced'|'immediate'`, 用于控制是否防抖渲染. 默认使用防抖渲染, 因为大多数情况下不需要立即渲染.
-- 将酒馆的 `PromptManager` 导出到 `builtin` 中, 并额外提供 `builtin.renderPromptManager` 和 `builtin.renderPromptManagerDebounced` 函数, 用于刷新预设提示词的渲染.
+- Added optional option `render:'debounced'|'immediate'` for Preset and Lorebook operations, controlling whether to use debounced rendering. Defaults to debounced rendering, as immediate rendering is not needed in most cases.
+- Exported Tavern's `PromptManager` to `builtin`, and provided additional `builtin.renderPromptManager` and `builtin.renderPromptManagerDebounced` functions to refresh preset prompt rendering.
 
 ## 3.4.2
 
-### 🐛修复
+### 🐛 Fix
 
-- `replareWorldbook` 不能正确处理关键字的问题
+- `replareWorldbook` Issue where keywords could not be handled correctly
 
 ## 3.4.1
 
-### ⏫功能
+### ⏫ Function
 
-**提示词发送情况查看:**
+**View Prompt Transmission Status :**
 
-- 内置库中的 "查看提示词发送" 脚本已经调整为内置功能, 在工具箱或界面左下角魔法棒快捷菜单中即可找到入口. **它会显示酒馆经过处理后最终发给 ai 的提示词**, 因此将正确处理一些特殊机制, 得到**真实的提示词和相对真实的提示词 token 数**. 特殊机制包含但不限于:
-  - 世界书绿灯条目的激活
-  - 预设的 "压缩系统消息" 功能
-  - 提示词模板
-  - 酒馆、酒馆助手宏
-  - 角色卡里其他监听提示词发送而进行的脚本
+- "View Prompt Transmission" script in built-in library has been adjusted to a built-in feature, accessible via Toolbox or magic wand shortcut menu in bottom left. **It displays the final prompt sent to AI after Tavern processing**, thus correctly handling special mechanisms to get **real prompts and relatively real prompt token counts**. Special mechanisms include but are not limited to :
+  - Activation of Lorebook green light entries
+  - Preset's "Compress System Messages" function
+  - Prompt Template
+  - Tavern, TavernHelper Macros
+  - Other scripts in the character card listening for prompt transmission
 
-- 支持随消息发送自动刷新
-- 可按内容搜索（支持正则表达式），以及根据消息role筛选
-- 搜索时勾选“仅显示匹配”可在搜索结果中折叠匹配部分外的上下文
+- Supports auto-refresh upon message sending
+- Search by content (supports regex), and filter by message role
+- Checking "Show Match Only" during search collapses context outside the matched part in search results
 
-**世界书:**
+**Lorebook :**
 
-- 新增 `createWorldbookEntries` 和 `deleteWorldbookEntries` 函数, 便于向世界书新增和删除条目
+- Added `createWorldbookEntries` and `deleteWorldbookEntries` functions to facilitate adding and deleting entries in Lorebook
 
   ```typescript
-  // 创建两个条目, 一个标题叫 "神乐光", 一个留白
-  const { worldbook, new_entries } = await createWorldbookEntries('eramgt少女歌剧', [{ name: '神乐光' }, {}]);
+  // Create two entries, one titled "Kagura Hikari", one blank
+  const { worldbook, new_entries } = await createWorldbookEntries('eramgt Revue Starlight', [{ name: 'Kagura Hikari' }, {}]);
   ```
 
   ```typescript
-   // 删除所有名字中包含 `神乐光` 的条目
-   const { worldbook, deleted_entries } = await deleteWorldbookEntries('eramgt少女歌剧', entry => entry.name.includes('神乐光'));
+   // Delete all entries with names containing `Kagura Hikari`
+   const { worldbook, deleted_entries } = await deleteWorldbookEntries('eramgt Revue Starlight', entry => entry.name.includes('Kagura Hikari'));
   ```
 
-### 🐛修复
+### 🐛 Fix
 
-- 将 `createChatMessages` 的默认 `refresh` 选项修复为用 `'affected'`, 从而避免在尾部创建消息时刷新整个聊天消息
-- 让 `generate` 函数也能触发提示词模板
+- Fixed default `refresh` option of `createChatMessages` to use `'affected'`, avoiding refreshing entire chat messages when creating messages at the end
+- Allowed the `generate` function to also trigger prompt templates
 
 ## 3.4.0
 
-### 📚脚本库
+### 📚 Script Library
 
-**内置库:**
+**Built-in Library :**
 
-- 新增 `世界书强制用推荐的全局设置` 脚本. 这是大多数作者写卡时的默认设置, 本来就没有玩家去修改的必要
+- Added `Lorebook Forced Recommended Global Settings` script. This is the default setting for most authors when writing cards, and there is usually no need for players to modify it
 
-### ⏫功能
+### ⏫ Function
 
-**世界书:**
+**Lorebook :**
 
-- 重新制作世界书接口 `Worldbook`, 原本的所有 `Lorebook` 函数均被弃用 (但仍可运行), 请使用 `Worldbook` 接口, 具体见于[文档](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/%E5%8A%9F%E8%83%BD%E8%AF%A6%E6%83%85/%E4%B8%96%E7%95%8C%E4%B9%A6/%E4%BF%AE%E6%94%B9%E4%B8%96%E7%95%8C%E4%B9%A6.html)或[类型文件 (可以直接发给 ai)](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/function/worldbook.d.ts)
-  - 移除了 `getLorebookSettings` 等控制全局设置的功能, 因为很少有需要改动的时候, 取而代之的是内置库新增 `世界书强制用推荐的全局设置` 脚本
-  - `getWorldbook` 将直接返回按世界书 "自定义顺序" 排序好的数组 (不知道自定义顺序是什么? 请查看内置库中的 "世界书强制自定义顺序" 说明)
+- 重新制作 Lorebook 接口 `Worldbook`, 原本的所有 `Lorebook` Function 均被弃用 (但仍可运行), 请使用 `Worldbook` 接口, 具体见于[文档](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/%E5%8A%9F%E8%83%BD%E8%AF%A6%E6%83%85/%E4%B8%96%E7%95%8C%E4%B9%A6/%E4%BF%AE%E6%94%B9%E4%B8%96%E7%95%8C%E4%B9%A6.html)或[类型文件 (可以直接发给 ai)](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/function/worldbook.d.ts)
+  - Removed `getLorebookSettings` and other global setting control functions as they are rarely needed; replaced by the new `Lorebook Forced Recommended Global Settings` script in the built-in library
+  - `getWorldbook` Will directly return the array sorted by Lorebook "Custom Order" (Don't know what custom order is? Please check the "Lorebook Forced Custom Order" description in the built-in library)
 
-**MVU 变量框架:**
+**MVU Variable Framework :**
 
-- 新增了 mvu 接口, 现在你可以通过 `Mvu` 来使用 MVU 变量框架中的功能了 (解析 ai 输出的更新命令、监听 mvu 更新变量事件从而调整变量或触发剧情等), 具体见于[文档](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/%E5%8A%9F%E8%83%BD%E8%AF%A6%E6%83%85/%E6%8E%A5%E5%8F%A3%E8%AE%BF%E9%97%AE.html#mvu-%E5%8F%98%E9%87%8F%E6%A1%86%E6%9E%B6)和[类型文件 (可以直接发给 ai)](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/iframe_client/exported.mvu.d.ts), 例如:
+- 新增了 mvu 接口, Now 你可以通过 `Mvu` 来使用 MVU Variable Framework 中的 Function 了 (解析 ai 输出的更新命令、监听 mvu 更新 Variable 事件从而调整 Variable 或触发剧情等), 具体见于[文档](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/%E5%8A%9F%E8%83%BD%E8%AF%A6%E6%83%85/%E6%8E%A5%E5%8F%A3%E8%AE%BF%E9%97%AE.html#mvu-%E5%8F%98%E9%87%8F%E6%A1%86%E6%9E%B6)和[类型文件 (可以直接发给 ai)](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/iframe_client/exported.mvu.d.ts), 例如:
 
   ```typescript
-  // 解析包含 _.set() 命令的消息, 从而更新络络好感度为 30
+  // Parse messages containing _.set() command, updating Luoluo Favorability to 30
   const old_data = Mvu.getMvuData({ type: 'message', message_id: 'latest' });
-  const new_data = await Mvu.parseMessage("_.set('角色.络络.好感度', 30); // 强制修改", old_data);
+  const new_data = await Mvu.parseMessage("_.set('Character.Luoluo.Favorability', 30); // Force modify", old_data);
   ```
 
   ```typescript
-  // 在 mvu 变量更新结束时, 保持好感度不低于 0
+  // At the end of mvu variable update, keep Favorability not lower than 0
   eventOn('mag_variable_update_ended', (variables) => {
-    if (_.get(variables, 'stat_data.角色.络络.好感度') < 0) {
-      _.set(variables, 'stat_data.角色.络络.好感度', 0);
+    if (_.get(variables, 'stat_data.Character.Luoluo.Favorability') < 0) {
+      _.set(variables, 'stat_data.Character.Luoluo.Favorability', 0);
     }
   });
   ```
 
-**变量:**
+**Variable :**
 
-- 让 `insertOrAssignVariables` 等变量函数返回更新后的变量表, 便于在脚本中使用
+- Made `insertOrAssignVariables` and other variable functions return the updated variable table for easier use in scripts
 
-**脚本按钮:**
+**Script Button :**
 
-- 新增 `appendInexistentScriptButtons` 函数, 便于为已经有按钮的脚本新增脚本按钮, 例如角色卡作者可能在导入 mvu (`import 'https://testingcf.jsdelivr.net/gh/MagicalAstrogy/MagVarUpdate@master/artifact/bundle.js'`) 的脚本中自己额外写了代码和按钮, mvu 则可以新增 "重新处理变量" 等按钮但不影响角色卡作者已经写的按钮.
+- 新增 `appendInexistentScriptButtons` Function , 便于为已经有按钮的脚本新增 Script Button , 例如角色卡作者可能在导入 mvu (`import 'https://testingcf.jsdelivr.net/gh/MagicalAstrogy/MagVarUpdate@master/artifact/bundle.js'`) 的脚本中自己额外写了代码和按钮, mvu 则可以新增 "重新处理 Variable" 等按钮但不影响角色卡作者已经写的按钮.
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复与酒馆 1.12.10 的兼容性
-- 修复了无法通过脚本库点开内置库的问题
-- 修复了预设对当前加载到设置中的预设内容 (`'in_use'`) 的获取和修改功能
-- 修复了 `getPreset` 对预设提示词列表中占位提示词 (如 Chat History) 等开启状态的获取
-- 补充了事件发送, 修复了提示词模板更换时间后 `generate` 函数不会触发提示词模板的问题
-- 尝试修复切换角色卡时事件监听未能移除的问题
+- Fixed compatibility with Tavern 1.12.10
+- Fixed the issue where the built-in library could not be opened via the Script Library
+- Fixed the retrieval and modification of the currently loaded preset content (`'in_use'`)
+- Fixed `getPreset` retrieval of enabled status for placeholder prompts (like Chat History) in preset prompt lists
+- Added event sending, fixed issue where `generate` function would not trigger prompt template after prompt template change
+- Attempted to fix event listeners not being removed when switching character cards
 
 ## 3.3.4
 
-### 🐛修复
+### 🐛 Fix
 
-- `getLorebookEntries` 在一些情况不可用的问题
+- `getLorebookEntries` Issue where it was unavailable in some situations
 
 ## 3.3.3
 
-### 🐛修复
+### 🐛 Fix
 
-- `getLorebookEntries` 在一些情况不可用的问题
+- `getLorebookEntries` Issue where it was unavailable in some situations
 
 ## 3.3.2
 
-### ⏫功能
+### ⏫ Function
 
-- 更换了内置脚本库等的网络链接 (从 `fastly.jsdelivr.net` 更换为 `testingcf.jsdelivr.net`), 让国内更容易访问
+- Changed network links for built-in script libraries etc. (from `fastly.jsdelivr.net` to `testingcf.jsdelivr.net`) for easier access in China
 - 为前端和脚本默认置入了 [`zod` 库](https://zod.dev/basics). 通过这个库, 你可以更方便地解析 ai 输出的数据, 并对不符的数据进行**中文报错**. 如果已经配置了[编写模板](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/基本用法/如何正确使用酒馆助手.html)请下载新的模板.
 
   ```typescript
-  // 定义一个手机消息数据类型
+  // Define a mobile message data type
   type PhoneMessage = z.infer<typeof PhoneMessage>;
   const PhoneMessage = z.object({
-    name: z.string()       // `name` 是一个字符串
-           .catch('络络'),  // 如果 ai 错误输出了数字之类的, 用 '络络'
+    name: z.string()       // `name` is a string
+           .catch('Luoluo'),  // If AI incorrectly outputs numbers etc., use 'Luoluo'
 
     content: z.string()
-              .default('络络'),  // 如果 ai 忘了输出 `content`, 用 '你好',
+              .default('Luoluo'),  // If AI forgets to output `content`, use 'Hello',
 
-    reply_count: z.number().min(1),  // 至少有一条回复
+    reply_count: z.number().min(1),  // At least one reply
 
     time: z.iso.time(),
   });
 
-  const data = JSON.parse(/*假设你从 ai 回复中提取出了一条手机消息*/);
+  const data = JSON.parse(/*Suppose you extracted a mobile text message from the AI response*/);
   const phone_message = PhoneMessage.parse(message);
   console.info(data);
-  // >> { name: '络络', content: '你好', reply_count: 1, time: '06:15' }
-  // 如果解析失败, 将会报错
-  // >> 无效输入: 期望 string，实际接收 undefined
+  // >> { name: 'Luoluo', content: 'Hello', reply_count: 1, time: '06:15' }
+  // If parsing fails, an error will be thrown
+  // >> Invalid input: expected string, actually received undefined
   ```
 
-  之后会用这个库修改酒馆助手的 `@types` 文件夹, 允许你检查酒馆助手的如 `ChatMessage` 等数据类型.
+  Will use this library to modify TavernHelper's `@types` folder later, allowing you to check data types like `ChatMessage` in TavernHelper.
 
 ## 3.3.1
 
-### ⏫功能
+### ⏫ Function
 
-- `{{get_message_variable::}}` 等宏将字符串变量替换为文本时, 将不会用引号包裹内容. 例如 `{{get_message_variable::世界.时间阶段}}` 将不会替换为 `"早上"` 而是 `早上`
+- `{{get_message_variable::}}` Macros will not wrap content in quotes when replacing string variables with text. For example, `{{get_message_variable::World.TimePhase}}` will not be replaced with `"Morning"` but `Morning`
 
-### 🐛修复
+### 🐛 Fix
 
-- `loadPreset` 不能正常使用的问题
+- `loadPreset` Issue where it could not work normally
 
 ## 3.3.0
 
-### ⏫功能
+### ⏫ Function
 
-- 更新了一套操控预设的函数, 现在你可以**比酒馆接口更简单地**通过脚本操控酒馆的预设了! 具体函数请自行参考[文档](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/功能详情/预设操作/创建预设.html)或[类型文件 (可以直接发给 ai)](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/function/preset.d.ts), 如果已经配置了[编写模板](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/基本用法/如何正确使用酒馆助手.html)请`pnpm add -D type-fest`并下载新的`@types`文件夹!
+- 更新了一套操控 Preset 的 Function , Now 你可以**比酒馆接口更简单地**通过脚本操控酒馆的 Preset 了! 具体 Function 请自行参考[文档](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/ Function 详情/ Preset 操作/创建 Preset.html)或[类型文件 (可以直接发给 ai)](https://github.com/N0VI028/JS-Slash-Runner/blob/main/%40types/function/preset.d.ts), 如果已经配置了[编写模板](https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/基本用法/如何正确使用酒馆助手.html)请`pnpm add -D type-fest`并下载新的`@types`文件夹!
 
   ```typescript
-  // 为酒馆正在使用的预设开启流式传输
+  // Enabled streaming for the preset currently in use by Tavern
   await setPreset('in_use', { settings: { should_stream: true } });
   ```
 
   ```typescript
-  // 将 '预设A' 的条目按顺序复制到 '预设B' 开头
-  const preset_a = getPreset('预设A');
-  const preset_b = getPreset('预设B');
+  // Copy entries of 'Preset A' in order to the beginning of 'Preset B'
+  const preset_a = getPreset('Preset A');
+  const preset_b = getPreset('Preset B');
   preset_b.prompts = [...preset_a.prompts, ...preset_b.prompts];
-  await replacePreset('预设B', preset_b);
+  await replacePreset('Preset B', preset_b);
   ```
 
   ```typescript
-  // 将 '预设A' 的条目顺序反过来
-  await updatePresetWith('预设A', preset => {
+  // Reverse the entry order of 'Preset A'
+  await updatePresetWith('Preset A', preset => {
     preset.prompts = preset.prompts.reverse();
     return preset;
   });
@@ -1072,162 +1072,162 @@
 
 ## 3.2.13
 
-### ⏫功能
+### ⏫ Function
 
-- 新增 `formatAsTavernRegexedString()` 函数, 可获取酒馆正则处理后的文本结果
+- Added `formatAsTavernRegexedString()` function to get text result processed by Tavern Regex
 
   ```typescript
-  // 获取最后一楼文本, 将它视为将会作为显示的 AI 输出, 对它应用酒馆正则
+  // Get text of the last message, treat it as the upcoming displayed AI output, and apply Tavern Regex to it
   const message = getChatMessages(-1)[0];
   const result = formatAsTavernRegexedString(message.message, 'ai_output', 'display', { depth: 0 });
   ```
 
-### 📚脚本库
+### 📚 Script Library
 
-**内置库:**
+**Built-in Library :**
 
-- 新增 `世界书强制自定义排序` 脚本. 很多作者会使用自定义排序来写世界书, 因为他们将能自己拖动改变世界书条目顺序: 按功能分类条目、把允许玩家自定义的条目放在最上面……**所以请使用自定义排序.**
+- Added `Lorebook Forced Custom Order` script. Many authors use custom order to write Lorebooks because it allows them to drag and reorder entries: categorize entries by function, put player-customizable entries at the top... **So please use custom order.**
 
-### 🐛修复
+### 🐛 Fix
 
-- 世界书条目函数将 `与所有` 和 `非任意` 弄反了
+- Lorebook entry functions mixed up `And Any` and `Not Any`
 
 ## 3.2.12
 
-### 💻界面
+### 💻 Interface
 
-- 变量管理器切换为文本视图时, 使用 YAML 而非 JSON 格式显示变量文本, 这更便于编辑
+- When switching Variable Manager to text view, use YAML instead of JSON format to display variable text, which is easier to edit
 
 ## 3.2.11
 
-### ⏫功能
+### ⏫ Function
 
-- 新增 `getAllVariables()` 函数, 直接获取合并后的变量表. 简单来说, 它包含了前端界面/脚本一般会需要的变量表.
+- Added `getAllVariables()` function to directly get the merged variable table. Simply put, it contains the variable table that the frontend/script generally needs.
 
   ```typescript
-  // 你可以直接写下面一行:
+  // You can directly write the following line :
   const variables = getAllVariables();
   ```
 
   ```typescript
-  // 而以前不熟悉代码的人可能出现这个问题
+  // whereas previously people unfamiliar with code might encounter this issue
 
-  // 想获取当前消息楼层的 stat_data.好感度
-  const variables = _.get(getVariables({type: 'message', message_id: getCurrentMessageId()}), 'stat_data.好感度');
+  // Want to get stat_data.Favorability of current message floor
+  const variables = _.get(getVariables({type: 'message', message_id: getCurrentMessageId()}), 'stat_data.Favorability');
 
-  // 但是新的消息楼层并没有更新变量, 所以没有 stat_data.好感度
+  // But the new message floor did not update variables, so there is no stat_data.Favorability
   console.info(JSON.stringify(variables));
   // >> null
   ```
 
 ## 3.2.10
 
-### 📚脚本库
+### 📚 Script Library
 
-**内置库:**
+**Built-in Library :**
 
-- 新增 `查看提示词发送情况` 脚本, 启用后可以在左下角魔棒中打开`提示词发送情况`界面来查看上次发送的提示词情况.
+- Added `View Prompt Transmission` script. When enabled, you can open the `Prompt Transmission` interface from the magic wand in the bottom left corner to view the last sent prompt status.
 
-### 🐛修复
+### 🐛 Fix
 
-- 渲染界面高度问题
-- 角色卡头像获取问题
+- Render interface height issue
+- Character card avatar retrieval issue
 
 ## 3.2.9
 
-### 🐛修复
+### 🐛 Fix
 
-- 渲染界面大小调整时的显示问题
+- Display issue when resizing the render interface
 
 ## 3.2.8
 
-### 🐛修复
+### 🐛 Fix
 
-- 部分国产浏览器无法渲染的问题
+- Issue where some domestic browsers could not render
 
 ## 3.2.7
 
-### 🐛修复
+### 🐛 Fix
 
-- 部分国产浏览器无法渲染的问题
+- Issue where some domestic browsers could not render
 
 ## 3.2.6
 
-### ⏫功能
+### ⏫ Function
 
-- 默认禁用大多数非报错日志, 从而优化高频性能; 可通过开启 "调试模式" 来启用所有日志
+- Disabled most non-error logs by default to optimize high-frequency performance; enable all logs by turning on "Debug Mode"
 
 ## 3.2.5
 
-### ⏫功能
+### ⏫ Function
 
-- 新增 `getScriptButtons` 和 `replaceScriptButtons` 用于获取和替换脚本的按钮设置, 例如, 你可以这样设置二级按钮:
+- Added `getScriptButtons` and `replaceScriptButtons` to get and replace script button settings; for example, you can set secondary buttons like this :
 
   ```typescript
-  eventOnButton('前往地点', () => {
+  eventOnButton('Go to Location', () => {
     replaceScriptButtons(getScriptId(), [
-      { name: '学校', visible: true },
-      { name: '商店', visible: true },
+      { name: 'School', visible: true },
+      { name: 'Shop', visible: true },
     ]);
   });
   ```
 
-- 新增 `eventEmitAndWait` 用于在非异步函数中监听并等待事件.
+- Added `eventEmitAndWait` to listen for and wait for events in non-async functions.
 
 ## 3.2.4
 
-### 💻界面
+### 💻 Interface
 
-- 变量管理器的对象类型增加折叠功能
+- Added collapse function for object types in Variable Manager
 
 ## 3.2.3
 
-⚠️有破坏性变更, 升级本版本后如果再降级扩展，脚本功能将出现不可预期的问题。如有降级需求，在升级之前备份`sillytavern/data/用户名/settings.json`文件。
+⚠️ Destructive change: After upgrading to this version, if you downgrade the extension, script functions will behave unexpectedly. If downgrade is needed, back up `sillytavern/data/username/settings.json` file before upgrading 。
 
-### ⏫功能
+### ⏫ Function
 
-1. 脚本支持文件夹分组
-   - 根据文件夹批量开关脚本
-   - 自定义文件夹图标和图标颜色
-   - 通过拖动脚本控件，可直接移动到指定文件夹
+1. Scripts support folder grouping
+   - Batch toggle scripts based on folders
+   - Customize folder icon and icon color
+   - Scripts can be moved directly to a specific folder by dragging the script control
 
-2. 脚本批量管理
-   - 通过全局/角色脚本库文字旁的齿轮图标进入批量操作模式
-   - 可以批量删除、移动、导出脚本
-   - 脚本导入导出支持zip格式，保留文件夹层级结构
-   - 支持搜索脚本
+2. Script Batch Management
+   - Enter batch operation mode via the gear icon next to the Global/Character Script Library text
+   - Can batch delete, move, export scripts
+   - Script import/export supports zip format, preserving folder hierarchy
+   - Support searching scripts
   
-3. 脚本支持存储数据
-   - 新增脚本变量存储功能，脚本可以存储和读取自己的数据，你可以通过 `getVariables({type: 'script', script_id: getScriptId()})` 等来访问脚本变量
-   - 脚本编辑界面新增可视化变量管理
-   - 当脚本包含数据时，导出时会弹出选择对话框，注意API-KEY等敏感数据的处理，可清除数据后导出
+3. Scripts support storing data
+   - Added script variable storage function. Scripts can store and read their own data; you can access script variables via `getVariables({type: 'script', script_id: getScriptId()})` etc.
+   - Added visual variable management to the script editing interface
+   - When a script contains data, a selection dialog will pop up upon export. Pay attention to sensitive data like API-KEYs; you can clear data before exporting
 
 ## 3.2.2
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复 `{{get_message_variable::stat_data}}` 在第 0 楼中会显示最新数值而不是第 0 楼应该对应数值的问题
+- Fixed `{{get_message_variable::stat_data}}` displaying the latest value in message #0 instead of the value corresponding to message #0
 
 ## 3.2.1
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复 `{{get_message_variable::stat_data}}`
+- Fix `{{get_message_variable::stat_data}}`
 
 ## 3.2.0
 
-### ⏫功能
+### ⏫ Function
 
-完善了助手宏功能,
+Improved Helper Macro functionality ,
 
-- 现在楼层中的 `{{get_message_variable::stat_data}}` 等助手宏将会显示为对应的值, 因此你可以用酒馆正则直接制作带变量的文字状态栏:
+- Helper macros like `{{get_message_variable::stat_data}}` in messages will now display as their corresponding values, so you can create text status bars with variables directly using Tavern Regex :
 
   ```typescript
-  熟络度: {{get_message_variable::stat_data.络络.熟络度[0]}}
-  笨蛋度: {{get_message_variable::stat_data.络络.笨蛋度[0]}}
+  Familiarity: {{get_message_variable::stat_data.Luoluo.Familiarity[0]}}
+  Idiot Degree: {{get_message_variable::stat_data.Luoluo.IdiotDegree[0]}}
   ```
 
-- 新增了 `registerMacros` 用于注册新的助手宏:
+- Added `registerMacros` for registering new helper macros :
 
   ```typescript
   registerMacros(
@@ -1237,205 +1237,205 @@
 
 ## 3.1.9
 
-### 🐛修复
+### 🐛 Fix
 
-- 兼容旧版酒馆，目前支持的最低酒馆版本为1.12.10
+- Compatible with old Tavern versions, currently supported minimum Tavern version is 1.12.10
 
 ## 3.1.8
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复generateRaw没有注入世界书深度条目的问题
-- 修复了当局部脚本关闭时，每次新建对话都会弹出脚本开启提示框的问题
-- 修复了变量管理器的部分已知问题
+- Fixed `generateRaw` not injecting Lorebook depth entries
+- Fixed the issue where a script enable prompt would pop up every time a new chat started when local scripts were closed
+- Fixed some known issues in Variable Manager
 
 ## 3.1.7
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复在快速回复未启用，但勾选了合并快速回复时，快速回复按钮栏高度异常的问题
-- 修复了从界面添加或删除快速回复集时，脚本按钮消失的问题
+- Fixed abnormal height of the Quick Reply button bar when Quick Reply is disabled but Merge Quick Replies is checked
+- Fixed the issue where script buttons disappeared when adding or removing Quick Reply sets from the interface
 
 ## 3.1.6
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复 `setLorebookEntries`
+- Fix `setLorebookEntries`
 
 ## 3.1.5
 
-### 💻界面
+### 💻 Interface
 
-- 为变量管理器添加 json 解析
+- Added JSON parsing to Variable Manager
 
-### ⏫功能
+### ⏫ Function
 
-- 补充单文件的酒馆助手函数参考文件, 从而方便手机端
+- Added single-file TavernHelper function reference file, convenient for mobile
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复变量管理器数组的保存问题
-- 修复更换聊天时, 局部脚本未正确清理的问题
+- Fixed Variable Manager array saving issue
+- Fixed issue where local scripts were not correctly cleaned up when changing chat
 
 ## 3.1.4
 
-### ⏫功能
+### ⏫ Function
 
-- 补充 `builtin.addOneMessage`, 用于向页面添加某一楼消息
+- Added `builtin.addOneMessage` to add a specific message floor to the page
 
 ## 3.1.3
 
-### 💻界面
+### 💻 Interface
 
-- 脚本按钮不再单独占用一行，现在与快速回复按钮一起显示，多个脚本的按钮是否合为一行由快速回复的“合并快速回复”按钮控制
-- 播放器标签页更名为工具箱，播放器移动到工具箱子菜单
-- 输入框旁的快捷菜单增加快速打开变量管理器的按钮
+- Script buttons no longer occupy a separate line; they are now displayed with Quick Reply buttons. Whether multiple script buttons are merged into one line is controlled by the "Merge Quick Replies" button
+- Player tab renamed to Toolbox; Player moved to Toolbox submenu
+- Added a button to quickly open Variable Manager in the shortcut menu next to the input box
 
-### ⏫功能
+### ⏫ Function
 
-- 新增变量管理器，可对全局、角色、聊天、消息变量进行可视化管理
+- Added Variable Manager for visual management of Global, Character, Chat, and Message variables
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复 `setVariables` 对消息楼层变量进行操作时意外触发渲染事件的问题
-- 修复了切换角色时上一个角色的角色脚本错误地复制到当前角色的问题
-- 修复了按钮容器错误创建的问题
+- Fixed `setVariables` unexpectedly triggering render events when operating on message floor variables
+- Fixed the issue where the previous character's script was incorrectly copied to the current character when switching characters
+- Fixed issue where button container was created incorrectly
 
 ## 3.1.2
 
-### 💻界面
+### 💻 Interface
 
-- 在界面中新增到[酒馆命令自查手册](https://rentry.org/sillytavern-script-book)的参考链接
-- 拆分了渲染优化和折叠代码块选项, 现在你可以单独禁用代码块的高亮从而优化渲染速度
+- 在 Interface 中新增到[酒馆命令自查手册](https://rentry.org/sillytavern-script-book)的参考链接
+- Split rendering optimization and code block collapsing options; now you can independently disable code block highlighting to optimize rendering speed
 
-### ⏫功能
+### ⏫ Function
 
-- 为 `ChatMessage` 补充了 `extra` 字段, 为 `ChatMessageSwiped` 补充了 `swipes_info` 字段.
-- 新增了 `createChatMessages` 接口来增加新的消息, 相比于 `/send` 和 `/sendas`, 它支持批量创建
+- Added `extra` field to `ChatMessage` and `swipes_info` field to `ChatMessageSwiped`.
+- Added `createChatMessages` interface to add new messages. Compared to `/send` and `/sendas`, it supports batch creation
 
   ```typescript
-  // 在末尾插入一条消息
-  await createChatMessages([{role: 'user', message: '你好'}]);
+  // Insert a message at the end
+  await createChatMessages([{role: 'user', message: 'Hello'}]);
   ```
 
   ```typescript
-  // 在第 10 楼前插入两条消息且不需要刷新显示
-  await createChatMessages([{role: 'user', message: '你好'}, {role: 'assistant', message: '我好'}], {insert_at: 10});
+  // Insert two messages before message #10 without refreshing the display
+  await createChatMessages([{role: 'user', message: 'Hello'}, {role: 'assistant', message: 'I am good'}], {insert_at: 10});
   ```
 
-- 新增了 `deleteChatMessages` 接口来删除消息, 相比于 `/del`, 它支持批量删除以及零散地进行删除
+- Added `deleteChatMessages` interface to delete messages. Compared to `/del`, it supports batch deletion and scattered deletion
 
   ```typescript
-  // 删除第 10 楼、第 15 楼、倒数第二楼和最后一楼
+  // Delete message #10, #15, second to last, and last message
   await deleteChatMessages([10, 15, -2, getLastMessageId()]);
   ```
 
   ```typescript
-  // 删除所有楼层
+  // Delete all messages
   await deleteChatMessages(_.range(getLastMessageId() + 1));
   ```
 
-- 新增了 `rotateChatMessages` 接口来调整消息顺序
+- Added `rotateChatMessages` interface to adjust message order
 
   ```typescript
-  // 将 [4, 7) 楼放到 [2, 4) 楼之前, 即, 将 4-6 楼放到 2-3 楼之前
+  // Move messages [4, 7) to before [2, 4), i.e., move messages 4-6 to before messages 2-3
   await rotateChatMessages(2, 4, 7);
   ```
 
   ```typescript
-  // 将最后一楼放到第 5 楼之前
+  // Move the last message to before message #5
   await rotateChatMessages(5, getLastMessageId(), getLastMessageId() + 1);
   ```
 
   ```typescript
-  // 将最后 3 楼放到第 1 楼之前
+  // Move the last 3 messages to before message #1
   await rotateChatMessages(1, getLastMessageId() - 2, getLastMessageId() + 1);
   ```
 
   ```typescript
-  // 将前 3 楼放到最后
+  // Move the first 3 messages to the end
   await rotateChatMessages(0, 3, getLastMessageId() + 1);
   ```
 
-- 新增了 `getChatLorebook` 和 `setChatLorebook` 对聊天世界书进行更直接的控制
-- 为 `getOrCreateChatLorebook` 新增一个可选参数, 从而允许自定义聊天世界书名称:
+- Added `getChatLorebook` and `setChatLorebook` for more direct control over chat Lorebooks
+- Added an optional parameter to `getOrCreateChatLorebook`, allowing custom chat Lorebook names :
 
   ```typescript
-  // 如果聊天世界书不存在, 则尝试创建一个名为 '你好' 的世界书作为聊天世界书
-  const lorebook = await getOrCreateChatLorebook('你好');
+  // If the chat Lorebook does not exist, attempt to create a Lorebook named 'Hello' as the chat Lorebook
+  const lorebook = await getOrCreateChatLorebook('Hello');
   ```
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复 `getCharLorebooks` 不能获取到附加世界书的问题
+- Fixed `getCharLorebooks` not being able to retrieve attached Lorebooks
 
 ## 3.1.1
 
-### ⏫功能
+### ⏫ Function
 
-- 新增了 `setChatMessages` 接口, 相比原来的 `setChatMessage` 更灵活——你现在可以直接地跳转开局、隐藏消息等等.
+- Added `setChatMessages` interface, more flexible than the original `setChatMessage` — you can now directly jump to opening, hide messages, etc..
 
   ```typescript
-  // 修改第 10 楼被 ai 使用的消息页的正文
-  await setChatMessages([{message_id: 10, message: '新的消息'}]);
+  // Modified the body of the message page used by AI at message #10
+  await setChatMessages([{message_id: 10, message: 'New message'}]);
   ```
 
   ```typescript
-  // 补充倒数第二楼的楼层变量
+  // Added variable for the second to last floor
   const chat_message = getChatMessages(-2)[0];
-  _.set(chat_message.data, '神乐光好感度', 5);
+  _.set(chat_message.data, 'Kagura Hikari Favorability', 5);
   await setChatMessages([{message_id: 0, data: chat_message.data}], {refresh: 'none'});
   ```
 
   ```typescript
-  // 切换为开局 3
+  // Switch to Opening 3
   await setChatMessages([{message_id: 0, swipe_id: 2}]);
   ```
 
   ```typescript
-  // 隐藏所有楼层
+  // Hide all messages
   const last_message_id = getLastMessageId();
   await setChatMessages(_.range(last_message_id + 1).map(message_id => ({message_id, is_hidden: true})));
   ```
 
-- 调整了 `getChatMessage` 接口, 现在返回类型将根据是否获取 swipes 部分 (`{ include_swipes: boolean }`) 返回 `ChatMessage[]` 或 `ChatMessageSwiped[]`.
+- Adjusted `getChatMessage` interface. The return type will now be `ChatMessage[]` or depending on whether swipes are retrieved (`{ include_swipes: boolean }`) `ChatMessageSwiped[]`.
 
   ```typescript
-  // 仅获取第 10 楼被 ai 使用的消息页
+  // Only get the message page used by AI for message #10
   const chat_messages = getChatMessages(10);
   const chat_messages = getChatMessages('10');
   const chat_messages = getChatMessages('10', { include_swipes: false });
-  // 获取第 10 楼所有的消息页
+  // Get all message pages for message #10
   const chat_messages = getChatMessages(10, { include_swipes: true });
   ```
 
   ```typescript
-  // 获取最新楼层被 ai 使用的消息页
+  // Get the message page used by AI for the latest message
   const chat_message = getChatMessages(-1)[0];  // 或 getChatMessages('{{lastMessageId}}')[0]
-  // 获取最新楼层所有的消息页
+  // Get all message pages for the latest message
   const chat_message = getChatMessages(-1, { include_swipes: true })[0];  // 或 getChatMessages('{{lastMessageId}}', { include_swipes: true })[0]
   ```
 
   ```typescript
-  // 获取所有楼层被 ai 使用的消息页
+  // Get all message pages used by AI for all messages
   const chat_messages = getChatMessages('0-{{lastMessageId}}');
-  // 获取所有楼层所有的消息页
+  // Get all message pages for all messages
   const chat_messages = getChatMessages('0-{{lastMessageId}}', { include_swipes: true });
   ```
 
-### 🐛修复
+### 🐛 Fix
 
-- 现在 `setChatMessage` 使用 `refresh: 'display_and_render_current'` 选项时将会发送对应的酒馆渲染事件从而激活对应的监听器, 而不只是渲染 iframe.
+- Now when `setChatMessage` uses `refresh: 'display_and_render_current'` option, it will send the corresponding Tavern render event to activate listeners, instead of just rendering iframe.
 
 ## 3.1.0
 
-现在所有内置库脚本将使用 `import 'https://fastly.jsdelivr.net/gh/StageDog/tavern_resource/dist/酒馆助手/标签化/index.js'` 的形式从仓库直接获取最新代码, **因此脚本将永远保持最新**, 你不再需要为了更新脚本重新导入脚本.
+Now 所有 Built-in Library 脚本将使用 `import 'https://fastly.jsdelivr.net/gh/StageDog/tavern_resource/dist/酒馆助手/标签化/index.js'` 的形式从仓库直接获取最新代码, **因此脚本将永远保持最新**, 你 No longer needed 为了更新脚本重新导入脚本.
 
 ## 3.0.7
 
-### ⏫功能
+### ⏫ Function
 
-- 导出了 `toastr` 库, 你现在可以用 `toastr.error('内容', '标题')` 而不是 `triggerSlash('/echo severity=error title=标题 内容')` 来进行酒馆提示了:
+- Exported `toastr` library; you can now use `toastr.error('Content', 'Title')` instead of `triggerSlash('/echo severity=error title=Title Content')` for Tavern notifications :
   - `toastr.info`
   - `toastr.success`
   - `toastr.warning`
@@ -1443,139 +1443,139 @@
 
 ## 3.0.6
 
-### 🐛修复
+### 🐛 Fix
 
-- 修复世界书条目操作后, 以前版本酒馆可能不能正常显示世界书条目的问题
+- Fixed issue where previous versions of Tavern might not properly display Lorebook entries after Lorebook operations
 
 ## 3.0.5
 
-### 💻界面
+### 💻 Interface
 
-- 新导入的脚本将添加到末尾而不是开头
-- 在脚本编辑界面新建按钮将默认是启用的
+- Newly imported scripts will be added to the end instead of the beginning
+- New buttons in script editing interface will be enabled by default
 
-### 📚脚本库
+### 📚 Script Library
 
-**内置库:**
+**Built-in Library :**
 
-- 新增 `预设防误触` 脚本, 启用后将锁定预设除了 '流式传输'、'请求思维链' 和 '具体条目' 以外的选项, 不能通过界面来修改
+- Added `Preset Accidental Touch Protection` script. When enabled, it locks preset options except 'Streaming', 'Request CoT', and 'Specific Entries', preventing modification via the interface
 
-### ⏫功能
+### ⏫ Function
 
-**世界书条目操作:**
+**Lorebook Entry Operations :**
 
-- 新增 `replaceLorebookEntries` 和 `updateLorebookEntriesWith` 函数, 相比于原来的 `setLorebookEntries` 等函数更方便
+- Added `replaceLorebookEntries` and `updateLorebookEntriesWith` functions, which are more convenient than the original `setLorebookEntries` functions
 
   ```typescript
-  // 禁止所有条目递归, 保持其他设置不变
-  const entries = await getLorebookEntries("eramgt少女歌剧");
-  await replaceLorebookEntries("eramgt少女歌剧", entries.map(entry => ({ ...entry, prevent_recursion: true })));
+  // Disable recursion for all entries, keep other settings unchanged
+  const entries = await getLorebookEntries("eramgt Revue Starlight");
+  await replaceLorebookEntries("eramgt Revue Starlight", entries.map(entry => ({ ...entry, prevent_recursion: true })));
   ```
 
   ```typescript
-  // 删除所有名字中包含 `神乐光` 的条目
-  const entries = await getLorebookEntries("eramgt少女歌剧");
-  _.remove(entries, entry => entry.comment.includes('神乐光'));
-  await replaceLorebookEntries("eramgt少女歌剧", entries);
+  // Delete all entries with names containing `Kagura Hikari`
+  const entries = await getLorebookEntries("eramgt Revue Starlight");
+  _.remove(entries, entry => entry.comment.includes('Kagura Hikari'));
+  await replaceLorebookEntries("eramgt Revue Starlight", entries);
   ```
 
-- 新增 `createLorebookEntry` 和 `deleteLorebookEntry` 的数组版本: `createLorebookEntries` 和 `deleteLorebookEntries`
+- Added array versions of `createLorebookEntry` and `deleteLorebookEntry`: `createLorebookEntries` and `deleteLorebookEntries`
 
-### 🐛修复
+### 🐛 Fix
 
-- 部分函数不兼容以前版本的问题
+- Issue where some functions were incompatible with previous versions
 
 ## 3.0.4
 
-### 🐛修复
+### 🐛 Fix
 
-- 深度输入框为0时无法正确加载
-- 快速回复代码编辑界面在开启前端优化时无法正确显示
+- Could not load correctly when depth input box is 0
+- Quick Reply code editing interface failed to display correctly when frontend optimization was enabled
 
 ## 3.0.3
 
-### 💻界面
+### 💻 Interface
 
-- 现在脚本导入发生冲突时, 将可以选择是 '新建脚本' 还是 '覆盖原脚本'.
+- Now when script import conflict occurs, you can choose 'New Script' or 'Overwrite Original Script'.
 
-### 📚脚本库
+### 📚 Script Library
 
-**内置库:**
+**Built-in Library :**
 
-- 让`标签化`能开关酒馆助手脚本
+- Enable `Tagging` to toggle TavernHelper scripts
 
-### 🐛修复
+### 🐛 Fix
 
-- 在没有打开角色卡时 `replaceTavernRegexes` 意外报错
+- `replaceTavernRegexes` unexpectedly threw error when no character card was open
 
 ## 3.0.2
 
-### 📚脚本库
+### 📚 Script Library
 
-**内置库:**
+**Built-in Library :**
 
-- 优化了`标签化`的执行速度
-- 让`自动关闭前端卡不兼容选项`也会关闭 "在响应中显示标签"
-- 添加了`样式加载`脚本
-- 添加了`资源预载`脚本
+- Optimized the execution speed of `Tagging`
+- Make `Automatically disable incompatible frontend options` also disable "Show tags in response""
+- Added `Style Loader` script
+- Added `Resource Preload` script
 
-### ⏫功能
+### ⏫ Function
 
-- 新增 `getScriptId` 函数, 可以在脚本中获取脚本的唯一 id
+- Added `getScriptId` function to get the script's unique id
 
-- `getVariables` 等变量操作现在支持获取和修改绑定在角色卡的变量, 你也可以在酒馆助手 "脚本库" 设置界面的 "变量" 按钮手动修改角色卡变量.
+- `getVariables` Variable operations now support getting and modifying variables bound to the character card; you can also manually modify character card variables via the "Variables" button in TavernHelper "Script Library" settings interface.
 
   ```typescript
   const variables = getVariables({type: 'character'});
   ```
 
-- `getVariables` 等变量操作现在支持获取和修改某层消息楼层的变量，并支持负数来获取倒数楼层的变量（如 `-1` 为最新一条消息）
+- `getVariables` Variable operations now support getting and modifying variables of a specific message floor, and support negative numbers to get variables of counting-back floors (e.g., `-1` is the latest message ）
 
   ```typescript
   const variables = getVariables({type: 'message', message_id: -1});
   ```
 
-- `getChatMessage` 和 `setChatMessage` 也支持了用负数来获取倒数楼层
+- `getChatMessage` and `setChatMessage` also supports using negative numbers to access counting-back floors
 
-### 🐛修复
+### 🐛 Fix
 
-- 实时修改监听器不能监听脚本
+- Real-time modification listener could not listen to scripts
 
 ## 3.0.1
 
-### 🐛修复
+### 🐛 Fix
 
-- 部分函数无法正常使用
-- 音频播放器无法正常播放
-- getCharacterRegexes在不选择角色时错误抛出异常
+- Some functions could not work properly
+- Audio player unable to play normally
+- getCharacterRegexes Incorrectly threw an exception when no character was selected
 
 ## 3.0.0
 
-### 💻全新用户界面
+### 💻 Brand New User Interface
 
-- 重新设计了整体界面布局，各功能模块独立控制启用
+- Redesigned the overall interface layout; each functional module is independently controlled/enabled
 
-### ⏫版本管理
+### ⏫ Version Management
 
-- 扩展启动时自动检查版本并提示更新，点击更新按钮可查看最新版本到本地版本的更新日志
+- Extension automatically checks version and prompts for update on startup; click update button to view changelog from local version to latest version
 
-### 📚脚本库功能
+### 📚 Script Library Function
 
-- 新增脚本库功能，支持脚本的统一管理
-- 提供脚本导入导出功能
-- 脚本可与角色卡一同导出，导入角色卡时自动导入脚本
-- 新增绑定到角色卡的变量，可被扩展读取及与角色卡一同导出
-- 内置库中拥有扩展提供的实用功能脚本
+- Added Script Library function, supporting unified management of scripts
+- Provided script import/export functionality
+- Scripts can be exported with character cards and automatically imported when importing character cards
+- Added variables bound to character cards, which can be read by extensions and exported with the character card
+- Built-in library contains utility scripts provided by the extension
 
-### 🔌扩展性增强
+### 🔌 Enhanced Extensibility
 
-- 将酒馆助手核心函数注册到全局作用域
-- 支持其他扩展插件调用酒馆助手的功能
+- Registered TavernHelper core functions to global scope
+- Supports other extensions calling TavernHelper functions
 
-### ✍️写卡体验提升
+### ✍️ Card Creation Experience Improvement
 
-请阅读 [【正确使用酒馆助手编写前端界面教程】【直播】刚装好的win11喵从安装软件开始](https://discord.com/channels/1291925535324110879/1374317316631695370/1374330019446263879)
+请阅读 [【正确使用酒馆助手编写前端 Interface 教程】【直播】刚装好的win11喵从安装软件开始](https://discord.com/channels/1291925535324110879/1374317316631695370/1374330019446263879)
 
-- 支持真实时修改，只需要在软件中修改代码，酒馆就会立即更新内容
-- 支持拆分文件编写，为界面不同功能拆分逻辑
-- 支持使用 package.json 自行加入第三方库
+- Support true real-time modification; just modify code in the software, and Tavern will update content immediately
+- Support split file writing to split logic for different interface functions
+- Support using package.json to add third-party libraries

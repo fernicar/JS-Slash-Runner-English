@@ -66,7 +66,7 @@ withDefaults(
     width?: string | 'normal' | 'wide' | 'full' | 'fit';
   }>(),
   {
-    buttons: () => [{ name: '取消' }],
+    buttons: () => [{ name: 'Cancel' }],
     width: 'normal',
   },
 );

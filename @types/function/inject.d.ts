@@ -1,9 +1,9 @@
 type InjectionPrompt = {
   id: string;
   /**
-   * 要注入的位置
-   * - 'in_chat': 插入到聊天中
-   * - 'none': 不会发给 AI, 但能用来激活世界书条目.
+   * The position to inject
+   * - 'in_chat': Insert into the chat
+   * - 'none': Will not be sent to AI, but can be used to activate World Info entries.
    */
   position: 'in_chat' | 'none';
   depth: number;
@@ -11,36 +11,36 @@ type InjectionPrompt = {
   role: 'system' | 'assistant' | 'user';
   content: string;
 
-  /** 提示词在什么情况下启用; 默认为始终 */
+  /** Under what conditions the prompt is enabled; defaults to always */
   filter?: (() => boolean) | (() => Promise<boolean>);
-  /** 是否作为欲扫描文本, 加入世界书绿灯条目扫描文本中; 默认为任意 */
+  /** Whether to include as text to be scanned for World Info entry triggers; defaults to any */
   should_scan?: boolean;
 };
 
 type injectPromptsOptions = {
-  /** 是否只在下一次请求生成中有效; 默认为 false */
+  /** Whether it is only valid for the next generation request; defaults to false */
   once?: boolean;
 };
 
 /**
- * 注入提示词
+ * Inject prompts
  *
- * 这样注入的提示词仅在当前聊天文件中有效,
- * - 如果需要跨聊天文件注入或在新开聊天时重新注入, 你可以监听 `tavern_events.CHAT_CHANGED` 事件.
- * - 或者, 可以监听 `tavern_events.GENERATION_AFTER_COMMANDS` 事件, 在生成前注入.
+ * Prompts injected this way are only valid in the current chat file,
+ * - If you need to inject across chat files or re-inject when opening a new chat, you can listen for the `tavern_events.CHAT_CHANGED` event.
+ * - Alternatively, you can listen for the `tavern_events.GENERATION_AFTER_COMMANDS` event to inject before generation.
  *
- * @param prompts 要注入的提示词
- * @param options 可选选项
- *   - `once:boolean`: 是否只在下一次请求生成中有效; 默认为 false
+ * @param prompts The prompts to be injected
+ * @param options Optional settings
+ *   - `once:boolean`: Whether it is only valid for the next generation request; defaults to false
  *
- * @returns 后续操作
- *   - `uninject`: 取消这个提示词的注入
+ * @returns Subsequent operations
+ *   - `uninject`: Cancel the injection of this prompt
  */
 declare function injectPrompts(prompts: InjectionPrompt[], options?: injectPromptsOptions): { uninject: () => void };
 
 /**
- * 移除注入的提示词
+ * Remove injected prompts
  *
- * @param ids 要移除的提示词的 id 列表
+ * @param ids List of prompt IDs to be removed
  */
 declare function uninjectPrompts(ids: string[]): void;

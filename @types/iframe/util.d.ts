@@ -1,11 +1,11 @@
 /**
- * 在前端界面或脚本内使用, 从而重新加载前端界面或脚本
+ * Used within the frontend interface or script to reload the frontend interface or script.
  *
- * 这相当于调用 `window.location.reload()`, 会让分享到全局的接口失效;
- *   如果有需要在重新加载前端界面后沿用的数据, 你应该自行编写重新加载方式而不是使用这个函数
+ * This is equivalent to calling `window.location.reload()`, which will invalidate globally shared interfaces;
+ *   If there is data that needs to be retained after reloading the frontend interface, you should write your own reload method instead of using this function.
  *
  * @example
- * // 当聊天文件变更时, 重新加载前端界面或脚本
+ * // Reload the frontend interface or script when the chat file changes
  * let current_chat_id = SillyTavern.getCurrentChatId();
  * eventOn(tavern_events.CHAT_CHANGED, chat_id => {
  *   if (current_chat_id !== chat_id) {
@@ -15,7 +15,7 @@
  * })
  *
  * @example
- * // 自行编写重新加载方式
+ * // Writing your own reload method
  * function initailzie() { ... }
  * $(initialize);
  *
@@ -30,26 +30,26 @@
 declare function reloadIframe(): void;
 
 /**
- * 获取前端界面或脚本的标识名称
+ * Get the identifier name of the frontend interface or script
  *
- * @returns 对于前端界面是 `TH-message--楼层号--前端界面是该楼层第几个界面`, 对于脚本库是 `TH-script--脚本名称--脚本id`
+ * @returns For the frontend interface it is `TH-message--floor number--index of the interface in that floor`, for script libraries it is `TH-script--script name--script id`
  */
 declare function getIframeName(): string;
 
 /**
- * 获取本消息楼层 iframe 所在楼层的楼层 id, **只能对楼层消息 iframe** 使用
+ * Get the floor ID of the floor where the current message iframe is located, **can only be used for message floor iframes**
  *
- * @returns 楼层 id
+ * @returns Floor ID
  *
- * @throws 如果不在楼层消息 iframe 内使用, 将会抛出错误
+ * @throws An error will be thrown if not used within a message floor iframe
  */
 declare function getCurrentMessageId(): number;
 
 /**
- * 获取脚本的脚本库 id, **只能在脚本内使用**
+ * Get the script library ID of the script, **can only be used within a script**
  *
- * @returns 脚本库的 id
+ * @returns Script library ID
  *
- * @throws 如果不在脚本内使用, 将会抛出错误
+ * @throws An error will be thrown if not used within a script
  */
 declare function getScriptId(): string;

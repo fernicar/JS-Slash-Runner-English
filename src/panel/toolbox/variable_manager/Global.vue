@@ -14,7 +14,7 @@ useEventSourceOn(event_types.SETTINGS_UPDATED, () => {
   const new_variables = get_variables_without_clone({ type: 'global' });
   if (!_.isEqual(variables.value, new_variables)) {
     ignoreUpdates(() => {
-      // 酒馆可能用 /flushglobalvar 等直接修改对象内部, 因此要拷贝一份从而能被 _.isEqual 判定
+      // The Tavern might use /flushglobalvar etc. to directly modify the object internals, so a copy is needed to allow detection by _.isEqual
       variables.value = klona(new_variables);
     });
   }

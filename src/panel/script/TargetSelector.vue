@@ -1,6 +1,6 @@
 <template>
-  <Popup :buttons="[{ name: t`确认`, shouldEmphasize: true, onClick: submit }, { name: t`取消` }]" width="fit">
-    <Selector v-model="target" :title="t`选择创建目标`" :options="options" />
+  <Popup :buttons="[{ name: t`Confirm`, shouldEmphasize: true, onClick: submit }, { name: t`Cancel` }]" width="fit">
+    <Selector v-model="target" :title="t`Select creation target`" :options="options" />
   </Popup>
 </template>
 
@@ -29,11 +29,11 @@ const target = ref<'global' | 'character' | 'preset'>(props.target);
 const character_name = toRef(useCharacterSettingsStore(), 'name');
 const options = computed(() => {
   let result = _<{ label: string; value: 'global' | 'character' | 'preset' }>([]);
-  result = result.push({ label: t`全局脚本库`, value: 'global' });
+  result = result.push({ label: t`Global Script Library`, value: 'global' });
   if (character_name.value !== undefined) {
-    result = result.push({ label: t`角色脚本库`, value: 'character' });
+    result = result.push({ label: t`Character Script Library`, value: 'character' });
   }
-  result = result.push({ label: t`预设脚本库`, value: 'preset' });
+  result = result.push({ label: t`Preset Script Library`, value: 'preset' });
   return result.value();
 });
 </script>

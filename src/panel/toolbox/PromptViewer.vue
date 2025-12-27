@@ -4,20 +4,20 @@
       <div class="flex items-center justify-between">
         <div class="flex flex-col gap-0.25">
           <div class="th-text-base font-bold text-(--SmartThemeQuoteColor)">
-            {{ t`总token数` }}: {{ filtered_prompts.reduce((result, prompt) => result + prompt.token, 0) }}
+            {{ t`Total token count` }}: {{ filtered_prompts.reduce((result, prompt) => result + prompt.token, 0) }}
           </div>
           <div class="th-text-sm text-(--SmartThemeQuoteColor)">
-            {{ t`${filtered_prompts.length}/${prompts.length} 条消息` }}
+            {{ t`${filtered_prompts.length}/${prompts.length} messages` }}
           </div>
         </div>
         <div class="flex items-center gap-1">
-          <div class="fa-solid fa-expand cursor-pointer" title="展开全部" @click="toggleAll(true)" />
-          <div class="fa-solid fa-compress cursor-pointer" title="收起全部" @click="toggleAll(false)" />
-          <div class="fa-solid fa-copy cursor-pointer" title="复制全部" @click="copyAll" />
+          <div class="fa-solid fa-expand cursor-pointer" title="Expand All" @click="toggleAll(true)" />
+          <div class="fa-solid fa-compress cursor-pointer" title="Collapse All" @click="toggleAll(false)" />
+          <div class="fa-solid fa-copy cursor-pointer" title="Copy All" @click="copyAll" />
           <div
             class="fa-solid fa-rotate-right cursor-pointer th-text-base duration-200"
             :class="{ 'animate-spin': is_refreshing }"
-            title="刷新"
+            title="Refresh"
             @click="triggerRefresh"
           />
         </div>
@@ -34,7 +34,7 @@
           <SearchBar
             v-model="search_input"
             class="grow rounded-sm bg-transparent th-text-base text-(--mainTextColor)"
-            :placeholder="t`搜索消息内容...`"
+            :placeholder="t`Search message content...`"
           />
           <!-- prettier-ignore-attribute -->
           <div
@@ -44,7 +44,7 @@
             "
           >
             <input v-model="matched_only" type="checkbox" class="mr-0.25 mb-0 h-0.75 w-0.75" />
-            <label for="prompt-search-compact-mode">{{ t`仅显示匹配` }}</label>
+            <label for="prompt-search-compact-mode">{{ t`Show Match Only` }}</label>
           </div>
         </div>
         <div v-if="is_filter_opened" ref="teleportTarget" class="flex items-center gap-0.5"></div>
@@ -66,20 +66,20 @@
         </Teleport>
       </div>
       <div class="flex items-center justify-between gap-1 border-b border-(--SmartThemeBorderColor) py-0.25">
-        <span class="overflow-hidden th-text-sm text-ellipsis whitespace-nowrap">{{ t`模型` }}: {{ model }}</span
-        ><span class="overflow-hidden th-text-sm text-ellipsis whitespace-nowrap">{{ t`预设` }}: {{ preset }}</span>
+        <span class="overflow-hidden th-text-sm text-ellipsis whitespace-nowrap">{{ t`Model` }}: {{ model }}</span
+        ><span class="overflow-hidden th-text-sm text-ellipsis whitespace-nowrap">{{ t`Preset` }}: {{ preset }}</span>
       </div>
     </div>
     <template v-if="during_generation_when_opening">
       <div class="mx-2 flex h-full items-center justify-center gap-1 opacity-70">
         <div class="TH-loading-spinner"></div>
-        <span class="whitespace-normal">{{ t`等待已有生成请求完成... (或用刷新按钮强制取消它)` }}</span>
+        <span class="whitespace-normal">{{ t`Waiting for existing generation request to complete... (or use refresh button to force cancel it)` }}</span>
       </div>
     </template>
     <template v-if="is_refreshing">
       <div class="mx-2 flex h-full items-center justify-center gap-1 opacity-70">
         <div class="TH-loading-spinner"></div>
-        <span class="whitespace-normal">{{ t`正在发送虚假生成请求, 从而获取最新提示词...` }}</span>
+        <span class="whitespace-normal">{{ t`Sending fake generation request to retrieve latest prompt...` }}</span>
       </div>
     </template>
     <template v-else>
@@ -96,7 +96,7 @@
                 | Tokens: <span>{{ item_data.token }}</span>
               </span>
               <div class="flex gap-1">
-                <div class="fa-solid fa-copy cursor-pointer" title="复制" @click.stop="copyPrompt(item_data.content)" />
+                <div class="fa-solid fa-copy cursor-pointer" title="Copy" @click.stop="copyPrompt(item_data.content)" />
                 <div
                   class="fa-solid"
                   :class="is_expanded[item_data.id] ? 'fa-circle-chevron-up' : 'fa-circle-chevron-down'"
@@ -210,12 +210,12 @@ function triggerRefresh(): void {
   }
 
   if (main_api !== 'openai') {
-    toastr.error(t`当前 API 不是聊天补全, 无法使用提示词查看器功能`);
+    toastr.error(t`Current API is not Chat Completion, Prompt Viewer function unavailable`);
     return;
   }
 
   if (online_status === 'no_connection') {
-    toastr.error(t`未连接到 API, 提示词查看器将无法获取数据`);
+    toastr.error(t`Not connected to API, Prompt Viewer cannot retrieve data`);
     return;
   }
 
@@ -257,7 +257,7 @@ function collectPrompts(data: SendingMessage[]) {
                   case 'image_url':
                     return await getImageTokenCost(item.image_url.url, item.image_url.detail);
                   case 'video_url':
-                    // TODO： 用户附加的视频文件似乎根本不计入？content中没有，AI回复的视频未知
+                    // TODO： User attached video files seem to not count at all? Not in content, AI reply video unknown
                     return await getVideoTokenCost(item.video_url.url);
                 }
               }),
@@ -272,9 +272,9 @@ function collectPrompts(data: SendingMessage[]) {
 }
 
 /**
- * 解析多模态内容
- * @param content 内容
- * @returns 纯文本和图片列表
+ * Parse multimodal content
+ * @param content Content
+ * @returns Plain text and image list
  */
 function parseJsonContent(content: any): { text: string; images: { url: string }[] } {
   try {
@@ -300,7 +300,7 @@ function parseJsonContent(content: any): { text: string; images: { url: string }
           break;
         }
         case 'video_url': {
-          // TODO: 视频如何处理？
+          // TODO: How to handle video ？
           const url: string = _.get(item, 'video_url.url', '');
           if (url) {
             text_parts.push(`[Video] ${url}`);
@@ -312,7 +312,7 @@ function parseJsonContent(content: any): { text: string; images: { url: string }
         }
       }
     }
-    // TODO: 有没有必要严格按照显示的顺序图文穿插显示？目前把图片全部放在最后了
+    // TODO: Is it necessary to strictly interleave text and images as displayed? Currently all images are placed at the end
     return { text: text_parts.join('\n\n'), images };
   } catch (e) {
     return { text: JSON.stringify(content, null, 2), images: [] };
@@ -324,20 +324,20 @@ useEventSourceOn(event_types.CHAT_COMPLETION_SETTINGS_READY, completion => {
 });
 
 /**
- * 复制全部提示词内容到剪贴板
+ * Copy all prompt content to clipboard
  */
 function copyAll() {
   const all_prompts = prompts.value.map(prompt => prompt.content).join('\n\n');
   copyText(all_prompts);
-  toastr.success(t`已复制全部提示词到剪贴板`);
+  toastr.success(t`Copied all prompts to clipboard`);
 }
 /**
- * 复制单个提示词内容到剪贴板
- * @param content 提示词内容
+ * Copy single prompt content to clipboard
+ * @param content Prompt Content
  */
 function copyPrompt(content: string) {
   copyText(content);
-  toastr.success(t`已复制提示词到剪贴板`);
+  toastr.success(t`Copied prompt to clipboard`);
 }
 </script>
 

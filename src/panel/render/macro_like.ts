@@ -57,7 +57,7 @@ function demacroOnRender($mes: JQuery<HTMLDivElement>) {
     return html;
   };
 
-  // 因未知原因, 一些设备上在初次进入角色卡时会 '渲染前端界面-替换助手宏-渲染前端界面', 因此需要移除额外渲染的 iframe
+  // For unknown reasons, on some devices, 'Render UI - Replace Assistant Macro - Render UI' occurs when first entering a character card, so extra rendered iframes need to be removed
   $mes_text.find('.TH-render > iframe').remove();
 
   $mes_text.html((_index, html) => replace_html(html));

@@ -28,13 +28,13 @@ const character = useCharacterSettingsStore();
 
 const active_tab = useLocalStorage<number>('TH-VariableManager:active_tab', 0);
 const tabs = [
-  { name: t`全局`, component: Global },
-  { name: t`预设`, component: Preset },
+  { name: t`Global`, component: Global },
+  { name: t`Preset`, component: Preset },
 ]
-  .concat(character.name ? [{ name: '角色', component: Character }] : [])
+  .concat(character.name ? [{ name: 'Character', component: Character }] : [])
   .concat([
-    { name: t`聊天`, component: Chat },
-    { name: t`消息楼层`, component: Message },
+    { name: t`Chat`, component: Chat },
+    { name: t`Message Floor`, component: Message },
   ]);
 </script>
 

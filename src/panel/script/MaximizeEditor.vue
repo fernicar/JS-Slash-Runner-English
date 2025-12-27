@@ -1,8 +1,8 @@
 <template>
   <Popup
     :buttons="[
-      { name: t`确认`, shouldEmphasize: true, onClick: close => onConfirm(close) },
-      { name: t`取消`, onClick: close => onCancel(close) },
+      { name: t`Confirm`, shouldEmphasize: true, onClick: close => onConfirm(close) },
+      { name: t`Cancel`, onClick: close => onCancel(close) },
     ]"
     width="wide"
     @closed="() => emit('closed')"
@@ -11,7 +11,7 @@
       <template v-if="props.target === 'content' || props.target === 'info'">
         <textarea
           v-model="text"
-          :placeholder="props.target === 'content' ? t`JavaScript 代码` : t`备注文本`"
+          :placeholder="props.target === 'content' ? t`JavaScript code` : t`Note text`"
           class="text_pole h-dvh! min-h-[50vh] font-(family-name:--monoFontFamily)!"
         />
       </template>

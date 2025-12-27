@@ -3,19 +3,19 @@
   <SearchBar
     v-model="search_input"
     class="flex w-full flex-wrap items-center gap-0.5"
-    :placeholder="t`搜索（支持普通和/正则/）`"
+    :placeholder="t`Search (supports normal and /regex /）`"
     clearable
   />
 
-  <Container v-model="global_scripts" :title="t`全局脚本`" :description="t`酒馆全局可用`" target="global" />
+  <Container v-model="global_scripts" :title="t`Global Script`" :description="t`Available globally in Tavern`" target="global" />
 
   <template v-if="character_name !== undefined">
     <Divider />
-    <Container v-model="character_scripts" :title="t`角色脚本`" :description="t`绑定到当前角色卡`" target="character" />
+    <Container v-model="character_scripts" :title="t`Character Script`" :description="t`Bound to current character card`" target="character" />
   </template>
 
   <Divider />
-  <Container v-model="preset_scripts" :title="t`预设脚本`" :description="t`绑定到当前预设`" target="preset" />
+  <Container v-model="preset_scripts" :title="t`Preset Script`" :description="t`Bound to current preset`" target="preset" />
 
   <Teleport to="body">
     <Iframe

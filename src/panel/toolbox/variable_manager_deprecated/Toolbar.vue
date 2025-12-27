@@ -39,36 +39,36 @@
         <div class="h-1 w-px bg-(--SmartThemeBodyColor)"></div>
         <div class="flex items-center gap-0.75">
           <IconButton
-            title="展开全部"
+            title="Expand All"
             icon="fa-solid fa-expand"
             :on-click="expandAll"
             :disabled="currentView === 'text'"
           />
           <IconButton
-            title="收起全部"
+            title="Collapse All"
             icon="fa-solid fa-compress"
             :on-click="collapseAll"
             :disabled="currentView === 'text'"
           />
           <IconButton
-            title="筛选"
+            title="Filter"
             icon="fa-solid fa-filter"
             :on-click="showFilter"
             :active="isFilterActive"
             :disabled="currentView === 'text'"
           />
-          <IconButton title="搜索变量" icon="fa-solid fa-magnifying-glass" :on-click="showSearch" />
+          <IconButton title="Search Variable" icon="fa-solid fa-magnifying-glass" :on-click="showSearch" />
         </div>
       </div>
       <div class="flex items-center gap-0.75">
         <IconButton
-          title="撤销"
+          title="Undo"
           icon="fa-solid fa-rotate-left"
           :on-click="() => emit('undo')"
           :disabled="!canUndo"
         />
         <IconButton
-          title="重做"
+          title="Redo"
           icon="fa-solid fa-rotate-right"
           :on-click="() => emit('redo')"
           :disabled="!canRedo"
@@ -77,19 +77,19 @@
     </div>
     <div ref="teleportTarget"></div>
   </div>
-  <!-- 搜索变量 -->
+  <!-- Search Variable -->
   <Teleport :to="teleportTarget" :disabled="!teleportTarget">
     <transition name="vm-toolbar-teleport">
       <SearchBar
         v-if="isSearchVisible"
         v-model="search_input"
-        :placeholder="t`搜索变量(支持正则表达式 )`"
+        :placeholder="t`Search variables (supports regex )`"
         :clearable="true"
         class="mt-0.5 w-full"
       />
     </transition>
   </Teleport>
-  <!-- 筛选 -->
+  <!-- Filter -->
   <Teleport :to="teleportTarget" :disabled="!teleportTarget">
     <transition name="vm-toolbar-teleport">
       <div v-if="isFilterVisible" class="mt-0.5 flex flex-wrap gap-0.5 rounded-sm text-(--SmartThemeBodyColor)">
@@ -120,7 +120,7 @@ import { computed, ref, toRefs } from 'vue';
 const props = defineProps<{
   canUndo?: boolean;
   canRedo?: boolean;
-  // 移除顶层新增入口，改由根节点行承载
+  // Remove top-level add entry, hosted by root node row instead
 }>();
 const { canUndo, canRedo } = toRefs(props);
 
@@ -142,9 +142,9 @@ const emit = defineEmits<{
 
 type ViewMode = 'tree' | 'card' | 'text';
 const viewOptions: { label: string; value: ViewMode }[] = [
-  { label: '树状', value: 'tree' },
-  { label: '卡片', value: 'card' },
-  { label: '文本', value: 'text' },
+  { label: 'Tree', value: 'tree' },
+  { label: 'Card', value: 'card' },
+  { label: 'Text', value: 'text' },
 ];
 
 const filterDefinitions: { type: FilterType; name: string }[] = [
@@ -166,8 +166,8 @@ const teleportTarget = ref<HTMLElement | null>(null);
 const isFilterActive = computed(() => Object.values(filters.value).some(value => !value));
 
 /**
- * 设置变量管理器的显示视图模式
- * @param {ViewMode} mode - 视图模式 ('tree' | 'card' | 'text')
+ * Set display view mode of Variable Manager
+ * @param {ViewMode} mode - View Mode ('tree' | 'card' | 'text')
  */
 const setView = (mode: ViewMode) => {
   currentView.value = mode;
@@ -177,25 +177,25 @@ const showSearch = () => toggleSearchVisible();
 const showFilter = () => toggleFilterVisible();
 
 /**
- * 收起所有已展开的变量节点
- * 触发collapse-all事件给父组件处理
+ * Collapse all expanded variable nodes
+ * Trigger collapse-all event for parent component handling
  */
 const collapseAll = () => {
   emit('collapse-all');
 };
 
 /**
- * 展开所有可展开的变量节点
- * 触发expand-all事件给父组件处理
+ * Expand all expandable variable nodes
+ * Trigger expand-all event for parent component handling
  */
 const expandAll = () => {
   emit('expand-all');
 };
 
 /**
- * 处理筛选器复选框状态变更
- * @param {FilterType} filterType - 筛选器类型 ('string' | 'number' | 'array' | 'boolean' | 'object')
- * @param {Event} event - 复选框change事件
+ * Handle filter checkbox status change
+ * @param {FilterType} filterType - Filter Type ('string' | 'number' | 'array' | 'boolean' | 'object')
+ * @param {Event} event - Checkbox change event
  */
 const onFilterChange = (filterType: FilterType, event: Event) => {
   const target = event.target as HTMLInputElement;

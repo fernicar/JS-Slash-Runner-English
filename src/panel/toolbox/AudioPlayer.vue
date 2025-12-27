@@ -1,14 +1,14 @@
 <template>
   <Item v-model="is_expanded" type="box">
-    <template #title>{{ t`播放器` }}</template>
-    <template #description>{{ t`全局音频播放器` }}</template>
+    <template #title>{{ t`Player` }}</template>
+    <template #description>{{ t`Global Audio Player` }}</template>
     <template #content>
       <Toggle id="TH-toolbox-audio-player-enabled" v-model="enabled" @click.stop />
     </template>
     <template #detail>
       <div class="flex max-w-full flex-col gap-1" :class="{ 'opacity-50': !enabled }">
-        <Controller v-model="bgm" :title="t`音乐`" :enabled="enabled" :audio-type="'bgm'" />
-        <Controller v-model="ambient" :title="t`音效`" :enabled="enabled" :audio-type="'ambient'" />
+        <Controller v-model="bgm" :title="t`Music`" :enabled="enabled" :audio-type="'bgm'" />
+        <Controller v-model="ambient" :title="t`Sound Effect`" :enabled="enabled" :audio-type="'ambient'" />
       </div>
     </template>
   </Item>

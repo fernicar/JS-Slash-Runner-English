@@ -93,19 +93,19 @@ const removeField = (fieldKey: string) => {
 };
 
 const updateField = (fieldKey: string, newValue: unknown) => {
-  // 直接回写对象，触发父级 v-model 更新
+  // Write back object directly, trigger parent v-model update
   content.value = { ...content.value, [fieldKey]: newValue } as Record<string, any>;
 };
 
 const renameField = (oldKey: string, newKey: string) => {
   const key = String(newKey || '').trim();
   if (!key) {
-    toastr.error(t`键名不能为空`, t`重命名失败`);
+    toastr.error(t`Key name cannot be empty`, t`Rename failed`);
     return;
   }
   if (oldKey === key) return;
   if (Object.prototype.hasOwnProperty.call(content.value, key)) {
-    toastr.error(t`键名已存在`, t`重命名失败`);
+    toastr.error(t`Key name already exists`, t`Rename failed`);
     return;
   }
   const entries = Object.entries(content.value ?? {}).map(([k, v]) => (k === oldKey ? [key, v] : [k, v]));
@@ -119,18 +119,18 @@ const openAddChild = () => {
       onSubmit: async (payload: { key: string; value: unknown }) => {
         const key = String(payload.key || '').trim();
         if (!key) {
-          toastr.error(t`键名不能为空`, t`新增变量失败`);
+          toastr.error(t`Key name cannot be empty`, t`Add variable failed`);
           return false;
         }
 
         const entries = Object.entries(content.value ?? {});
         if (entries.some(([existingKey]) => existingKey === key)) {
-          toastr.error(t`键名已存在`, t`新增变量失败`);
+          toastr.error(t`Key name already exists`, t`Add variable failed`);
           return false;
         }
         content.value = { ...content.value, [key]: payload.value };
         isCollapsed.value = false;
-        toastr.success(t`已添加到对象`);
+        toastr.success(t`Added to object`);
         return true;
       },
     },
@@ -139,7 +139,7 @@ const openAddChild = () => {
   openCreatorModal();
 };
 
-// 搜索命中时自动展开
+// Auto-expand when search hit
 const searchMatched = computed(() => {
   if (!isSearching(props.searchInput)) return false;
   const q = props.searchInput as string | RegExp;

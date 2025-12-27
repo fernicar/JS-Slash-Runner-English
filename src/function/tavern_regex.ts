@@ -149,9 +149,9 @@ function fromTavernRegex(tavern_regex: TavernRegex): RegexScriptData {
 
     substituteRegex: 0, // TODO: handle this?
 
-    // @ts-expect-error 类型是正确的
+    // @ts-expect-error Type is correct
     minDepth: tavern_regex.min_depth,
-    // @ts-expect-error 类型是正确的
+    // @ts-expect-error Type is correct
     maxDepth: tavern_regex.max_depth,
 
     markdownOnly: tavern_regex.destination.display,
@@ -166,16 +166,16 @@ export function isCharacterTavernRegexesEnabled(): boolean {
 }
 
 type GetTavernRegexesOption = {
-  scope?: 'all' | 'global' | 'character'; // 按所在区域筛选正则
-  enable_state?: 'all' | 'enabled' | 'disabled'; // 按是否被开启筛选正则
+  scope?: 'all' | 'global' | 'character'; // Filter regexes by scope
+  enable_state?: 'all' | 'enabled' | 'disabled'; // Filter regexes by enabled state
 };
 
 export function getTavernRegexes({ scope = 'all', enable_state = 'all' }: GetTavernRegexesOption = {}): TavernRegex[] {
   if (!['all', 'enabled', 'disabled'].includes(enable_state)) {
-    throw Error(`提供的 enable_state 无效, 请提供 'all', 'enabled' 或 'disabled', 你提供的是: ${enable_state}`);
+    throw Error(`Provided enable_state is invalid, please provide 'all', 'enabled', or 'disabled'. You provided: ${enable_state}`);
   }
   if (!['all', 'global', 'character'].includes(scope)) {
-    throw Error(`提供的 scope 无效, 请提供 'all', 'global' 或 'character', 你提供的是: ${scope}`);
+    throw Error(`Provided scope is invalid, please provide 'all', 'global', or 'character'. You provided: ${scope}`);
   }
 
   let regexes: TavernRegex[] = [];
@@ -193,7 +193,7 @@ export function getTavernRegexes({ scope = 'all', enable_state = 'all' }: GetTav
 }
 
 type ReplaceTavernRegexesOption = {
-  scope?: 'all' | 'global' | 'character'; // 要替换的酒馆正则部分
+  scope?: 'all' | 'global' | 'character'; // Tavern regex part to be replaced
 };
 
 export async function render_tavern_regexes() {
@@ -208,14 +208,14 @@ export async function replaceTavernRegexes(
   { scope = 'all' }: ReplaceTavernRegexesOption,
 ): Promise<void> {
   if (!['all', 'global', 'character'].includes(scope)) {
-    throw Error(`提供的 scope 无效, 请提供 'all', 'global' 或 'character', 你提供的是: ${scope}`);
+    throw Error(`Provided scope is invalid, please provide 'all', 'global', or 'character'. You provided: ${scope}`);
   }
 
   // TODO: `trimStrings` and `substituteRegex` are not considered
   regexes
     .filter(regex => regex.script_name == '')
     .forEach(regex => {
-      regex.script_name = `未命名-${regex.id}`;
+      regex.script_name = `Unnamed-${regex.id}`;
     });
   const [global_regexes, character_regexes] = _.partition(regexes, regex => regex.scope === 'global').map(paritioned =>
     paritioned.map(fromTavernRegex),

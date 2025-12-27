@@ -37,8 +37,8 @@ const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
 /**
- * 选择选项
- * @param value 选项值
+ * Select option
+ * @param value Option value
  */
 const selectOption = (value: string | number) => {
   if (props.modelValue === value) return;
@@ -68,7 +68,7 @@ const selectOption = (value: string | number) => {
     @apply rounded-none;
   }
 
-  /* 连接样式 - 相邻按钮之间的边框处理 */
+  /* Connection style - border handling between adjacent buttons */
   &:not(:first-child) {
     @apply -ml-px;
   }

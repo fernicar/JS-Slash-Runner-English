@@ -30,7 +30,7 @@
         <div
           class="mt-0! mr-0.5 mb-0! cursor-pointer"
           :class="{ enabled: script_folder.enabled }"
-          title="批量开关文件夹内脚本"
+          title="Batch toggle scripts in folder"
           @click.stop="script_folder.enabled = !script_folder.enabled"
         >
           <i class="fa-solid" :class="[script_folder.enabled ? 'fa-toggle-on' : 'fa-toggle-off']" />
@@ -40,11 +40,11 @@
             <i class="fa-solid" :class="icon"></i>
           </div>
         </DefineScriptFolderButton>
-        <ScriptFolderButton name="编辑文件夹" icon="fa-pencil" @click.stop="openFolderEditor" />
-        <ScriptFolderButton name="移动文件夹" icon="fa-arrow-right-arrow-left" @click.stop="openMoveConfirm" />
-        <ScriptFolderButton name="导出文件夹" icon="fa-file-export" @click.stop="exportFolder" />
-        <ScriptFolderButton name="删除文件夹" icon="fa-trash" @click.stop="openDeleteConfirm" />
-        <ScriptFolderButton name="展开或折叠文件夹" :icon="is_expanded ? 'fa-chevron-up' : 'fa-chevron-down'" />
+        <ScriptFolderButton name="Edit Folder" icon="fa-pencil" @click.stop="openFolderEditor" />
+        <ScriptFolderButton name="Move Folder" icon="fa-arrow-right-arrow-left" @click.stop="openMoveConfirm" />
+        <ScriptFolderButton name="Export Folder" icon="fa-file-export" @click.stop="exportFolder" />
+        <ScriptFolderButton name="Delete Folder" icon="fa-trash" @click.stop="openDeleteConfirm" />
+        <ScriptFolderButton name="Expand or Collapse Folder" :icon="is_expanded ? 'fa-chevron-up' : 'fa-chevron-down'" />
       </div>
     </div>
     <VueDraggable
@@ -165,18 +165,18 @@ const { open: openDeleteConfirm } = useModal({
   attrs: {
     buttons: [
       {
-        name: t`确定`,
+        name: t`Confirm`,
         shouldEmphasize: true,
         onClick: close => {
           emit('delete', script_folder.value.id);
           close();
         },
       },
-      { name: t`取消` },
+      { name: t`Cancel` },
     ],
   },
   slots: {
-    default: t`<div>确定要删除文件夹及其中所有脚本吗？此操作无法撤销</div>`,
+    default: t`<div>Are you sure you want to delete the folder and all scripts within? This action cannot be undone</div>`,
   },
 });
 
@@ -224,7 +224,7 @@ const createExportPayload = async (option: ScriptExportOptions): Promise<ScriptF
       _.set(script, 'data', {});
     });
   }
-  const filename = await getSanitizedFilename(t`酒馆助手脚本-${to_export.name}.json`);
+  const filename = await getSanitizedFilename(t`TavernHelperScript-${to_export.name}.json`);
   const data = JSON.stringify(to_export, null, 2);
   return { filename, data };
 };
@@ -246,26 +246,26 @@ const exportFolder = async () => {
     attrs: {
       buttons: [
         {
-          name: t`包含数据导出`,
+          name: t`Export with data`,
           onClick: close => {
             void downloadExport({ should_strip_data: false });
             close();
           },
         },
         {
-          name: t`清除数据导出`,
+          name: t`Export and clear data`,
           shouldEmphasize: true,
           onClick: close => {
             void downloadExport({ should_strip_data: true });
             close();
           },
         },
-        { name: t`取消`, onClick: close => close() },
+        { name: t`Cancel`, onClick: close => close() },
       ],
     },
     slots: {
-      // TODO: 显示脚本变量有什么?
-      default: t`<div>'${script_folder.value.name}' 文件夹中脚本包含脚本变量, 是否要清除? 如有 API Key 等敏感数据，注意清除</div>`,
+      // TODO: What script variables are shown?
+      default: t`<div>Scripts in folder '${script_folder.value.name}' contain script variables. Do you want to clear them? If there are sensitive data such as API Keys, please be careful to clear them.</div>`,
     },
   }).open();
 };

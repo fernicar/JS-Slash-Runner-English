@@ -1,2 +1,2 @@
-/** @deprecated 之前的 `Character` 已经重命名为 `RawCharacter`, 给之后制作角色卡接口 `Character` 腾位置 */
+/** @deprecated The previous `Character` has been renamed to `RawCharacter`, to make room for the upcoming character card interface `Character` */
 type Character = RawCharacter;

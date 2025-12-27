@@ -58,7 +58,7 @@ export function get_variables_without_clone(option: VariableOption): Record<stri
     case 'message': {
       option.message_id = option.message_id === undefined || option.message_id === 'latest' ? -1 : option.message_id;
       if (!_.inRange(option.message_id, -chat.length, chat.length)) {
-        throw Error(`提供的消息楼层号 '${option.message_id}' 超出了范围 [${-chat.length}, ${chat.length})`);
+        throw Error(`The provided message index '${option.message_id}' is out of range [${-chat.length}, ${chat.length})`);
       }
       const chat_message = chat.at(option.message_id);
       return chat_message?.variables?.[chat_message?.swipe_id ?? 0] ?? {};
@@ -77,7 +77,7 @@ export function get_variables_without_clone(option: VariableOption): Record<stri
     }
     case 'script': {
       if (!option.script_id) {
-        throw Error('获取变量失败, 未指定 script_id');
+        throw Error('Failed to get variables, script_id not specified');
       }
       return useScriptIframeRuntimesStore().get(option.script_id)?.data ?? {};
     }
@@ -124,13 +124,13 @@ export function replaceVariables(variables: Record<string, any>, option: Variabl
     case 'message': {
       option.message_id = option.message_id === undefined || option.message_id === 'latest' ? -1 : option.message_id;
       if (!_.inRange(option.message_id, -chat.length, chat.length)) {
-        throw Error(`提供的消息楼层号 '${option.message_id}' 超出了范围 (${-chat.length}, ${chat.length})`);
+        throw Error(`The provided message index '${option.message_id}' is out of range (${-chat.length}, ${chat.length})`);
       }
       const chat_message = chat.at(option.message_id) as Record<string, any>;
       if (!_.has(chat_message, 'variables')) {
         _.set(chat_message, 'variables', _.times(chat_message.swipes?.length ?? 1, _.constant({})));
       }
-      // 与提示词模板的兼容性
+      // Compatibility with prompt templates
       if (_.isPlainObject(_.get(chat_message, 'variables'))) {
         _.set(
           chat_message,
@@ -150,7 +150,7 @@ export function replaceVariables(variables: Record<string, any>, option: Variabl
     case 'character': {
       const store = useCharacterSettingsStore();
       if (store.name === undefined) {
-        throw new Error('当前没有打开角色卡，保存角色卡变量失败');
+        throw new Error('No character card is currently open; failed to save character card variables');
       }
       toRef(store.settings, 'variables').value = variables;
       break;
@@ -167,7 +167,7 @@ export function replaceVariables(variables: Record<string, any>, option: Variabl
     }
     case 'script': {
       if (!option.script_id) {
-        throw Error('保存变量失败, 未指定 script_id');
+        throw Error('Failed to save variables, script_id not specified');
       }
       const script = useScriptIframeRuntimesStore().get(option.script_id);
       if (!script) {

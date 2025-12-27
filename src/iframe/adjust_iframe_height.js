@@ -15,7 +15,7 @@
 
       let height = 0;
       if (IS_BLOB_MODE) {
-        // blob 模式: 使用子元素高度算法
+        // blob mode: use sub-element height algorithm
         const children = Array.from(body.children || []);
         if (children.length > 0) {
           const body_rect = body.getBoundingClientRect();
@@ -31,7 +31,7 @@
             const rect = el.getBoundingClientRect();
             const style = window.getComputedStyle(el);
             const position = style.position;
-            // 只计算正常文档流中占空间的元素，绝对定位/固定定位不参与高度计算
+            // Only calculate elements that occupy space in the normal document flow; absolute/fixed positioning are not involved in height calculation
             if (position === 'absolute' || position === 'fixed') {
               continue;
             }
@@ -63,7 +63,7 @@
           height = body.scrollHeight;
         }
       } else {
-        // srcdoc 模式: 只用 body.scrollHeight
+        // srcdoc mode: only use body.scrollHeight
         height = body.scrollHeight;
       }
 

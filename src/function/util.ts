@@ -51,7 +51,7 @@ export function _errorCatched<T extends any[], U>(this: Window, fn: (...args: T)
       escapeHtml: false,
       toastClass: 'toastr w-fit! min-w-[300px]',
     });
-    // @ts-expect-error _th_impl 是存在的
+    // @ts-expect-error _th_impl exists
     this._th_impl._log(_getIframeName.call(this), 'error', message);
     throw error;
   };
@@ -96,7 +96,7 @@ export function _getIframeName(this: Window): string {
 export function _getScriptId(this: Window): string {
   const iframe_name = _getIframeName.call(this);
   if (!iframe_name.startsWith('TH-script--')) {
-    throw new Error('你只能在脚本 iframe 内获取 getScriptId!');
+    throw new Error('You can only get getScriptId inside a script iframe!');
   }
   return iframe_name.replace(/TH-script--.+--/, '');
 }
@@ -108,7 +108,7 @@ export function _getCurrentMessageId(this: Window): number {
 export function getMessageId(iframe_name: string): number {
   const match = iframe_name.match(/^TH-message--(\d+)--\d+$/);
   if (!match) {
-    throw Error(`获取 ${iframe_name} 所在楼层 id 时出错: 不要对全局脚本 iframe 调用 getMessageId!`);
+    throw Error(`Error getting message ID for ${iframe_name}: Do not call getMessageId on a global script iframe!`);
   }
   return parseInt(match[1].toString());
 }

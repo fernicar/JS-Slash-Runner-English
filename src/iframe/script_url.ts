@@ -7,7 +7,7 @@ function createObjectURLFromScript(code: string): string {
   return URL.createObjectURL(new Blob([code], { type: 'application/javascript' }));
 }
 
-// 反正酒馆助手不会 unmount, 无需考虑 revoke
+// Since Tavern Assistant won't unmount anyway, there's no need to consider revoking
 export const adjust_iframe_height_url = createObjectURLFromScript(adjust_iframe_height);
 export const adjust_viewport_url = createObjectURLFromScript(adjust_viewport);
 export const parent_jquery_url = createObjectURLFromScript(parent_jquery);

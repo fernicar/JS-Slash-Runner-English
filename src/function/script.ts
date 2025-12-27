@@ -13,7 +13,7 @@ export function _getButtonEvent(this: Window, button_name: string): string {
 
 export function _getScriptButtons(this: Window): ScriptButton[] {
   const script = useScriptIframeRuntimesStore().get(_getScriptId.call(this));
-  // TODO: 对于预设脚本、角色脚本, $(window).on('pagehide') 时已经切换了角色卡, get 会失败
+  // TODO: For preset scripts and character scripts, the character card has already been switched when $(window).on('pagehide') occurs, so "get" will fail
   if (!script) {
     return [];
   }
@@ -28,7 +28,7 @@ export function _replaceScriptButtons(this: Window, script_id: string, buttons: 
 export function _replaceScriptButtons(this: Window, buttons: ScriptButton[]): void;
 export function _replaceScriptButtons(this: Window, param1: string | ScriptButton[], param2?: ScriptButton[]): void {
   const script = useScriptIframeRuntimesStore().get(_getScriptId.call(this))!;
-  // TODO: 对于预设脚本、角色脚本, $(window).on('pagehide') 时已经切换了角色卡, get 会失败
+  // TODO: For preset scripts and character scripts, the character card has already been switched when $(window).on('pagehide') occurs, so "get" will fail
   if (!script) {
     return;
   }
@@ -52,7 +52,7 @@ export function _appendInexistentScriptButtons(
 }
 
 export function _getScriptInfo(this: Window): string {
-  // TODO: 对于预设脚本、角色脚本, $(window).on('pagehide') 时已经切换了角色卡, get 会失败
+  // TODO: For preset scripts and character scripts, the character card has already been switched when $(window).on('pagehide') occurs, so "get" will fail
   const script = useScriptIframeRuntimesStore().get(_getScriptId.call(this));
   if (!script) {
     return '';

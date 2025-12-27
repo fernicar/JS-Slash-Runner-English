@@ -28,7 +28,7 @@ export async function importRawCharacter(name: string, content: Blob): Promise<R
 
 export async function importRawChat(name: string, content: string): Promise<Response> {
   if (this_chid === undefined) {
-    throw Error('导入聊天文件失败, 请先选择一张角色卡');
+    throw Error('Failed to import chat file, please select a character card first');
   }
 
   const form_data = new FormData();

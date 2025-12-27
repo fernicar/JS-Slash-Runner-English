@@ -1,7 +1,7 @@
 @layer theme, base, components, utilities;
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/utilities.css' layer(utilities);
-/* 避免 tailwindcss 扫描 dist 中的打包结果, 导致打包变慢 */
+/* Prevent tailwindcss from scanning build results in dist, causing slow build times */
 @source not "../dist";
 
 @theme {
@@ -40,7 +40,7 @@
   font-size: calc(var(--mainFontSize) * 2.5);
 }
 
-/* 模拟overlay: 使用 CSS 伪元素自动创建全局唯一的 overlay */
+/* Simulate overlay: Use CSS pseudo-elements to automatically create globally unique overlay */
 body:has(.TH-popup)::before {
   content: '';
   position: fixed;

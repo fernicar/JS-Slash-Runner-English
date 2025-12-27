@@ -3,14 +3,14 @@ declare namespace SillyTavern {
   type ChatMessage = {
     name: string;
     /**
-     * 实际的 role 为:
+     * The actual role is:
      * - 'system': extra?.type === 'narrator' && !is_user
      * - 'user': extra?.type !== 'narrator' && is_user
      * - 'assistant': extra?.type !== 'narrator' && !is_user
      */
     is_user: boolean;
     /**
-     * 实际是表示消息是否被隐藏不会发给 llm
+     * Actually indicates whether the message is hidden and will not be sent to the LLM
      */
     is_system: boolean;
 
@@ -376,8 +376,8 @@ declare namespace SillyTavern {
 }
 
 /**
- * 酒馆提供给插件的稳定接口, 具体内容见于 SillyTavern/public/scripts/st-context.js 或 https://github.com/SillyTavern/SillyTavern/blob/release/public/scripts/st-context.js
- * 你也可以在酒馆页面按 f12, 在控制台中输入 `window.SillyTavern.getContext()` 来查看当前酒馆所提供的接口
+ * Stable interface provided by SillyTavern to extensions. Specific content can be found in SillyTavern/public/scripts/st-context.js or https://github.com/SillyTavern/SillyTavern/blob/release/public/scripts/st-context.js
+ * You can also press F12 on the SillyTavern page and enter `window.SillyTavern.getContext()` in the console to view the interfaces provided by the current SillyTavern instance.
  */
 declare const SillyTavern: {
   readonly accountStorage: any;
@@ -422,7 +422,7 @@ declare const SillyTavern: {
   readonly tokenizers: any;
   readonly getTextTokens: (tokenizer_type: number, string: string) => Promise<number>;
   readonly getTokenCountAsync: (string: string, padding?: number | undefined) => Promise<number>;
-  /**  `/inject`、`setExtensionPrompt` 等注入的所有额外提示词 */
+  /** All additional prompts injected via `/inject`, `setExtensionPrompt`, etc. */
   readonly extensionPrompts: Record<
     string,
     {
@@ -435,15 +435,15 @@ declare const SillyTavern: {
     }
   >;
   /**
-   * 注入一段额外的提示词
+   * Injects an extra prompt
    *
-   * @param prompt_id id, 重复则会替换原本的内容
-   * @param content 内容
-   * @param position 位置. -1 为不注入 (配合 scan=true 来仅用于激活绿灯), 1 为插入到聊天中
-   * @param depth 深度
-   * @param scan 是否作为欲扫描文本, 加入世界书绿灯条目扫描文本中
-   * @param role 消息角色. 0 为 system, 1 为 user, 2 为 assistant
-   * @param filter 提示词在什么情况下启用
+   * @param prompt_id id, duplicates will replace the original content
+   * @param content content
+   * @param position position. -1 for no injection (used with scan=true to only activate World Info keys), 1 for insertion into chat
+   * @param depth depth
+   * @param scan whether to treat as text to be scanned, adding it to the World Info key scan text
+   * @param role message role. 0 is system, 1 is user, 2 is assistant
+   * @param filter condition under which the prompt is enabled
    */
   readonly setExtensionPrompt: (
     prompt_id: string,
@@ -510,22 +510,22 @@ declare const SillyTavern: {
   readonly registerMacro: (key: string, value: string | ((uid: string) => string), description?: string) => void;
   readonly unregisterMacro: (key: string) => void;
   readonly registerFunctionTool: (tool: {
-    /** 工具名称 */
+    /** Tool name */
     name: string;
-    /** 工具显示名称 */
+    /** Tool display name */
     displayName: string;
-    /** 工具描述 */
+    /** Tool description */
     description: string;
-    /** 对函数参数的 JSON schema 定义, 可以通过 zod 的 z.toJSONSchema 来得到 */
+    /** JSON schema definition for function parameters, can be obtained via zod's z.toJSONSchema */
     parameters: Record<string, any>;
-    /** 要注册的函数调用工具 */
+    /** The function call tool to be registered */
     action: ((args: any) => string) | ((args: any) => Promise<string>);
 
-    /** 要如何格式化函数调用结果消息; 默认不进行任何操作, 显示为 `'Invoking tool: 工具显示名称'` */
+    /** How to format the function call result message; default does nothing, displays as 'Invoking tool: Tool Display Name' */
     formatMessage?: (args: any) => string;
-    /** 在下次聊天补全请求时是否注册本工具; 默认为始终注册 */
+    /** Whether to register this tool during the next chat completion request; defaults to always register */
     shouldRegister?: (() => boolean) | (() => Promise<boolean>);
-    /** 是否不在楼层中用一层楼显示函数调用结果, `true` 则不显示且将不会触发生成; 默认为 false */
+    /** Whether to hide the function call result in the chat UI, if `true` it is not shown and will not trigger generation; defaults to false */
     stealth?: boolean;
   }) => void;
   readonly unregisterFunctionTool: (name: string) => void;

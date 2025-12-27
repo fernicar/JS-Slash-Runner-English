@@ -1,18 +1,18 @@
 /**
- * 搜索工具函数：用于判断节点是否匹配搜索词，并在卡片模式中进行可见性判定。
+ * Search utility function: Used to judge if node matches search term, and determine visibility in card mode 。
  */
 
 export type SearchQuery = string | RegExp | undefined | null;
 
 /**
- * 判断当前是否处于搜索状态（有非空查询）
+ * Judge if currently in search state (has non-empty query ）
  */
 export const isSearching = (q: SearchQuery): boolean => q !== '' && q !== undefined && q !== null;
 
 /**
- * 文本匹配：
- * - 若 query 为正则，使用其 test
- * - 若 query 为字符串，进行不区分大小写的包含匹配
+ * Text match ：
+ * - If query is regex, use it test
+ * - If query is string, perform case-insensitive inclusion match
  */
 export const textMatches = (text: string, query: string | RegExp): boolean => {
   if (query instanceof RegExp) {
@@ -28,7 +28,7 @@ export const textMatches = (text: string, query: string | RegExp): boolean => {
 };
 
 /**
- * 规范化原始值为可用于匹配的文本。
+ * Normalize raw value to text usable for matching 。
  */
 const normalizePrimitive = (value: unknown): string => {
   if (value === null) return 'null';
@@ -43,10 +43,10 @@ const normalizePrimitive = (value: unknown): string => {
 };
 
 /**
- * 递归判断值是否命中搜索词（检查字符串展示与子节点）。
- * - 对象：同时检查 key 文本与子值
- * - 数组：检查元素
- * - 原始类型：匹配其字符串表示
+ * Recursively judge if value hits search term (check string display and children ）。
+ * - Object: Check both key text and sub-values
+ * - Array: Check elements
+ * - Primitive type: Match its string representation
  */
 export const valueMatchesSearch = (
   value: unknown,
@@ -80,7 +80,7 @@ export const valueMatchesSearch = (
 };
 
 /**
- * 节点匹配：键名或值任一命中即视为匹配。
+ * Node match: Match if either key name or value hits 。
  */
 export const nodeMatchesSearch = (
   name: string | number | undefined,

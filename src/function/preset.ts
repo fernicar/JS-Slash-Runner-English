@@ -151,50 +151,50 @@ export const default_preset: Preset = {
   prompts: [
     {
       id: 'worldInfoBefore',
-      name: 'World Info (before) - 角色定义之前',
+      name: 'World Info (before) - Before character definition',
       enabled: true,
       position: { type: 'relative' },
       role: 'system',
     },
     {
       id: 'personaDescription',
-      name: 'Persona Description - 玩家描述',
+      name: 'Persona Description - User description',
       enabled: true,
       position: { type: 'relative' },
       role: 'system',
     },
     {
       id: 'charDescription',
-      name: 'Char Description - 角色描述',
+      name: 'Char Description - Character description',
       enabled: true,
       position: { type: 'relative' },
       role: 'system',
     },
     {
       id: 'charPersonality',
-      name: 'Char Personality - 角色性格',
+      name: 'Char Personality - Character personality',
       enabled: true,
       position: { type: 'relative' },
       role: 'system',
     },
-    { id: 'scenario', name: 'Scenario - 情景', enabled: true, position: { type: 'relative' }, role: 'system' },
+    { id: 'scenario', name: 'Scenario - Scenario', enabled: true, position: { type: 'relative' }, role: 'system' },
     {
       id: 'worldInfoAfter',
-      name: 'World Info (after) - 角色定义之后',
+      name: 'World Info (after) - After character definition',
       enabled: true,
       position: { type: 'relative' },
       role: 'system',
     },
     {
       id: 'dialogueExamples',
-      name: 'Chat Examples - 对话示例',
+      name: 'Chat Examples - Dialogue examples',
       enabled: true,
       position: { type: 'relative' },
       role: 'system',
     },
     {
       id: 'chatHistory',
-      name: 'Chat History - 聊天记录',
+      name: 'Chat History - Chat history',
       enabled: true,
       position: { type: 'relative' },
       role: 'system',
@@ -460,7 +460,7 @@ function fromPreset(preset: Preset): _OriginalPreset {
       return id;
     }
     if (!is_normal_prompt) {
-      throw Error(`修改的预设中存在重复的系统/占位提示词 '${id}'`);
+      throw Error(`Duplicate system/placeholder prompt ID found in the modified preset: '${id}'`);
     }
     const new_id = uuidv4();
     id_set.add(new_id);
@@ -672,7 +672,7 @@ export function getPreset(preset_name: LiteralUnion<'in_use', string>): Preset {
   const original_preset =
     preset_name === 'in_use' ? oai_settings : preset_manager.getCompletionPresetByName(preset_name);
   if (!original_preset) {
-    throw Error(`预设 '${preset_name}' 不存在`);
+    throw Error(`Preset '${preset_name}' does not exist`);
   }
   return klona(toPreset(original_preset, { in_use: preset_name === 'in_use' }));
 }
@@ -683,7 +683,7 @@ export async function replacePreset(
   options: ReplacePresetOptions = {},
 ): Promise<void> {
   if (!getPresetNames().includes(preset_name)) {
-    throw Error(`预设 '${preset_name}' 不存在`);
+    throw Error(`Preset '${preset_name}' does not exist`);
   }
   await createOrReplacePreset(preset_name, preset, options);
 }
@@ -696,7 +696,7 @@ export async function updatePresetWith(
   options: ReplacePresetOptions = {},
 ): Promise<Preset> {
   if (!getPresetNames().includes(preset_name)) {
-    throw Error(`预设 '${preset_name}' 不存在`);
+    throw Error(`Preset '${preset_name}' does not exist`);
   }
   const preset = await updater(getPreset(preset_name)!);
   await replacePreset(preset_name, preset, options);

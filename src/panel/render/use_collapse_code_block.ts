@@ -20,15 +20,15 @@ function collapseCodeBlock($pre: JQuery<HTMLPreElement>, collapse_code_block: Co
   const $div = $pre.parent('div.TH-render');
 
   const $button = $('<div class="TH-collapse-code-block-button">')
-    .text(is_frontend ? '显示前端代码块' : '显示代码块')
+    .text(is_frontend ? 'Show Frontend Code Block' : 'Show Code Block')
     .on('click', function () {
       const is_visible = $pre.is(':visible');
       if (is_visible) {
         $pre.addClass('hidden!');
-        $(this).text(is_frontend ? '显示前端代码块' : '显示代码块');
+        $(this).text(is_frontend ? 'Show Frontend Code Block' : 'Show Code Block');
       } else {
         $pre.removeClass('hidden!');
-        $(this).text(is_frontend ? '隐藏前端代码块' : '隐藏代码块');
+        $(this).text(is_frontend ? 'Hide Frontend Code Block' : 'Hide Code Block');
       }
     })
     .prependTo($div);
@@ -76,7 +76,7 @@ export function useCollapseCodeBlock(collapse_code_block: Readonly<Ref<CollapseC
     { immediate: true },
   );
 
-  // 流式过程监听变化并应用折叠代码块功能
+  // Listen for changes during the streaming process and apply the collapse code block feature
   const observer = new MutationObserver(() => {
     const chat_length = chat.length;
     if (chat_length > 0) {

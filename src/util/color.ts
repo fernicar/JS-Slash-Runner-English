@@ -1,10 +1,10 @@
 /**
- * 使用 gamma 校正的公式计算颜色的相对亮度 (心理亮度)
+ * Calculate relative brightness (perceived brightness) of color using gamma correction formula)
  *
- * @param r 红色分量 (0-255)
- * @param g 绿色分量 (0-255)
- * @param b 蓝色分量 (0-255)
- * @returns 亮度值 (0-1)
+ * @param r Red component (0-255)
+ * @param g Green component (0-255)
+ * @param b Blue component (0-255)
+ * @returns Brightness value (0-1)
  */
 export const calculateLightness = (r: number, g: number, b: number): number => {
   const GAMMA = 2.2;
@@ -20,13 +20,13 @@ export const calculateLightness = (r: number, g: number, b: number): number => {
 };
 
 /**
- * 将 RGB 转换为灰度值 (0-255)
- * 基于相同的 gamma 校正公式
+ * Convert RGB to grayscale value (0-255)
+ * Based on the same gamma correction formula
  *
- * @param r 红色分量 (0-255)
- * @param g 绿色分量 (0-255)
- * @param b 蓝色分量 (0-255)
- * @returns 灰度值 (0-255)
+ * @param r Red component (0-255)
+ * @param g Green component (0-255)
+ * @param b Blue component (0-255)
+ * @returns Grayscale value (0-255)
  */
 export const rgb2gray = (r: number, g: number, b: number): number => {
   const GAMMA = 2.2;
@@ -38,12 +38,12 @@ export const rgb2gray = (r: number, g: number, b: number): number => {
 };
 
 /**
- * 根据 RGBA 分量判断文本颜色
+ * Determine text color based on RGBA components
  *
- * @param r 红色分量 (0-255)
- * @param g 绿色分量 (0-255)
- * @param b 蓝色分量 (0-255)
- * @param a 透明度 (0-1), 默认为 1
+ * @param r Red component (0-255)
+ * @param g Green component (0-255)
+ * @param b Blue component (0-255)
+ * @param a Opacity (0-1), defaults to 1
  * @returns 'black' | 'white'
  */
 export const determineTextColorFromRgba = (r: number, g: number, b: number, a: number = 1): 'black' | 'white' => {
@@ -52,8 +52,8 @@ export const determineTextColorFromRgba = (r: number, g: number, b: number, a: n
 };
 
 /**
- * 解析 CSS 颜色值字符串
- * @returns [r, g, b, a] 或 null (解析失败)
+ * Parse CSS color value string
+ * @returns [r, g, b, a] or null (parsing failed)
  */
 export const parseCssColor = (colorStr: string): [number, number, number, number] | null => {
   const trimmed = colorStr.trim();

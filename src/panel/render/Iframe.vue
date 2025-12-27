@@ -26,11 +26,11 @@ const $pre = $div.children('pre');
 
 const iframe_ref = useTemplateRef<HTMLIFrameElement>('iframe');
 onBeforeMount(() => {
-  // 因未知原因, 一些设备上在初次进入角色卡时会 '渲染前端界面-替换助手宏-渲染前端界面', 因此需要移除额外渲染的 iframe
+  // For unknown reasons, on some devices, when first entering a character card, it triggers "Render Frontend - Replace Macros - Render Frontend", so extra rendered iframes need to be removed.
   $div.find('iframe').remove();
 });
 
-// 高度调整
+// Height adjustment
 useEventListener('message', event => {
   if (event?.data?.type === 'TH_ADJUST_IFRAME_HEIGHT' && event?.data?.iframe_name === iframe_ref.value?.id) {
     iframe_ref.value!.style.height = `${event.data.height}px`;
@@ -40,7 +40,7 @@ useEventListener(window, 'resize', () => {
   iframe_ref.value?.contentWindow?.postMessage({ type: 'TH_UPDATE_VIEWPORT_HEIGHT' }, '*');
 });
 
-// 代码内容
+// Code content
 const src_prop = computed((old_src_prop?: { srcdoc?: string; src?: string }) => {
   if (old_src_prop?.src) {
     URL.revokeObjectURL(old_src_prop.src);
@@ -58,7 +58,7 @@ onUnmounted(() => {
   }
 });
 
-// 相关事件
+// Related events
 const prefixed_id = computed(() => `TH-message--${props.id}`);
 onMounted(() => {
   eventSource.emit('message_iframe_render_started', prefixed_id.value);
@@ -67,7 +67,7 @@ function onLoad() {
   eventSource.emit('message_iframe_render_ended', prefixed_id.value);
 }
 
-// 与折叠代码块的兼容性
+// Compatibility with collapsible code blocks
 onMounted(() => {
   $div
     .children()
@@ -79,7 +79,7 @@ onBeforeUnmount(() => {
   if ($button.length === 0) {
     $pre.removeClass('hidden!');
   } else {
-    $button.text('显示前端代码块').removeClass('hidden!');
+    $button.text('Show frontend code block').removeClass('hidden!');
   }
 });
 </script>

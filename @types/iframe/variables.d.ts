@@ -1,7 +1,7 @@
 /**
- * 获取合并后的变量表
- * - 如果在消息楼层 iframe 中调用本函数, 则获取 全局→角色卡→聊天→0号消息楼层→中间所有消息楼层→当前消息楼层 的合并结果
- * - 如果在全局变量 iframe 中调用本函数, 则获取 全局→角色卡→脚本→聊天→0号消息楼层→中间所有消息楼层→最新消息楼层 的合并结果
+ * Get the merged variable table
+ * - If this function is called within a message floor iframe, it retrieves the merged result of Global → Character Card → Chat → Message Floor 0 → All intermediate message floors → Current message floor
+ * - If this function is called within the global variable iframe, it retrieves the merged result of Global → Character Card → Script → Chat → Message Floor 0 → All intermediate message floors → Latest message floor
  *
  * @example
  * const variables = getAllVariables();

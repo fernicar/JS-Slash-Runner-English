@@ -3,7 +3,7 @@
 export const rootVariableTypes = ['string', 'number', 'boolean', 'array', 'object', 'null'] as const;
 export type RootVariableType = (typeof rootVariableTypes)[number];
 
-export const rootVariableKeySchema = z.string().trim().min(1, '键名不能为空');
+export const rootVariableKeySchema = z.string().trim().min(1, 'Key name cannot be empty');
 
 export interface RootVariablePayload {
   key: string;
@@ -11,21 +11,21 @@ export interface RootVariablePayload {
   value: unknown;
 }
 
-/** 树形选择上下文接口 */
+/** Tree selection context interface */
 export interface TreeSelectionContext {
-  /** 当前选中的路径，按层级顺序保存键或索引 */
+  /** Currently selected path, saving keys or indices in hierarchical order */
   selectedPath: Ref<(string | number)[] | null>;
-  /** 供面包屑展示使用的路径片段（字符串形式） */
+  /** Path fragments for breadcrumb display (string format ） */
   selectedSegments: Ref<string[]>;
-  /** 当前选中节点对应的 JavaScript 访问路径 */
+  /** JavaScript access path corresponding to currently selected node */
   selectedJsPath: Ref<string>;
-  /** 触发路径选中 */
+  /** Trigger path selection */
   selectPath: (path: (string | number)[]) => void;
 }
 
 export const treeSelectionKey: InjectionKey<TreeSelectionContext> = Symbol('TreeSelectionContext');
 
-/** 提供给树形组件使用的全局折叠控制上下文 */
+/** Global collapse control context provided for tree component */
 export interface TreeControlContext {
   collapseAllSignal: Ref<number>;
   expandAllSignal: Ref<number>;

@@ -1,27 +1,28 @@
 /**
- * 将接口共享到全局, 使其可以在其他前端界面或脚本中使用.
+ * Share the interface globally so that it can be used in other frontend interfaces or scripts.
  *
- * 其他前端界面或脚本将能通过 `await waitGlobalInitialized(global)` 来等待初始化完毕, 从而用 `global` 为变量名访问该接口.
+ * Other frontend interfaces or scripts will be able to wait for initialization to complete via `await waitGlobalInitialized(global)`,
+ * and then access the interface using `global` as the variable name.
  *
- * @param global 要共享的接口名称
- * @param value 要共享的接口内容
+ * @param global The name of the interface to share
+ * @param value The content of the interface to share
  *
  * @example
- * // 共享 Mvu 接口到全局
+ * // Share the Mvu interface globally
  * initializeGlobal('Mvu', Mvu);
- * // 此后其他前端界面或脚本中可以通过 `await waitGlobalInitialized('Mvu')` 来等待初始化完毕, 从而用 `Mvu` 为变量名访问该接口
+ * // After this, other frontend interfaces or scripts can use `await waitGlobalInitialized('Mvu')` to wait for initialization and then access the interface using `Mvu` as the variable name.
  */
 declare function initializeGlobal(global: LiteralUnion<'Mvu', string>, value: any): void;
 
 /**
- * 等待其他前端界面或脚本中共享出来的全局接口初始化完毕, 并使之在当前前端界面或脚本中可用.
+ * Wait for the global interface shared from other frontend interfaces or scripts to finish initialization, and make it available in the current frontend interface or script.
  *
- * 这需要其他前端界面或脚本通过 `initializeGlobal(global, value)` 来共享接口.
+ * This requires other frontend interfaces or scripts to share the interface via `initializeGlobal(global, value)`.
  *
- * @param global 要初始化的全局接口名称
+ * @param global The name of the global interface to initialize
  *
  * @example
  * await waitGlobalInitialized('Mvu');
- * ...此后可以直接使用 Mvu 接口
+ * ...After this, the Mvu interface can be used directly
  */
 declare function waitGlobalInitialized<T>(global: LiteralUnion<'Mvu', string>): Promise<T>;

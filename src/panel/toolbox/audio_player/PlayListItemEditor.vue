@@ -2,24 +2,24 @@
   <Popup
     :buttons="[
       {
-        name: t`确认`,
+        name: t`Confirm`,
         shouldEmphasize: true,
         onClick: submit,
       },
-      { name: t`取消` },
+      { name: t`Cancel` },
     ]"
   >
     <div class="flex flex-col gap-0.5">
-      <h3>{{ t`编辑音频项` }}</h3>
+      <h3>{{ t`Edit Audio Item` }}</h3>
       <div class="flex flex-col gap-0.5">
         <label>
-          <strong>{{ t`标题` }}</strong
-          ><small class="block">{{ t`留空将自动从链接中提取文件名` }}</small>
-          <input v-model="title" type="text" class="text_pole" :placeholder="t`音频标题（可选）`" />
+          <strong>{{ t`Title` }}</strong
+          ><small class="block">{{ t`Leave empty to automatically extract filename from link` }}</small>
+          <input v-model="title" type="text" class="text_pole" :placeholder="t`Audio title (optional)`" />
         </label>
         <label>
-          <strong>{{ t`链接` }}</strong>
-          <input v-model="url" type="text" class="text_pole" :placeholder="t`音频链接`" required />
+          <strong>{{ t`Link` }}</strong>
+          <input v-model="url" type="text" class="text_pole" :placeholder="t`Audio link`" required />
         </label>
       </div>
     </div>
@@ -42,7 +42,7 @@ const submit = (close: () => void) => {
     return;
   }
 
-  // 如果标题为空，自动从 URL 中提取标题
+  // If title is empty, automatically extract title from URL
   const finalTitle = title.value.trim() || handle_url_to_title(url.value);
 
   props.onSubmit({

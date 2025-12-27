@@ -27,10 +27,10 @@
           "
         >
           <i class="fa-solid fa-check"></i>
-          <span>确认</span>
+          <span>Confirm</span>
         </button>
       </div>
-      <div class="py-0.25 th-text-sm text-(--warning)">最大楼层不能小于最小楼层</div>
+      <div class="py-0.25 th-text-sm text-(--warning)">Max floor cannot be less than min floor</div>
     </div>
   </div>
 

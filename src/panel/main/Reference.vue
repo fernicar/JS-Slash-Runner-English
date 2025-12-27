@@ -1,19 +1,19 @@
 <template>
   <Item type="box">
-    <template #title>{{ t`编写参考` }}</template>
-    <template #description>{{ t`编写脚本的参考文档` }}</template>
+    <template #title>{{ t`Writing Reference` }}</template>
+    <template #description>{{ t`Reference documentation for writing scripts` }}</template>
     <template #detail>
       <div class="flex w-full flex-wrap gap-0.5">
-        <Divider margin-y="0">{{ t`酒馆助手` }}</Divider>
+        <Divider margin-y="0">{{ t`Tavern Helper` }}</Divider>
         <div class="mb-0.5 flex items-center justify-center gap-0.5">
           <div
             class="TH-reference-button"
             @click="open('https://n0vi028.github.io/JS-Slash-Runner-Doc/guide/基本用法/如何正确使用酒馆助手.html')"
           >
-            {{ t`查看教程及文档` }}<i class="fa-solid fa-external-link" />
+            {{ t`View Tutorial and Documentation` }}<i class="fa-solid fa-external-link" />
           </div>
           <div ref="tavern_helper_types_button" class="TH-reference-button">
-            {{ t`下载参考文件` }}<i class="fa-solid fa-ellipsis-vertical" />
+            {{ t`Download Reference Files` }}<i class="fa-solid fa-ellipsis-vertical" />
           </div>
           <div ref="tavern_helper_types_popup" class="list-group" style="display: none">
             <a
@@ -21,25 +21,25 @@
               href="https://gitlab.com/novi028/JS-Slash-Runner/-/raw/main/dist/@types.zip?ref_type=heads&inline=false"
               class="list-group-item"
             >
-              {{ t`电脑编写模板用` }}<i class="fa-solid fa-download" />
+              {{ t`For Desktop Templates` }}<i class="fa-solid fa-download" />
             </a>
             <a
               target="_blank"
               href="https://gitlab.com/novi028/JS-Slash-Runner/-/raw/main/dist/@types.txt?ref_type=heads&inline=false"
               class="list-group-item"
             >
-              {{ t`手机或 AI 官网用` }}<i class="fa-solid fa-download" />
+              {{ t`For Mobile or AI Official Site` }}<i class="fa-solid fa-download" />
             </a>
           </div>
         </div>
-        <Divider margin-y="0">{{ t`酒馆 /STScript` }}</Divider>
+        <Divider margin-y="0">{{ t`Tavern / STScript` }}</Divider>
         <div class="mb-0.5 flex items-center justify-center gap-0.5">
           <div class="TH-reference-button" @click="open('https://rentry.org/sillytavern-script-book')">
-            {{ t`查看手册` }}
+            {{ t`View Manual` }}
             <i class="fa-solid fa-external-link" />
           </div>
           <div class="TH-reference-button" @click="downloadSlashCommands">
-            {{ t`下载参考文件` }}<i class="fa-solid fa-download" />
+            {{ t`Download Reference Files` }}<i class="fa-solid fa-download" />
           </div>
         </div>
       </div>

@@ -1,20 +1,20 @@
 /**
- * 获取世界书名称列表
+ * Get the list of Worldbook names
  *
- * @returns 世界书名称列表
+ * @returns List of Worldbook names
  */
 declare function getWorldbookNames(): string[];
 
 /**
- * 获取当前全局开启的世界书名称列表
+ * Get the list of currently globally enabled Worldbook names
  *
- * @returns 全局世界书名称列表
+ * @returns List of global Worldbook names
  */
 declare function getGlobalWorldbookNames(): string[];
 /**
- * 重新绑定全局世界书
+ * Rebind global Worldbooks
  *
- * @param worldbook_names 要全局开启的世界书
+ * @param worldbook_names Worldbooks to be enabled globally
  */
 declare function rebindGlobalWorldbooks(worldbook_names: string[]): Promise<void>;
 
@@ -23,83 +23,83 @@ type CharWorldbooks = {
   additional: string[];
 };
 /**
- * 获取角色卡绑定的世界书
+ * Get the Worldbooks bound to a character card
  *
- * @param character_name 要查询的角色卡名称, 'current' 表示当前打开的角色卡
+ * @param character_name The name of the character card to query; 'current' represents the currently open character card
  *
- * @returns 角色卡绑定的世界书
+ * @returns Worldbooks bound to the character card
  */
 declare function getCharWorldbookNames(character_name: LiteralUnion<'current' | string>): CharWorldbooks;
 /**
- * 重新绑定角色卡世界书
+ * Rebind character card Worldbooks
  *
- * @param character_name 角色卡名称, 'current' 表示当前打开的角色卡
- * @param char_worldbooks 要对该角色卡绑定的世界书
+ * @param character_name Character card name; 'current' represents the currently open character card
+ * @param char_worldbooks Worldbooks to bind to this character card
  */
 declare function rebindCharWorldbooks(character_name: 'current', char_worldbooks: CharWorldbooks): Promise<void>;
 
 /**
- * 获取聊天文件绑定的世界书
+ * Get the Worldbook bound to a chat file
  *
- * @param chat_name 聊天文件名称
+ * @param chat_name Chat file name
  *
- * @returns 聊天文件绑定的世界书, 如果没有则为 `null`
+ * @returns Worldbook bound to the chat file, or `null` if none
  */
 declare function getChatWorldbookName(chat_name: 'current'): string | null;
 /**
- * 重新绑定聊天文件世界书
+ * Rebind chat file Worldbook
  *
- * @param character_name 聊天文件名称, 'current' 表示当前打开的聊天
- * @param char_worldbooks 要对该聊天文件绑定的世界书
+ * @param chat_name Chat file name; 'current' represents the currently open chat
+ * @param worldbook_name Worldbook name to bind to this chat file
  */
 declare function rebindChatWorldbook(chat_name: 'current', worldbook_name: string): Promise<void>;
 /**
- * 获取或新建聊天文件世界书
+ * Get or create a chat file Worldbook
  *
- * @param chat_name 聊天文件名称, 'current' 表示当前打开的聊天
- * @param worldbook_name 世界书名称; 不填则根据当前时间创建
+ * @param chat_name Chat file name; 'current' represents the currently open chat
+ * @param worldbook_name Worldbook name; if not provided, it will be created based on the current time
  */
 declare function getOrCreateChatWorldbook(chat_name: 'current', worldbook_name?: string): Promise<string>;
 
 type WorldbookEntry = {
-  /** uid 是相对于世界书内部的, 不要跨世界书使用 */
+  /** uid is relative to the internal Worldbook; do not use across different Worldbooks */
   uid: number;
   name: string;
   enabled: boolean;
 
-  /** 激活策略: 条目应该何时激活 */
+  /** Activation Strategy: When the entry should be activated */
   strategy: {
     /**
-     * 激活策略类型:
-     * - `'constant'`: 常量🔵, 俗称蓝灯. 只需要满足 "启用"、"激活概率%" 等别的要求即可.
-     * - `'selective'`: 可选项🟢, 俗称绿灯. 除了蓝灯条件, 还需要满足 `keys` 扫描条件
-     * - `'vectorized'`: 向量化🔗. 一般不使用
+     * Activation Strategy Type:
+     * - `'constant'`: Constant🔵, commonly known as "blue light". Only needs to meet "Enabled", "Activation Probability %", and other requirements.
+     * - `'selective'`: Selective🟢, commonly known as "green light". In addition to blue light conditions, it must also satisfy `keys` scanning conditions.
+     * - `'vectorized'`: Vectorized🔗. Generally not used.
      */
     type: 'constant' | 'selective' | 'vectorized';
-    /** 主要关键字. 绿灯条目必须在欲扫描文本中扫描到其中任意一个关键字才能激活 */
+    /** Primary Keywords. Selective entries must match at least one keyword in the target text to activate. */
     keys: (string | RegExp)[];
     /**
-     * 次要关键字. 如果次要关键字的 `keys` 数组不为空, 则条目除了在主要关键字中匹配到任意一个关键字外, 还需要满足 `logic`:
-     * - `'and_any'`: 次要关键字中任意一个关键字能在欲扫描文本中匹配到
-     * - `'and_all'`: 次要关键字中所有关键字都能在欲扫描文本中匹配到
-     * - `'not_all'`: 次要关键字中至少有一个关键字没能在欲扫描文本中匹配到
-     * - `'not_any'`: 次要关键字中所有关键字都没能欲扫描文本中匹配到
+     * Secondary Keywords. If the secondary `keys` array is not empty, the entry must match a primary keyword and also satisfy the `logic`:
+     * - `'and_any'`: At least one secondary keyword is matched in the target text
+     * - `'and_all'`: All secondary keywords are matched in the target text
+     * - `'not_all'`: At least one secondary keyword is not matched in the target text
+     * - `'not_any'`: None of the secondary keywords are matched in the target text
      */
     keys_secondary: { logic: 'and_any' | 'and_all' | 'not_all' | 'not_any'; keys: (string | RegExp)[] };
-    /** 扫描深度: 1 为仅扫描最后一个楼层, 2 为扫描最后两个楼层, 以此类推 */
+    /** Scanning Depth: 1 scans only the last message, 2 scans the last two messages, and so on. */
     scan_depth: 'same_as_global' | number;
   };
-  /** 插入位置: 如果条目激活应该插入到什么地方 */
+  /** Insertion Position: Where the entry should be inserted if activated */
   position: {
     /**
-     * 位置类型:
-     * - `'before_character_definition'`: 角色定义之前
-     * - `'after_character_definition'`: 角色定义之后
-     * - `'before_example_messages'`: 示例消息之前
-     * - `'after_example_messages'`: 示例消息之后
-     * - `'before_author_note'`: 作者注释之前
-     * - `'after_author_note'`: 作者注释之后
-     * - `'at_depth'`: 插入到指定深度
+     * Position Type:
+     * - `'before_character_definition'`: Before character definition
+     * - `'after_character_definition'`: After character definition
+     * - `'before_example_messages'`: Before example messages
+     * - `'after_example_messages'`: After example messages
+     * - `'before_author_note'`: Before author's note
+     * - `'after_author_note'`: After author's note
+     * - `'at_depth'`: Insert at specific depth
      */
     type:
       | 'before_character_definition'
@@ -109,56 +109,56 @@ type WorldbookEntry = {
       | 'before_author_note'
       | 'after_author_note'
       | 'at_depth';
-    /** 该条目的消息身份, 仅位置类型为 `'at_depth'` 时有效 */
+    /** The message role for this entry; only valid when position type is `'at_depth'` */
     role: 'system' | 'assistant' | 'user';
-    /** 该条目要插入的深度, 仅位置类型为 `'at_depth'` 时有效 */
+    /** The depth to insert this entry; only valid when position type is `'at_depth'` */
     depth: number;
-    // TODO: 世界书条目的插入: 文档链接
+    // TODO: Worldbook Entry Insertion: Documentation Link
     order: number;
   };
 
   content: string;
 
   probability: number;
-  /** 递归表示某世界书条目被激活后, 该条目的提示词又激活了其他条目 */
+  /** Recursion indicates that after a Worldbook entry is activated, its content activates other entries. */
   recursion: {
-    /** 禁止其他条目递归激活本条目 */
+    /** Prevent other entries from recursively activating this entry */
     prevent_incoming: boolean;
-    /** 禁止本条目递归激活其他条目 */
+    /** Prevent this entry from recursively activating other entries */
     prevent_outgoing: boolean;
-    /** 延迟到第 n 级递归检查时才能激活本条目 */
+    /** Delay activation of this entry until the n-th level of recursion check */
     delay_until: null | number;
   };
   effect: {
-    /** 黏性: 条目激活后, 在之后 n 条消息内始终激活, 无视激活策略、激活概率% */
+    /** Sticky: Once activated, the entry stays active for the next n messages, ignoring activation strategy and probability. */
     sticky: null | number;
-    /** 冷却: 条目激活后, 在之后 n 条消息内不能再激活 */
+    /** Cooldown: Once activated, the entry cannot be activated again for the next n messages. */
     cooldown: null | number;
-    /** 延迟: 聊天中至少有 n 楼消息时, 才能激活条目 */
+    /** Delay: The entry can only be activated when there are at least n messages in the chat. */
     delay: null | number;
   };
 
-  /** 额外字段, 用于为世界书条目绑定额外数据 */
+  /** Extra fields, used to bind additional data to Worldbook entries */
   extra?: Record<string, any>;
 };
 
 /**
- * 创建新的世界书
+ * Create a new Worldbook
  *
- * @param worldbook_name 世界书名称
- * @param worldbook 世界书内容; 不填则没有任何条目
+ * @param worldbook_name Worldbook name
+ * @param worldbook Worldbook content; if empty, it will contain no entries
  */
 declare function createWorldbook(worldbook_name: string, worldbook?: WorldbookEntry[]): Promise<boolean>;
 
 /**
- * 创建或替换名为 `worldbook_name` 的世界书, 内容为 `worldbook`
+ * Create or replace a Worldbook named `worldbook_name` with the content `worldbook`
  *
- * @param worldbook_name 世界书名称
- * @param worldbook 世界书内容; 不填则没有任何条目
- * @param options 可选选项
- *   - `render:'debounced'|'immediate'`: 对于对世界书的更改, 世界书编辑器应该防抖渲染 (debounced) 还是立即渲染 (immediate)? 默认为性能更好的防抖渲染
+ * @param worldbook_name Worldbook name
+ * @param worldbook Worldbook content; if empty, it will contain no entries
+ * @param options Optional settings
+ *   - `render:'debounced'|'immediate'`: For Worldbook changes, should the editor use debounced rendering or immediate rendering? Defaults to debounced rendering for better performance.
  *
- * @returns 如果发生创建, 则返回 `true`; 如果发生替换, 则返回 `false`
+ * @returns Returns `true` if created, `false` if replaced
  */
 declare function createOrReplaceWorldbook(
   worldbook_name: string,
@@ -167,47 +167,47 @@ declare function createOrReplaceWorldbook(
 ): Promise<boolean>;
 
 /**
- * 删除 `worldbook_name` 世界书
+ * Delete the Worldbook `worldbook_name`
  *
- * @param worldbook_name 世界书名称
+ * @param worldbook_name Worldbook name
  *
- * @returns 是否成功删除, 可能因世界书不存在等原因而失败
+ * @returns Whether the deletion was successful; may fail if the Worldbook does not exist, etc.
  */
 declare function deleteWorldbook(worldbook_name: string): Promise<boolean>;
 
-// TODO: rename 需要处理世界书绑定
+// TODO: rename needs to handle Worldbook bindings
 // export function renameWorldbook(old_name: string, new_name: string): boolean;
 
 /**
- * 获取 `worldbook_name` 世界书的内容
+ * Get the content of Worldbook `worldbook_name`
  *
- * @param worldbook_name 世界书名称
+ * @param worldbook_name Worldbook name
  *
- * @returns 世界书内容
+ * @returns Worldbook content
  *
- * @throws 如果世界书不存在, 将会抛出错误
+ * @throws Throws an error if the Worldbook does not exist
  */
 declare function getWorldbook(worldbook_name: string): Promise<WorldbookEntry[]>;
 
 interface ReplaceWorldbookOptions {
-  /** 对于对世界书的更改, 世界书编辑器应该防抖渲染 (debounced) 还是立即渲染 (immediate)? 默认为性能更好的防抖渲染 */
+  /** For Worldbook changes, should the editor use debounced rendering or immediate rendering? Defaults to debounced rendering for better performance. */
   render?: 'debounced' | 'immediate';
 }
 /**
- * 完全替换 `worldbook_name` 世界书的内容为 `worldbook`
+ * Completely replace the content of Worldbook `worldbook_name` with `worldbook`
  *
- * @param worldbook_name 世界书名称
- * @param worldbook 世界书内容
- * @param options 可选选项
- *   - `render:'debounced'|'immediate'`: 对于对世界书的更改, 世界书编辑器应该防抖渲染 (debounced) 还是立即渲染 (immediate)? 默认为性能更好的防抖渲染
+ * @param worldbook_name Worldbook name
+ * @param worldbook Worldbook content
+ * @param options Optional settings
+ *   - `render:'debounced'|'immediate'`: For Worldbook changes, should the editor use debounced rendering or immediate rendering? Defaults to debounced rendering for better performance.
  *
- * @throws 如果世界书不存在, 将会抛出错误
+ * @throws Throws an error if the Worldbook does not exist
  *
  * @example
- * // 禁止所有条目递归, 保持其他设置不变
- * const worldbook = await getWorldbook("eramgt少女歌剧");
+ * // Disable recursion for all entries, keeping other settings unchanged
+ * const worldbook = await getWorldbook("eramgt_starlight");
  * await replaceWorldbook(
- *   'eramgt少女歌剧',
+ *   'eramgt_starlight',
  *   worldbook.map(entry => ({
  *     ...entry,
  *     recursion: { prevent_incoming: true, prevent_outgoing: true, delay_until: null },
@@ -215,10 +215,10 @@ interface ReplaceWorldbookOptions {
  * );
  *
  * @example
- * // 删除所有名字中包含 `'神乐光'` 的条目
- * const worldbook = await getWorldbook("eramgt少女歌剧");
- * _.remove(worldbook, entry => entry.name.includes('神乐光'));
- * await replaceWorldbook("eramgt少女歌剧", worldbook);
+ * // Delete all entries whose names contain 'Kagura Hikari'
+ * const worldbook = await getWorldbook("eramgt_starlight");
+ * _.remove(worldbook, entry => entry.name.includes('Kagura Hikari'));
+ * await replaceWorldbook("eramgt_starlight", worldbook);
  */
 declare function replaceWorldbook(
   worldbook_name: string,
@@ -230,20 +230,20 @@ type WorldbookUpdater =
   | ((worldbook: WorldbookEntry[]) => PartialDeep<WorldbookEntry>[])
   | ((worldbook: WorldbookEntry[]) => Promise<PartialDeep<WorldbookEntry>[]>);
 /**
- * 用 `updater` 函数更新世界书 `worldbook_name`
+ * Update Worldbook `worldbook_name` using the `updater` function
  *
- * @param worldbook_name 世界书名称
- * @param updater 用于更新世界书的函数. 它应该接收世界书条目作为参数, 并返回更新后的世界书条目
- * @param options 可选选项
- *   - `render:'debounced'|'immediate'`: 对于对世界书的更改, 世界书编辑器应该防抖渲染 (debounced) 还是立即渲染 (immediate)? 默认为性能更好的防抖渲染
+ * @param worldbook_name Worldbook name
+ * @param updater Function to update the Worldbook. It should take Worldbook entries as an argument and return updated entries.
+ * @param options Optional settings
+ *   - `render:'debounced'|'immediate'`: For Worldbook changes, should the editor use debounced rendering or immediate rendering? Defaults to debounced rendering for better performance.
  *
- * @returns 更新后的世界书条目
+ * @returns Updated Worldbook entries
  *
- * @throws 如果世界书不存在, 将会抛出错误
+ * @throws Throws an error if the Worldbook does not exist
  *
  * @example
- * // 禁止所有条目递归, 保持其他设置不变
- * await updateWorldbookWith('eramgt少女歌剧', worldbook => {
+ * // Disable recursion for all entries, keeping other settings unchanged
+ * await updateWorldbookWith('eramgt_starlight', worldbook => {
  *   return worldbook.map(entry => ({
  *     ...entry,
  *     recursion: { prevent_incoming: true, prevent_outgoing: true, delay_until: null },
@@ -251,9 +251,9 @@ type WorldbookUpdater =
  * });
  *
  * @example
- * // 删除所有名字中包含 "神乐光" 的条目
- * await updateWorldbookWith('eramgt少女歌剧', worldbook => {
- *   _.remove(worldbook, entry => entry.name.includes('神乐光'));
+ * // Delete all entries whose names contain "Kagura Hikari"
+ * await updateWorldbookWith('eramgt_starlight', worldbook => {
+ *   _.remove(worldbook, entry => entry.name.includes('Kagura Hikari'));
  *   return worldbook;
  * });
  */
@@ -264,20 +264,20 @@ declare function updateWorldbookWith(
 ): Promise<WorldbookEntry[]>;
 
 /**
- * 向世界书中新增条目
+ * Add new entries to a Worldbook
  *
- * @param worldbook_name 世界书名称
- * @param new_entries 要新增的条目, 对于不设置的字段将会采用酒馆给的默认值
- * @param options 可选选项
- *   - `render:'debounced'|'immediate'`: 对于对世界书的更改, 世界书编辑器应该防抖渲染 (debounced) 还是立即渲染 (immediate)? 默认为性能更好的防抖渲染
+ * @param worldbook_name Worldbook name
+ * @param new_entries Entries to be added; fields not provided will use the default values provided by Tavern.
+ * @param options Optional settings
+ *   - `render:'debounced'|'immediate'`: For Worldbook changes, should the editor use debounced rendering or immediate rendering? Defaults to debounced rendering for better performance.
  *
- * @returns 更新后的世界书条目, 以及新增条目补全字段后的结果
+ * @returns Updated Worldbook entries and the result of the new entries after field completion.
  *
- * @throws 如果世界书不存在, 将会抛出错误
+ * @throws Throws an error if the Worldbook does not exist
  *
  * @example
- * // 创建两个条目, 一个标题叫 `'神乐光'`, 一个留白
- * const { worldbook, new_entries } = await createWorldbookEntries('eramgt少女歌剧', [{ name: '神乐光' }, {}]);
+ * // Create two entries: one titled 'Kagura Hikari' and one empty
+ * const { worldbook, new_entries } = await createWorldbookEntries('eramgt_starlight', [{ name: 'Kagura Hikari' }, {}]);
  */
 declare function createWorldbookEntries(
   worldbook_name: string,
@@ -286,20 +286,20 @@ declare function createWorldbookEntries(
 ): Promise<{ worldbook: WorldbookEntry[]; new_entries: WorldbookEntry[] }>;
 
 /**
- * 删除世界书中的条目
+ * Delete entries from a Worldbook
  *
- * @param worldbook_name 世界书名称
- * @param predicate 判断函数, 如果返回 `true` 则删除该条目
- * @param options 可选选项
- *   - `render:'debounced'|'immediate'`: 对于对世界书的更改, 世界书编辑器应该防抖渲染 (debounced) 还是立即渲染 (immediate)? 默认为性能更好的防抖渲染
+ * @param worldbook_name Worldbook name
+ * @param predicate Predicate function; if it returns true, the entry will be deleted.
+ * @param options Optional settings
+ *   - `render:'debounced'|'immediate'`: For Worldbook changes, should the editor use debounced rendering or immediate rendering? Defaults to debounced rendering for better performance.
  *
- * @returns 更新后的世界书条目, 以及被删除的条目
+ * @returns Updated Worldbook entries and the deleted entries.
  *
- * @throws 如果世界书不存在, 将会抛出错误
+ * @throws Throws an error if the Worldbook does not exist
  *
  * @example
- * // 删除所有名字中包含 `'神乐光'` 的条目
- * const { worldbook, deleted_entries } = await deleteWorldbookEntries('eramgt少女歌剧', entry => entry.name.includes('神乐光'));
+ * // Delete all entries whose names contain 'Kagura Hikari'
+ * const { worldbook, deleted_entries } = await deleteWorldbookEntries('eramgt_starlight', entry => entry.name.includes('Kagura Hikari'));
  */
 declare function deleteWorldbookEntries(
   worldbook_name: string,

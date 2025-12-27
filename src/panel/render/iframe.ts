@@ -28,7 +28,7 @@ function replaceVhInContent(content: string): string {
       return `calc(${VARIABLE_EXPRESSION} * ${parsed / 100})`;
     });
 
-  // 1) CSS 声明块 (包括 <style> 中或内联样式串) 中: `min-height: ...vh`
+  // 1) In CSS declaration blocks (including in <style> or inline style strings): `min-height: ...vh`
   content = content.replace(
     /(min-height\s*:\s*)([^;{}]*?\d+(?:\.\d+)?vh)(?=\s*[;}])/gi,
     (_m, prefix: string, value: string) => {
@@ -36,7 +36,7 @@ function replaceVhInContent(content: string): string {
     },
   );
 
-  // 2) 行内 `style="min-height: ...vh"`
+  // 2) Inline `style="min-height: ...vh"`
   content = content.replace(
     /(style\s*=\s*(["']))([^"'"]*?)(\2)/gi,
     (match, prefix: string, _quote: string, styleContent: string, suffix: string) => {
@@ -74,7 +74,7 @@ function replaceVhInContent(content: string): string {
   return content;
 }
 
-// 由于 vue 内使用 `</script>` 存在 bug, 不得不分开写
+// Due to a bug when using `</script>` inside Vue, it must be written separately
 export function createSrcContent(content: string, use_blob_url: boolean) {
   content = replaceVhInContent(content);
 

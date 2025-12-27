@@ -15,7 +15,7 @@ export const useIframeLogsStore = defineStore('iframe_logs', () => {
     if (!iframe_logs.value.has(iframe_id)) {
       iframe_logs.value.set(iframe_id, []);
     }
-    // TODO: 尽量模拟 console.info 的字符串结果
+    // TODO: Try to simulate string result of console.info
     iframe_logs.value.get(iframe_id)?.push({
       level: level === 'log' ? 'info' : level,
       message: args.map(String).join(''),

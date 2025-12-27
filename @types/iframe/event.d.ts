@@ -1,190 +1,190 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 /**
- * 事件可以是
- * - `iframe_events` 中的 iframe 事件
- * - `tavern_events` 中的酒馆事件
- * - 自定义的字符串事件
+ * Events can be
+ * - iframe events in `iframe_events`
+ * - tavern events in `tavern_events`
+ * - custom string events
  */
 type EventType = IframeEventType | TavernEventType | string;
 
 type EventOnReturn = {
-  /** 取消监听 */
+  /** Stop listening */
   stop: () => void;
 };
 
 /**
- * 让 `listener` 监听 `event_type`, 当事件发生时自动运行 `listener`;
- * 如果 `listener` 已经在监听 `event_type`, 则调用本函数不会有任何效果.
+ * Let `listener` listen to `event_type`; when the event occurs, automatically run `listener`.
+ * If `listener` is already listening to `event_type`, calling this function will have no effect.
  *
- * 当 `eventOn` 所在的前端界面/脚本关闭时, 监听将会自动卸载.
+ * When the frontend interface/script where `eventOn` is located is closed, the listener will be automatically uninstalled.
  *
- * @param event_type 要监听的事件
- * @param listener 要注册的函数
+ * @param event_type The event to listen for
+ * @param listener The function to register
  *
  * @example
  * function hello() { alert("hello"); }
- * eventOn(要监听的事件, hello);
+ * eventOn(Event to listen for, hello);
  *
  * @example
- * // 监听消息接收并弹出 `'hello'`
+ * // Listen for message reception and pop up 'hello'
  * eventOn(tavern_events.MESSAGE_RECEIVED, () => alert('hello'));
  *
  * @example
- * // 消息被修改时监听是哪一条消息被修改
- * // 酒馆事件 tavern_events.MESSAGE_UPDATED 会传递被更新的楼层 id
+ * // When a message is updated, listen for which message was modified
+ * // The tavern event tavern_events.MESSAGE_UPDATED will pass the updated message ID (floor ID)
  * eventOn(tavern_events.MESSAGE_UPDATED, message_id => {
- *   alert(`你刚刚更新了第 ${message_id} 条聊天消息对吧😡`);
+ *   alert(`You just updated chat message #${message_id}, didn't you? 😡`);
  * });
  *
- * @returns 后续操作
- *   - `stop`: 取消这个监听
+ * @returns Subsequent operations
+ *   - `stop`: Cancel this listener
  */
 declare function eventOn<T extends EventType>(event_type: T, listener: ListenerType[T]): EventOnReturn;
 
-/** @deprecated 请使用 `eventOn(getButtonEvent('按钮名称'), 函数)` 代替 */
+/** @deprecated Please use `eventOn(getButtonEvent('Button Name'), function)` instead */
 declare function eventOnButton<T extends EventType>(event_type: T, listener: ListenerType[T]): void;
 
 /**
- * 让 `listener` 监听 `event_type`, 当事件发生时自动在最后运行 `listener`;
- * 如果 `listener` 已经在监听 `event_type`, 则调用本函数会将 `listener` 调整为最后运行.
+ * Let `listener` listen to `event_type`; when the event occurs, automatically run `listener` last.
+ * If `listener` is already listening to `event_type`, calling this function will adjust `listener` to run last.
  *
- * 当 `eventMakeLast` 所在的前端界面/脚本关闭时, 监听将会自动卸载.
+ * When the frontend interface/script where `eventMakeLast` is located is closed, the listener will be automatically uninstalled.
  *
- * @param event_type 要监听的事件
- * @param listener 要注册/调整到最后运行的函数
+ * @param event_type The event to listen for
+ * @param listener The function to register/adjust to run last
  *
  * @example
- * eventMakeLast(要监听的事件, 要注册的函数);
+ * eventMakeLast(Event to listen for, Function to register);
  *
- * @returns 后续操作
- *   - `stop`: 取消这个监听
+ * @returns Subsequent operations
+ *   - `stop`: Cancel this listener
  */
 declare function eventMakeLast<T extends EventType>(event_type: T, listener: ListenerType[T]): EventOnReturn;
 
 /**
- * 让 `listener` 监听 `event_type`, 当事件发生时自动在最先运行 `listener`;
- * 如果 `listener` 已经在监听 `event_type`, 则调用本函数会将 `listener` 调整为最先运行.
+ * Let `listener` listen to `event_type`; when the event occurs, automatically run `listener` first.
+ * If `listener` is already listening to `event_type`, calling this function will adjust `listener` to run first.
  *
- * 当 `eventMakeFirst` 所在的前端界面/脚本关闭时, 监听将会自动卸载.
+ * When the frontend interface/script where `eventMakeFirst` is located is closed, the listener will be automatically uninstalled.
  *
- * @param event_type 要监听的事件
- * @param listener 要注册/调整为最先运行的函数
+ * @param event_type The event to listen for
+ * @param listener The function to register/adjust to run first
  *
  * @example
- * eventMakeFirst(要监听的事件, 要注册的函数);
+ * eventMakeFirst(Event to listen for, Function to register);
  *
- * @returns 后续操作
- *   - `stop`: 取消这个监听
+ * @returns Subsequent operations
+ *   - `stop`: Cancel this listener
  */
 declare function eventMakeFirst<T extends EventType>(event_type: T, listener: ListenerType[T]): EventOnReturn;
 
 /**
- * 让 `listener` 仅监听下一次 `event_type`, 当该次事件发生时运行 `listener`, 此后取消监听;
- * 如果 `listener` 已经在监听 `event_type`, 则调用本函数不会有任何效果.
+ * Let `listener` listen to `event_type` only once; run `listener` when the event occurs, then cancel the listener.
+ * If `listener` is already listening to `event_type`, calling this function will have no effect.
  *
- * 当 `eventOnce` 所在的前端界面/脚本关闭时, 监听将会自动卸载.
+ * When the frontend interface/script where `eventOnce` is located is closed, the listener will be automatically uninstalled.
  *
- * @param event_type 要监听的事件
- * @param listener 要注册的函数
+ * @param event_type The event to listen for
+ * @param listener The function to register
  *
  * @example
- * eventOnce(要监听的事件, 要注册的函数);
+ * eventOnce(Event to listen for, Function to register);
  *
- * @returns 后续操作
- *   - `stop`: 取消这个监听
+ * @returns Subsequent operations
+ *   - `stop`: Cancel this listener
  */
 declare function eventOnce<T extends EventType>(event_type: T, listener: ListenerType[T]): EventOnReturn;
 
 /**
- * 发送 `event_type` 事件, 同时可以发送一些数据 `data`.
+ * Emit the `event_type` event, and optionally send some `data`.
  *
- * 所有正在监听 `event_type` 消息频道的都会收到该消息并接收到 `data`.
+ * Anyone listening to the `event_type` message channel will receive the message and the `data`.
  *
- * @param event_type 要发送的事件
- * @param data 要随着事件发送的数据
- *
- * @example
- * // 发送 "角色阶段更新完成" 事件, 所有监听该事件的 `listener` 都会被运行
- * eventEmit("角色阶段更新完成");
+ * @param event_type The event to emit
+ * @param data The data to be sent with the event
  *
  * @example
- * // 发送 "存档" 事件, 并等待所有 `listener` (也许是负责存档的函数) 执行完毕后才继续
- * await eventEmit("存档");
+ * // Emit "Character phase update completed" event; all listeners listening to this event will be run
+ * eventEmit("Character phase update completed");
  *
  * @example
- * // 发送时携带数据 ["你好", 0]
- * eventEmit("事件", "你好", 0);
+ * // Emit "Save" event and wait for all listeners (possibly functions responsible for saving) to finish executing before continuing
+ * await eventEmit("Save");
+ *
+ * @example
+ * // Emit with data ["Hello", 0]
+ * eventEmit("Event", "Hello", 0);
  */
 declare function eventEmit<T extends EventType>(event_type: T, ...data: Parameters<ListenerType[T]>): Promise<void>;
 
 /**
- * 携带 `data` 而发送 `event_type` 事件并等待事件处理结束.
+ * Emit the `event_type` event with `data` and wait for the event processing to finish.
  *
- * @param event_type 要发送的事件
- * @param data 要随着事件发送的数据
+ * @param event_type The event to emit
+ * @param data The data to be sent with the event
  */
 declare function eventEmitAndWait<T extends EventType>(event_type: T, ...data: Parameters<ListenerType[T]>): void;
 
 /**
- * 让 `listener` 取消对 `event_type` 的监听; 如果 `listener` 没有监听 `event_type`, 则调用本函数不会有任何效果.
+ * Cancel the `listener`'s subscription to `event_type`; if `listener` is not listening to `event_type`, calling this function will have no effect.
  *
- * 前端界面/脚本关闭时会自动卸载所有的事件监听, 你不必手动调用 `eventRemoveListener` 来移除.
+ * All event listeners will be automatically uninstalled when the frontend interface/script is closed; you don't need to call `eventRemoveListener` manually to remove them.
  *
- * @param event_type 要监听的事件
- * @param listener 要取消注册的函数
+ * @param event_type The event to listen for
+ * @param listener The function to unregister
  *
  * @example
- * eventRemoveListener(要监听的事件, 要取消注册的函数);
+ * eventRemoveListener(Event to listen for, Function to unregister);
  */
 declare function eventRemoveListener<T extends EventType>(event_type: T, listener: ListenerType[T]): void;
 
 /**
- * 取消本 iframe 中对 `event_type` 的所有监听
+ * Cancel all listeners for `event_type` in this iframe.
  *
- * 前端界面/脚本关闭时会自动卸载所有的事件监听, 你不必手动调用 `eventClearEvent` 来移除.
+ * All event listeners will be automatically uninstalled when the frontend interface/script is closed; you don't need to call `eventClearEvent` manually to remove them.
  *
- * @param event_type 要取消监听的事件
+ * @param event_type The event to cancel listening for
  */
 declare function eventClearEvent(event_type: EventType): void;
 
 /**
- * 取消本 iframe 中 `listener` 的的所有监听
+ * Cancel all subscriptions for `listener` in this iframe.
  *
- * 前端界面/脚本关闭时会自动卸载所有的事件监听, 你不必手动调用 `eventClearListener` 来移除.
+ * All event listeners will be automatically uninstalled when the frontend interface/script is closed; you don't need to call `eventClearListener` manually to remove them.
  *
- * @param listener 要取消注册的函数
+ * @param listener The function to unregister
  */
 declare function eventClearListener(listener: Function): void;
 
 /**
- * 取消本 iframe 中对所有事件的所有监听
+ * Cancel all listeners for all events in this iframe.
  *
- * 前端界面/脚本关闭时会自动卸载所有的事件监听, 你不必手动调用 `eventClearAll` 来移除.
+ * All event listeners will be automatically uninstalled when the frontend interface/script is closed; you don't need to call `eventClearAll` manually to remove them.
  */
 declare function eventClearAll(): void;
 
 //------------------------------------------------------------------------------------------------------------------------
-// 以下是可用的事件, 你可以发送和监听它们
+// Below are the available events; you can emit and listen to them
 
 type IframeEventType = (typeof iframe_events)[keyof typeof iframe_events];
 
-// iframe 事件
+// iframe events
 declare const iframe_events: {
   MESSAGE_IFRAME_RENDER_STARTED: 'message_iframe_render_started';
   MESSAGE_IFRAME_RENDER_ENDED: 'message_iframe_render_ended';
-  /** `generate` 函数开始生成 */
+  /** `generate` function starts generating */
   GENERATION_STARTED: 'js_generation_started';
-  /** 启用流式传输的 `generate` 函数传输当前完整文本: "这是", "这是一条", "这是一条流式传输" */
+  /** Streaming-enabled `generate` function transmits current full text: "This is", "This is a", "This is a stream transmission" */
   STREAM_TOKEN_RECEIVED_FULLY: 'js_stream_token_received_fully';
-  /** 启用流式传输的 `generate` 函数传输当前增量文本: "这是", "一条", "流式传输" */
+  /** Streaming-enabled `generate` function transmits current incremental text: "This is", "a", "stream transmission" */
   STREAM_TOKEN_RECEIVED_INCREMENTALLY: 'js_stream_token_received_incrementally';
-  /** `generate` 函数完成生成 */
+  /** `generate` function finished generating */
   GENERATION_ENDED: 'js_generation_ended';
 };
 
 type TavernEventType = (typeof tavern_events)[keyof typeof tavern_events];
 
-// 酒馆事件. **不建议自己发送酒馆事件, 因为你并不清楚它需要发送什么数据**
+// Tavern events. **It is not recommended to emit tavern events yourself, as you may not know what data they require**
 declare const tavern_events: {
   APP_READY: 'app_ready';
   EXTRAS_CONNECTED: 'extras_connected';
@@ -376,7 +376,7 @@ type ListenerType = {
   [tavern_events.CHAT_CREATED]: () => void;
   [tavern_events.GENERATE_BEFORE_COMBINE_PROMPTS]: () => void;
   [tavern_events.GENERATE_AFTER_COMBINE_PROMPTS]: (result: { prompt: string; dryRun: boolean }) => void;
-  /** dry_run 只在 SillyTavern 1.13.15 及以后有 */
+  /** dry_run is only available in SillyTavern 1.13.15 and later */
   [tavern_events.GENERATE_AFTER_DATA]: (
     generate_data: {
       prompt: SillyTavern.SendingMessage[];

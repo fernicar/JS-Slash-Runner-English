@@ -1,4 +1,4 @@
-/** @deprecated 请使用内置库 "世界书强制用推荐的全局设置" */
+/** @deprecated Please use the built-in library "Worldbook Enforce Recommended Global Settings" */
 type LorebookSettings = {
   selected_global_lorebooks: string[];
   scan_depth: number;
@@ -16,46 +16,46 @@ type LorebookSettings = {
   overflow_alert: boolean;
 }
 
-/** @deprecated 请使用内置库 "世界书强制用推荐的全局设置" */
+/** @deprecated Please use the built-in library "Worldbook Enforce Recommended Global Settings" */
 declare function getLorebookSettings(): LorebookSettings;
-/** @deprecated 请使用内置库 "世界书强制用推荐的全局设置" */
+/** @deprecated Please use the built-in library "Worldbook Enforce Recommended Global Settings" */
 declare function setLorebookSettings(settings: Partial<LorebookSettings>): void;
 
-/** @deprecated 请使用 `getWorldbookNames` */
+/** @deprecated Please use `getWorldbookNames` */
 declare function getLorebooks(): string[];
 
-/** @deprecated 请使用 `deleteWorldbook` */
+/** @deprecated Please use `deleteWorldbook` */
 declare function deleteLorebook(lorebook: string): Promise<boolean>;
 
-/** @deprecated 请使用 `createWorldbook` */
+/** @deprecated Please use `createWorldbook` */
 declare function createLorebook(lorebook: string): Promise<boolean>;
 
-/** @deprecated 请使用 `getCharWorldbookNames` */
+/** @deprecated Please use `getCharWorldbookNames` */
 type CharLorebooks = {
   primary: string | null;
   additional: string[];
 }
 
-/** @deprecated 请使用 `getCharWorldbookNames` */
+/** @deprecated Please use `getCharWorldbookNames` */
 type GetCharLorebooksOption = {
   name?: string;
   type?: 'all' | 'primary' | 'additional';
 }
 
-/** @deprecated 请使用 `getCharWorldbookNames` */
+/** @deprecated Please use `getCharWorldbookNames` */
 declare function getCharLorebooks({ name, type }?: GetCharLorebooksOption): CharLorebooks;
 
-/** @deprecated 请使用 `getCharWorldbookNames` */
+/** @deprecated Please use `getCharWorldbookNames` */
 declare function getCurrentCharPrimaryLorebook(): string | null;
 
-/** @deprecated 请使用 `rebindCharWorldbook` */
+/** @deprecated Please use `rebindCharWorldbook` */
 declare function setCurrentCharLorebooks(lorebooks: Partial<CharLorebooks>): Promise<void>;
 
-/** @deprecated 请使用 `getChatWorldbook` */
+/** @deprecated Please use `getChatWorldbook` */
 declare function getChatLorebook(): string | null;
 
-/** @deprecated 请使用 `rebindChatWorldbook` */
+/** @deprecated Please use `rebindChatWorldbook` */
 declare function setChatLorebook(lorebook: string | null): Promise<void>;
 
-/** @deprecated 请使用 `getOrCreateChatWorldbook` */
+/** @deprecated Please use `getOrCreateChatWorldbook` */
 declare function getOrCreateChatLorebook(lorebook?: string): Promise<string>;

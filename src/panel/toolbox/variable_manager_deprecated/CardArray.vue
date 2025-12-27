@@ -38,7 +38,7 @@
             hover:bg-[color-mix(in_srgb,var(--SmartThemeQuoteColor)_15%,transparent)]
             hover:text-[var(--SmartThemeQuoteColor)]
           "
-          title="拖拽调整顺序"
+          title="Drag to reorder"
         >
           ☰
         </div>
@@ -54,7 +54,7 @@
         />
       </div>
       <div v-if="content.length === 0" class="px-0 py-2 text-center text-[var(--SmartThemeBodyColor)] opacity-60">
-        暂无元素
+        No elements
       </div>
     </VueDraggable>
   </CardBase>
@@ -181,7 +181,7 @@ const openAddChild = () => {
         const next = [...(Array.isArray(content.value) ? content.value : []), payload.value];
         content.value = next;
         isCollapsed.value = false;
-        toastr.success(t`已添加到数组`);
+        toastr.success(t`Added to array`);
         return true;
       },
     },
@@ -190,7 +190,7 @@ const openAddChild = () => {
   openCreatorModal();
 };
 
-// 搜索命中时自动展开
+// Auto-expand when search hit
 const searchMatched = computed(() => {
   if (!isSearching(props.searchInput)) return false;
   const q = props.searchInput as string | RegExp;

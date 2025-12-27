@@ -49,7 +49,7 @@ import { createDefaultFilters } from '@/panel/toolbox/variable_manager_deprecate
 import Toolbar from '@/panel/toolbox/variable_manager_deprecated/Toolbar.vue';
 import type { RootVariablePayload } from '@/panel/toolbox/variable_manager_deprecated/types';
 import { treeControlKey } from '@/panel/toolbox/variable_manager_deprecated/types';
-// 与各 Content 组件通过 defineExpose 暴露的公共接口保持一致
+// Keep consistent with public interfaces exposed by various Content components via defineExpose
 type HistoryController = {
   undo?: () => void;
   redo?: () => void;
@@ -77,7 +77,7 @@ const handleRedo = () => activeHistory.value?.redo?.();
 const handleCreateRootVariable = async (payload: RootVariablePayload) => {
   const editor = activeHistory.value;
   if (!editor || typeof editor.createRootVariable !== 'function') {
-    toastr.error('当前标签页不支持新增变量', '操作失败');
+    toastr.error('Current tab does not support adding variables', 'Operation failed');
     return false;
   }
   return editor.createRootVariable(payload);
@@ -91,11 +91,11 @@ provide(treeControlKey, {
 
 const active_tab = useLocalStorage<number>('TH-VariableManager:active_tab', 0);
 const tabs = [
-  { name: t`全局`, component: Global },
-  { name: t`预设`, component: Preset },
-  { name: t`角色`, component: Character },
-  { name: t`聊天`, component: Chat },
-  { name: t`消息`, component: Message },
+  { name: t`Global`, component: Global },
+  { name: t`Preset`, component: Preset },
+  { name: t`Character`, component: Character },
+  { name: t`Chat`, component: Chat },
+  { name: t`Message`, component: Message },
 ];
 
 const search_input = ref<RegExp | null>(null);

@@ -2,21 +2,21 @@
   <Popup
     :buttons="[
       {
-        name: t`确认`,
+        name: t`Confirm`,
         shouldEmphasize: true,
         onClick: submit,
       },
-      { name: t`取消` },
+      { name: t`Cancel` },
     ]"
   >
     <div class="flex flex-col gap-0.5">
       <div class="flex items-center justify-center gap-0.5">
-        <h3>{{ t`列表编辑` }}</h3>
-        <div :title="t`导入音频链接`" class="menu_button menu_button_icon" @click="openImporter">
+        <h3>{{ t`Edit List` }}</h3>
+        <div :title="t`Import Audio Links`" class="menu_button menu_button_icon" @click="openImporter">
           <i class="fa-solid fa-file-import" />
         </div>
       </div>
-      <div v-if="model.length === 0" class="text-center opacity-50">{{ t`暂无音频` }}</div>
+      <div v-if="model.length === 0" class="text-center opacity-50">{{ t`No Audio Available` }}</div>
       <VueDraggable
         v-model="model"
         handle=".TH-handle"
@@ -26,7 +26,7 @@
         item-key="id"
       >
         <div v-for="(item, index) in model" :key="item.url" class="flex items-center gap-0.5">
-          <span class="TH-handle shrink-0 cursor-grab select-none active:cursor-grabbing">☰</span>
+          <span class="TH-handle shrink-0 cursor-grab select-none_active:cursor-grabbing">☰</span>
           <!-- prettier-ignore-attribute -->
           <div
             class="flex min-w-0 grow items-center gap-0.5 rounded border border-(--SmartThemeBorderColor) px-0.5 py-px"
@@ -70,7 +70,7 @@ function openImporter() {
     component: PlayListImporter,
     attrs: {
       onSubmit: (items: { title: string; url: string }[]) => {
-        // 将导入的项目添加到播放列表末尾
+        // Add imported items to the end of the playlist
         model.value.push(...items);
       },
     },
@@ -83,18 +83,18 @@ function openDeleteConfirm(index: number) {
     attrs: {
       buttons: [
         {
-          name: t`确认`,
+          name: t`Confirm`,
           shouldEmphasize: true,
           onClick: (close: () => void) => {
             model.value.splice(index, 1);
             close();
           },
         },
-        { name: t`取消` },
+        { name: t`Cancel` },
       ],
     },
     slots: {
-      default: t`<div>确定要删除音频吗? 此操作无法撤销</div>`,
+      default: t`<div>Are you sure you want to delete the audio? This action cannot be undone</div>`,
     },
   }).open();
 }

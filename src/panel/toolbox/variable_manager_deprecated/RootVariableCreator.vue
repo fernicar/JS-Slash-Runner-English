@@ -1,13 +1,13 @@
 ﻿<template>
   <Popup v-model="isVisible" :buttons="popupButtons">
     <div class="flex w-full flex-col gap-0.75 th-text-sm text-(--SmartThemeBodyColor)">
-      <div class="th-text-md font-bold">新建变量</div>
+      <div class="th-text-md font-bold">New Variable</div>
       <div class="flex flex-col gap-0.25">
-        <label class="font-semibold">键名</label>
-        <input v-model="form.key" type="text" class="text_pole" placeholder="请输入键名" />
+        <label class="font-semibold">Key Name</label>
+        <input v-model="form.key" type="text" class="text_pole" placeholder="Please enter key name" />
       </div>
       <div class="flex flex-col gap-0.25">
-        <label class="font-semibold">数据类型</label>
+        <label class="font-semibold">Data Type</label>
         <select v-model="form.type" class="text_pole">
           <option v-for="option in typeOptions" :key="option.value" :value="option.value">
             {{ option.label }}
@@ -15,15 +15,15 @@
         </select>
       </div>
       <div v-if="form.type === 'string'" class="flex flex-col gap-0.25">
-        <label class="font-semibold">变量值</label>
-        <textarea v-model="form.stringValue" rows="3" class="text_pole" placeholder="请输入字符串，支持多行"></textarea>
+        <label class="font-semibold">Variable Value</label>
+        <textarea v-model="form.stringValue" rows="3" class="text_pole" placeholder="Please enter string, supports multi-line"></textarea>
       </div>
       <div v-else-if="form.type === 'number'" class="flex flex-col gap-0.25">
-        <label class="font-semibold">变量值</label>
-        <input v-model="form.numberValue" type="number" class="text_pole" placeholder="请输入数字" />
+        <label class="font-semibold">Variable Value</label>
+        <input v-model="form.numberValue" type="number" class="text_pole" placeholder="Please enter a number" />
       </div>
       <div v-else-if="form.type === 'boolean'" class="flex flex-col gap-0.25">
-        <label class="font-semibold">变量值</label>
+        <label class="font-semibold">Variable Value</label>
         <select v-model="form.booleanValue" class="text_pole">
           <option v-for="option in booleanOptions" :key="option.value" :value="option.value">
             {{ option.label }}
@@ -31,21 +31,21 @@
         </select>
       </div>
       <div v-else-if="form.type === 'array'" class="flex flex-col gap-0.25">
-        <label class="font-semibold">变量值</label>
+        <label class="font-semibold">Variable Value</label>
         <textarea
           v-model="form.arrayValue"
           rows="4"
           class="text_pole font-[family-name:var(--monoFontFamily)]!"
-          placeholder="请输入 JSON 数组，例如 [1, 2, 3]"
+          placeholder="Please enter a JSON array, e.g. [1, 2, 3]"
         ></textarea>
       </div>
       <div v-else-if="form.type === 'object'" class="flex flex-col gap-0.25">
-        <label class="font-semibold">变量值</label>
+        <label class="font-semibold">Variable Value</label>
         <textarea
           v-model="form.objectValue"
           rows="4"
           class="text_pole font-[family-name:var(--monoFontFamily)]!"
-          placeholder='请输入 JSON 对象，例如 {"name": "Tavern"}'
+          placeholder='Please enter a JSON object, e.g. {"name": "Tavern"}'
         ></textarea>
       </div>
     </div>
@@ -67,15 +67,15 @@ const typeOptions = rootVariableTypes.map(value => ({
   value,
   label:
     value === 'string'
-      ? '字符串'
+      ? 'String'
       : value === 'number'
-        ? '数字'
+        ? 'Number'
         : value === 'boolean'
-          ? '布尔值'
+          ? 'Boolean'
           : value === 'array'
-            ? '数组'
+            ? 'Array'
             : value === 'object'
-              ? '对象'
+              ? 'Object'
               : 'Null',
 }));
 
@@ -96,11 +96,11 @@ const form = reactive({
 
 const popupButtons = computed(() => [
   {
-    name: '创建变量',
+    name: 'Create Variable',
     shouldEmphasize: true,
     onClick: submit,
   },
-  { name: '取消' },
+  { name: 'Cancel' },
 ]);
 
 interface ValidationResult {
@@ -110,9 +110,9 @@ interface ValidationResult {
 }
 
 /**
- * 根据变量类型验证并转换用户输入的值
- * @param type 变量的数据类型
- * @returns 验证结果对象，包含成功状态、转换后的数据或错误信息
+ * Validate and convert user input value based on variable type
+ * @param type Data type of variable
+ * @returns Validation result object, containing success status, converted data or error info
  */
 const validateValue = (type: RootVariableType): ValidationResult => {
   switch (type) {
@@ -130,32 +130,32 @@ const validateValue = (type: RootVariableType): ValidationResult => {
     case 'array': {
       const trimmed = form.arrayValue.trim();
       if (!trimmed) {
-        return { success: false, error: '数组内容不能为空' };
+        return { success: false, error: 'Array content cannot be empty' };
       }
       try {
         const parsed = JSON.parse(trimmed);
         if (!Array.isArray(parsed)) {
-          return { success: false, error: '请输入有效的 JSON 数组' };
+          return { success: false, error: 'Please enter a valid JSON array' };
         }
         return { success: true, data: parsed };
       } catch (error) {
-        return { success: false, error: '请输入有效的 JSON 数组' };
+        return { success: false, error: 'Please enter a valid JSON array' };
       }
     }
 
     case 'object': {
       const trimmed = form.objectValue.trim();
       if (!trimmed) {
-        return { success: false, error: '对象内容不能为空' };
+        return { success: false, error: 'Object content cannot be empty' };
       }
       try {
         const parsed = JSON.parse(trimmed);
         if (parsed === null || Array.isArray(parsed) || typeof parsed !== 'object') {
-          return { success: false, error: '请输入有效的 JSON 对象' };
+          return { success: false, error: 'Please enter a valid JSON object' };
         }
         return { success: true, data: parsed };
       } catch (error) {
-        return { success: false, error: '请输入有效的 JSON 对象' };
+        return { success: false, error: 'Please enter a valid JSON object' };
       }
     }
 
@@ -163,12 +163,12 @@ const validateValue = (type: RootVariableType): ValidationResult => {
       return { success: true, data: null };
 
     default:
-      return { success: false, error: '未知的数据类型' };
+      return { success: false, error: 'Unknown data type' };
   }
 };
 
 /**
- * 重置表单到初始状态，清空所有输入字段
+ * Reset form to initial state, clear all input fields
  */
 const resetForm = () => {
   form.key = '';
@@ -181,19 +181,19 @@ const resetForm = () => {
 };
 
 /**
- * 处理表单提交逻辑，验证输入数据并创建根变量
- * @param close 关闭弹出窗口的回调函数
+ * Handle form submission logic, validate input data and create root variable
+ * @param close Callback function to close popup
  */
 const submit = async (close: () => void) => {
-  // 简单验证键名
+  // Simple validate key name
   if (!form.key || !form.key.trim()) {
-    toastr.error('键名不能为空', '键名校验失败');
+    toastr.error('Key name cannot be empty', 'Key name validation failed');
     return;
   }
 
   const valueResult = validateValue(form.type);
   if (!valueResult.success) {
-    toastr.error(valueResult.error || '未知错误', '变量值校验失败');
+    toastr.error(valueResult.error || 'Unknown error', 'Variable value validation failed');
     return;
   }
 

@@ -1,9 +1,9 @@
 /**
- * 获取酒馆助手版本号
+ * Get the Tavern Helper version
  */
 declare function getTavernHelperVersion(): string;
 
 /**
- * 获取酒馆版本号
+ * Get the Tavern version
  */
 declare function getTavernVersion(): string;
